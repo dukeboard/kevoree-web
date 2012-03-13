@@ -48,6 +48,7 @@ object MenuRenderer {
   def getItems: List[Tuple3[String, String, String]] = {
     List(
           ("Home", "/", "overview.html"),
+          ("Research", "/research", "research.html"),
           ("Core Features", "/core", "core_features.html"),
           ("Tools", "/tools", ""),
           ("Platforms", "/platform", ""),
