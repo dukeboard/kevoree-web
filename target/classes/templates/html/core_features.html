@@ -1,43 +1,78 @@
 <div class="hero-unit">
-    <h1>Features</h1>
-
-    <p class="pull-right">Geddy has you covered</p>
+    <h1>Core Features</h1>
+    <p class="pull-right">Elementary entities manipulate in Kevoree models</p>
 </div>
+
+<!-- Node Definition -->
 <div class="row">
     <div class="span2 heading-box">
         <h3>Node</h3>
     </div>
     <div class="span4">
         <h4>Nodes encapsulate adaptation semantics</h4>
-
-        <p>Distributed systems are composed by computation node instances related to a NodeType. A NodeType host specific adaptation semantics which is composed by a list of managed AdaptationPrimitive types, a plannification algorithm </p>
-
+        <p>Distributed systems are composed by computation node instances related to a NodeType. A NodeType host
+            specific adaptation semantics which is composed by a list of managed AdaptationPrimitive types, a
+            plannification algorithm</p>
+        <!-- TODO INSERT FIGURE -->
 
     </div>
     <div class="span6">
 
-        <!-- Model Example -->
-<pre class="code-box prettyprint">
-var User = function () {
-  this.property('login', 'string', {required: true});
-  this.property('password', 'string', {required: true});
-
-  this.validatesPresent('login');
-  this.validatesConfirmed('password', 'confirmPassword');
-
-  // You can define methods for instances like this
-  this.someMethod = function () {
-    // Do some stuff
-  };
-};
-
-User = geddy.model.registerModel('User', User);
-</pre>
-
+                <!-- Model Example -->
+        <pre class="code-box prettyprint">
+@NodeType
+public class JavaSENode extends AbstractNodeType {
+}</pre>
     </div>
 </div>
 
 <hr/>
+
+<!-- Channel Definition -->
+<div class="row">
+    <div class="span2 heading-box">
+        <h3>Channel</h3>
+    </div>
+    <div class="span4">
+        <h4>Channel entity encapsulate business communication semantics</h4>
+        <p>Channel are ...</p>
+        <!-- TODO INSERT FIGURE -->
+
+    </div>
+    <div class="span6">
+                <!-- Model Example -->
+        <pre class="code-box prettyprint">
+@ChannelTypeFragment
+public class defMSG extends AbstractChannelFragment {
+}</pre>
+    </div>
+</div>
+
+<hr/>
+
+
+<!-- Group Definition -->
+<div class="row">
+    <div class="span2 heading-box">
+        <h3>Groups</h3>
+    </div>
+    <div class="span4">
+        <h4>Groups encapsulate node synchronisation and communication semanctic</h4>
+        <p>In a nutshell, groups are channels dedicated to inter-nodes communications. These entity encapsulate also synchronisation semanctics such as groups synchronsation in total or partial order, etc ....</p>
+        <!-- TODO INSERT FIGURE -->
+    </div>
+    <div class="span6">
+                <!-- Model Example -->
+        <pre class="code-box prettyprint">
+@ChannelTypeFragment
+public class defMSG extends AbstractChannelFragment {
+}</pre>
+    </div>
+</div>
+
+<hr/>
+
+
 
 <!-- Views -->
 <div class="row">

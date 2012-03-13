@@ -5,7 +5,6 @@ package org.kevoree.web
  * User: duke
  * Date: 02/03/12
  * Time: 16:59
- * To change this template use File | Settings | File Templates.
  */
 
 object MenuRenderer {
@@ -20,8 +19,11 @@ object MenuRenderer {
           <a class="brand" href="index.html">Kevoree</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class={if(currentURL == "/"){"active"}else{"noactive"}}><a href="/">Home</a></li>
-              <li class={if(currentURL == "/core"){"active"}else{"noactive"}}><a href="/core">Core Features</a></li>
+              {
+              getItems.map(it =>{
+                <li class={if(currentURL == it._2){"active"}else{"noactive"}}><a href={it._2}>{it._1}</a></li>
+              })
+              }
             </ul>
             <ul class="nav pull-right">
               <li><a href="http://github.com/dukeboard/kevoree">Get it on Github</a></li>
@@ -33,8 +35,15 @@ object MenuRenderer {
   }
 
 
-  def getItems : List[Tuple2[String,String]] = {
-    List("core")
+  def getItems : List[Tuple3[String,String,String]] = {
+    List(
+      ("Home","/","overview.html"),
+      ("Core Features","/core","core_features.html"),
+      ("Tools","/tools",""),
+      ("Platforms","/platform",""),
+      ("Download","/download","download.html"),
+      ("The KTeam","/kteam","")
+    )
   }
 
 }

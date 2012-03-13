@@ -11,6 +11,14 @@ import io.Source
  */
 
 class MainRouteur extends Router with PageRenderer {
+
+  MenuRenderer.getItems.foreach{
+    it => {
+      any(it._2) = krender(it._3,it._2)
+    }
+  }
+
+/*
   any("/") = krender("overview.html","/")
   any("/index") = krender("overview.html","/")
   any("/index.htm") = krender("overview.html","/")
@@ -18,7 +26,7 @@ class MainRouteur extends Router with PageRenderer {
 
   any("/core") = krender("core_features.html","/core")
   //any("/core") = krender("core_features.html")
-
+*/
 
 }
 

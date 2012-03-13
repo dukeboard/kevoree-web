@@ -14,14 +14,15 @@ body {
             border-bottom: 1px solid #999;
         }
 
-        .hero-unit {
+
+        .hero-unit-big {
             text-align: center;
             background-color: rgba(200, 200, 200, .5);
             box-shadow: 0px 0px 3px #bababa;
             border: 1px solid #EDEDED;
         }
 
-        .hero-unit h1 {
+        .hero-unit-big h1 {
             font-size: 84px;
             line-height: 1.2;
             text-shadow: -1px -1px 3px #fff;
@@ -36,19 +37,22 @@ body {
             border-radius: 3px;
         }
 
-        @media (max-width: 480px) {
-            .hero-unit {
-                padding: 10px 10px 20px 20px;
-            }
+      .tutorial {
+        padding: 20px 40px;
+        line-height: 150%;
+      }
 
-            .hero-unit h1 {
-                font-size: 32px;
-            }
-
-            .hero-unit p {
-                font-size: 12px;
-            }
+      @media (max-width: 480px) {
+        .hero-unit {
+          padding: 20px 20px 30px 20px;
         }
+        .hero-unit h1 {
+          font-size: 32px;
+        }
+        .hero-unit p {
+          font-size: 12px;
+        }
+      }
 
         code {
                 color: #777;
@@ -56,6 +60,7 @@ body {
 
                 .code-box {
                 padding-top: 28px;
+                text-align:left;
                 }
 
                 .code-box .syntaxhighlighter {
