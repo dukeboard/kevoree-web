@@ -1,6 +1,7 @@
 package org.kevoree.web
 
 import io.Source
+import java.io.File
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,12 +24,21 @@ trait PageRenderer {
   }
 
   def renderHtml(name: String): String = {
+
+
+    Source.fromFile(new File(getClass.getClassLoader.getResource("templates/../").getPath+"../../src/main/resources/templates/html/" + name)).getLines().mkString("\n")
+    
+
+/*
     val st = getClass.getClassLoader.getResourceAsStream("templates/html/" + name)
     if (st != null) {
       Source.fromInputStream(st).getLines().mkString("\n")
     } else {
       "not found"
-    }
+    }*/
+    
+    
+    
   }
 
   def kheader: String = {
