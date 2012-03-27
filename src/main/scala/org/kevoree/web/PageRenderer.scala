@@ -1,7 +1,8 @@
 package org.kevoree.web
 
 import io.Source
-import java.io.File
+import collection.immutable.HashMap
+import org.kevoree.library.javase.webserver.{URLHandlerScala, AbstractPage, KevoreeHttpRequest, KevoreeHttpResponse}
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,35 +11,86 @@ import java.io.File
  * Time: 17:15
  */
 
-trait PageRenderer {
-  def krender(name : String,currentURL : String): String = {
+class PageRenderer {
+
+  val handler = new URLHandlerScala()
+
+  def checkForTemplateRequest(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
+    val urlPattern = origin.getDictionary.get("urlpattern").toString
+    handler.getLastParam(request.getUrl, urlPattern) match {
+      case Some(reqP) => {
+        if (reqP == "" || reqP == null || reqP == "/") {
+          response.setContent(krender(index, "/", HashMap[String, String](), urlPattern))
+          true
+        } else {
+          MenuRenderer.getItems.find(it => {
+            var patternCleaned = urlPattern
+            if (patternCleaned.endsWith("**")) {
+              patternCleaned = patternCleaned.replace("**", "");
+            }
+            if (!patternCleaned.endsWith("/")) {
+              patternCleaned = patternCleaned + "/";
+            }
+
+            val cleanupRequest = it._2.replace("{urlpattern}", patternCleaned)
+            val cleanupRep = if (!reqP.startsWith("/")) {
+              "/" + reqP
+            } else {
+              reqP
+            }
+            println(cleanupRequest + "==" + cleanupRep)
+
+            cleanupRequest == (cleanupRep)
+          }) match {
+            case Some(it) => {
+              response.setContent(krender(it._3, it._2, it._4, urlPattern))
+              true
+            }
+            case None => false
+          }
+        }
+      }
+      case None => false
+    }
+  }
+
+  def krender(name: String, currentURL: String, vars: HashMap[String, String], pattern: String): String = {
     val sb = new StringBuffer()
-    sb.append(MenuRenderer.getMenuHtml(currentURL))
     sb.append(kheader)
+    sb.append(MenuRenderer.getMenuHtml(currentURL))
+
+    // sb.append("<div class=\"hero-unit\">\n    <div class=\"row\">\n        <div class=\"span5\">\n            <p><img src=\"img/kevoree-logo.png\"/></p>\n        </div>\n        <div class=\"span5\">\n            <p>Kevoree project aims at enabling distributed reconfigurable software development. Build around a component model, Kevoree leverage model@runtime approach to offer tools to build, adapt and synchronize distributed systems.\n                Extensible, this project already offer runtime for Standard Java Virtual Machine, Android, Arduino but also for virtualization management such as VirtualBox.\n                In short Kevoree helping you to develop your adaptable software from Cloud stack to embedded devices !\n            </p>\n        </div>\n    </div>\n</div>")
+    sb.append("<div class=\"wrapper\">")
     sb.append("<div class=\"container\">")
-    sb.append(renderHtml(name))
-    sb.append("<footer>\n<p>&copy; Kevoree.org 2012</p>\n</footer>\n\n</div>")
-    sb.append(footer)
+    sb.append(replaceVariable(renderHtml(name), vars))
+    sb.append("</div>")
+    sb.append("<div class=\"push\"><!--//--></div>")
+    sb.append("</div>")
+    sb.append(footerScript)
+    sb.append("<div class=\"footer\" /><footer>\n<p>&copy; Kevoree.org 2012</p>\n</footer>\n\n</div>")
     sb.append("</body></html>")
-    sb.toString
+
+    var patternCleaned = pattern
+    if (patternCleaned.endsWith("**")) {
+      patternCleaned = patternCleaned.replace("**", "");
+    }
+    if (!patternCleaned.endsWith("/")) {
+      patternCleaned = patternCleaned + "/";
+    }
+    sb.toString.replace("{urlpattern}", patternCleaned);
   }
 
   def renderHtml(name: String): String = {
+    //Source.fromFile(new File(getClass.getClassLoader.getResource("templates/../").getPath+"../../src/main/resources/templates/html/" + name)).getLines().mkString("\n")
 
-
-    Source.fromFile(new File(getClass.getClassLoader.getResource("templates/../").getPath+"../../src/main/resources/templates/html/" + name)).getLines().mkString("\n")
-    
-
-/*
     val st = getClass.getClassLoader.getResourceAsStream("templates/html/" + name)
     if (st != null) {
       Source.fromInputStream(st).getLines().mkString("\n")
     } else {
       "not found"
-    }*/
-    
-    
-    
+    }
+
+
   }
 
   def kheader: String = {
@@ -48,30 +100,43 @@ trait PageRenderer {
       "<meta name=\"description\" content=\"Kevoree : Distributed Model@Runtime project\">" +
       "<meta name=\"author\" content=\"François Fouquet\">" +
       "<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->\n    <!--[if lt IE 9]>\n    <script src=\"//html5shim.googlecode.com/svn/trunk/html5.js\"></script>\n    <![endif]-->" +
-      "<link href=\"css/bootstrap.css\" rel=\"stylesheet\">" +
-      "<link href=\"css/bootstrap-responsive.css\" rel=\"stylesheet\">" +
-      "<link href=\"css/kevoree.css\" rel=\"stylesheet\">" +
+      "<link rel=\"stylesheet/less\" type=\"text/css\" href=\"{urlpattern}less/bootstrap.less\">\n<script src=\"{urlpattern}js/less-1.3.0.min.js\" type=\"text/javascript\"></script>" +
+      "<link rel=\"stylesheet/less\" type=\"text/css\" href=\"{urlpattern}less/bootstrap-responsive.less\">" +
+      "<link rel=\"stylesheet/less\" type=\"text/css\" href=\"{urlpattern}less/carousel.less\">" +
+      //"<script type=\"text/javascript\" src=\"{urlpattern}js/bootstrap-carousel.js\"></script>" +
+      "<link href=\"{urlpattern}css/kevoree.css\" rel=\"stylesheet\">" +
       "<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js\"></script>\n" +
-      "<link href=\"js/google-code-prettify/prettify.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
-      "<script type=\"text/javascript\" src=\"js/google-code-prettify/prettify.js\"></script>" +
+      "<link href=\"{urlpattern}js/google-code-prettify/prettify.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
+      "<script type=\"text/javascript\" src=\"{urlpattern}js/google-code-prettify/prettify.js\"></script>" +
       "</head>" +
-      "<body onload=\"prettyPrint()\" style=\"background-image: url(http://subtlepatterns.com/patterns/whitey.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; background-position: initial initial; background-repeat: initial initial; \">\n"
+      "<body onload=\"prettyPrint()\">\n"
   }
 
-  def footer: String = {
-    <script src="js/jquery.js"></script>
-      <script src="js/bootstrap-transition.js"></script>
-      <script src="js/bootstrap-alert.js"></script>
-      <script src="js/bootstrap-modal.js"></script>
-      <script src="js/bootstrap-dropdown.js"></script>
-      <script src="js/bootstrap-scrollspy.js"></script>
-      <script src="js/bootstrap-tab.js"></script>
-      <script src="js/bootstrap-tooltip.js"></script>
-      <script src="js/bootstrap-popover.js"></script>
-      <script src="js/bootstrap-button.js"></script>
-      <script src="js/bootstrap-collapse.js"></script>
-      <script src="js/bootstrap-carousel.js"></script>
-      <script src="js/bootstrap-typeahead.js"></script>.mkString
+
+  def replaceVariable(html: String, vars: HashMap[String, String]): String = {
+    var content = html
+    vars.foreach(v => {
+      content = content.replace("{" + v._1 + "}", v._2)
+    })
+    content
+  }
+
+
+  def footerScript: String = {
+    <script src={"{urlpattern}js/jquery.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-transition.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-alert.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-modal.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-dropdown.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-scrollspy.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-tab.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-tooltip.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-popover.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-button.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-collapse.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-carousel.js"}></script>
+      <script src={"{urlpattern}js/bootstrap-typeahead.js"}></script>.mkString
+
   }
 
 }

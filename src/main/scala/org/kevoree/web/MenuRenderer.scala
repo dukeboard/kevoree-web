@@ -1,5 +1,7 @@
 package org.kevoree.web
 
+import collection.immutable.HashMap
+
 /**
  * Created with IntelliJ IDEA.
  * User: duke
@@ -18,7 +20,7 @@ object MenuRenderer {
               <i class="icon-chevron-down icon-white"></i>
             </span>
           </a>
-          <a class="brand" href="index.html">Kevoree</a>
+          <a class="brand" href={"{urlpattern}"}>Kevoree</a>
           <div class="nav-collapse">
             <ul class="nav">
               {getItems.map(it => {
@@ -45,16 +47,16 @@ object MenuRenderer {
   }
 
 
-  def getItems: List[Tuple3[String, String, String]] = {
+  def getItems: List[Tuple4[String, String, String,HashMap[String, String]]] = {
     List(
-          ("Home", "/", "overview.html"),
-          ("Research", "/research", "research.html"),
-          ("Core Features", "/core", "core_features.html"),
-          ("Tools", "/tools", ""),
-          ("Platforms", "/platform", ""),
-          ("Download", "/download", "download.html"),
-          ("Related Projects", "/related_projects", "related_projects.html"),
-          ("The KTeam", "/kteam", "")
+         // ("Home", "/", "overview.html"),
+        //  ("Research", "/research", "research.html"),
+          ("Core Features", "{urlpattern}core", "core_features.html",HashMap[String,String]()),
+         // ("Tools", "/tools", ""),
+          //("Platforms", "/platform", ""),
+          ("Download", "{urlpattern}download", "download.html",DownloadHelper.getVariables),
+          ("Related Projects", "{urlpattern}related_projects", "related_projects.html",HashMap[String,String]()),
+          ("Blog", "http://blog.kevoree.org", "",HashMap[String,String]())
         )
   }
 
