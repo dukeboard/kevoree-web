@@ -7,12 +7,12 @@
     <groupId>org.kevoree.web</groupId>
     <artifactId>org.kevoree.web.base</artifactId>
     <packaging>jar</packaging>
-    <version>1.6.0-SNAPSHOT</version>
+    <version>1.6.0-RC1</version>
     <name>Kevoree :: Web :: Base</name>
 
     <properties>
         <kevoree.include>*:*</kevoree.include>
-        <kevoree.version>1.6.0-SNAPSHOT</kevoree.version>
+        <kevoree.version>1.6.0-RC1</kevoree.version>
     </properties>
 
     <dependencies>
