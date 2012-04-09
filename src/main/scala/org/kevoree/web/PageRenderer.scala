@@ -1,6 +1,7 @@
 package org.kevoree.web
 
 import io.Source
+import java.io._
 import collection.immutable.HashMap
 import org.kevoree.library.javase.webserver.{URLHandlerScala, AbstractPage, KevoreeHttpRequest, KevoreeHttpResponse}
 
@@ -11,7 +12,7 @@ import org.kevoree.library.javase.webserver.{URLHandlerScala, AbstractPage, Kevo
  * Time: 17:15
  */
 
-class PageRenderer {
+class PageRenderer(devmod:Boolean,folder:java.io.File) {
 
   val handler = new URLHandlerScala()
 
@@ -83,7 +84,11 @@ class PageRenderer {
   def renderHtml(name: String): String = {
     //Source.fromFile(new File(getClass.getClassLoader.getResource("templates/../").getPath+"../../src/main/resources/templates/html/" + name)).getLines().mkString("\n")
 
-    val st = getClass.getClassLoader.getResourceAsStream("templates/html/" + name)
+    var st :InputStream = null
+    if (devmod)
+      st = new FileInputStream(new File(folder.getAbsolutePath + java.io.File.separator+"templates"+ java.io.File.separator + "html"+ java.io.File.separator + name))
+    else
+      st = getClass.getClassLoader.getResourceAsStream("templates/html/" + name)
     if (st != null) {
       Source.fromInputStream(st).getLines().mkString("\n")
     } else {

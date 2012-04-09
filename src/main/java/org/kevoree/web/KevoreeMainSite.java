@@ -24,7 +24,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
     private HashMap<String, byte[]> contentRawCache = new HashMap<String, byte[]>();
     private HashMap<String, String> contentTypeCache = new HashMap<String, String>();
 
-    private PageRenderer krenderer = new PageRenderer();
+    private PageRenderer krenderer = new PageRenderer(false,null);
 
     @Override
     public void startPage() {
