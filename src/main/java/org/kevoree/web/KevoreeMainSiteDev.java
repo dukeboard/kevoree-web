@@ -2,11 +2,14 @@ package org.kevoree.web;
 
 
 import org.kevoree.annotation.ComponentType;
+import org.kevoree.annotation.DictionaryAttribute;
+import org.kevoree.annotation.DictionaryType;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
 import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
 import org.kevoree.library.javase.webserver.ParentAbstractPage;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -17,46 +20,51 @@ import java.util.HashMap;
  */
 
 @ComponentType
-public class KevoreeMainSite extends ParentAbstractPage {
+//@DictionaryType()
+@DictionaryType({
+        @DictionaryAttribute(name = "folder")})
+
+public class KevoreeMainSiteDev extends ParentAbstractPage {
 
     protected String basePage = "overview.html";
 
-    private HashMap<String, byte[]> contentRawCache = new HashMap<String, byte[]>();
-    private HashMap<String, String> contentTypeCache = new HashMap<String, String>();
 
-    private PageRenderer krenderer = new PageRenderer(false,null);
+    private File f;
+    private PageRenderer krenderer = null;
+
 
     @Override
     public void startPage() {
         super.startPage();
-        contentRawCache.clear();
-        contentTypeCache.clear();
+        File f1 = new File((String) super.getDictionary().get("folder"));
+        if (f1.isDirectory()){
+            f=f1;
+            krenderer = new PageRenderer(true,f);
+        }
+
     }
 
     @Override
     public void updatePage() {
         super.updatePage();
-        contentRawCache.clear();
-        contentTypeCache.clear();
+        File f1 = new File((String) super.getDictionary().get("folder"));
+        if (f1.isDirectory()){
+            f=f1;
+            krenderer = new PageRenderer(true,f);
+        }
+
     }
 
     @Override
     public void stopPage() {
         super.stopPage();
-        contentRawCache.clear();
-        contentTypeCache.clear();
     }
 
     @Override
     public KevoreeHttpResponse process(KevoreeHttpRequest request, KevoreeHttpResponse response) {
 
-        if (contentTypeCache.containsKey(request.getUrl())) {
-            response.setRawContent(contentRawCache.get(request.getUrl()));
-            response.getHeaders().put("Content-Type", contentTypeCache.get(request.getUrl()));
-            return response;
-        }
 
-        if (FileServiceHelper.checkStaticFile(basePage, this, request, response)) {
+        if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response,f.getAbsolutePath())) {
             if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
                 String pattern = getDictionary().get("urlpattern").toString();
                 if (pattern.endsWith("**")) {
@@ -67,24 +75,14 @@ public class KevoreeMainSite extends ParentAbstractPage {
                 }
                 response.setContent(response.getContent().replace("{urlpattern}", pattern));
             }
-            cacheResponse(request, response);
             return response;
         }
         if (krenderer.checkForTemplateRequest(basePage, this, request, response)) {
-            cacheResponse(request, response);
             return response;
         }
         response.setContent("Bad request");
         return response;
     }
 
-    public void cacheResponse(KevoreeHttpRequest request, KevoreeHttpResponse response) {
-        if (response.getRawContent() != null) {
-            contentRawCache.put(request.getUrl(), response.getRawContent());
-        } else {
-            contentRawCache.put(request.getUrl(), response.getContent().getBytes());
-        }
-        contentTypeCache.put(request.getUrl(), response.getHeaders().get("Content-Type"));
-    }
 
 }
