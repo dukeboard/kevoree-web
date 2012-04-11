@@ -23,6 +23,10 @@ object DownloadHelper {
 
   def getPlatformStableJNLP = "download/KevoreeRuntimeStableJNLP"
 
+  def getEditorLastRelease = "download/KevoreeEditorLastRelease"
+
+  def getRuntimeLastRelease = "download/KevoreeRuntimeLastRelease"
+
   /* Snapshot */
   def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshotJNLP"
 
@@ -90,17 +94,18 @@ object DownloadHelper {
   }
 
 
-  private def getStableVersion: String = {
+  /*private def getStableVersion: String = {
     AetherUtil.resolveVersion("org.kevoree", "org.kevoree.core", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
   }
 
   private def getSnapshotVersion: String = {
     AetherUtil.resolveVersion("org.kevoree", "org.kevoree.core", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
-  }
+  }*/
 
   def buildEditorStableJNLP: String = {
-    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/tools/org.kevoree.tools.ui.editor.standalone/" + getStableVersion + "/org.kevoree.tools.ui.editor.standalone-" +
-      getStableVersion + ".jar"
+    //    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/tools/org.kevoree.tools.ui.editor.standalone/" + getStableVersion + "/org.kevoree.tools.ui.editor.standalone-" +
+//    getStableVersion + ".jar"
+    val stableVersion = "http://kevoree.org/" + getEditorLastRelease
     //    <?xml version="1.0" encoding="utf-8"?>
     <jnlp spec="1.0" codebase="http://kevoree.org/">
       <information>
@@ -128,8 +133,9 @@ object DownloadHelper {
   }
 
   def buildRuntimeStableJNLP: String = {
-    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone.gui/" + getStableVersion + "/org.kevoree.platform.standalone.gui-" + getStableVersion +
-      ".jar"
+//    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone.gui/" + getStableVersion + "/org.kevoree.platform.standalone.gui-" + getStableVersion +
+//      ".jar"
+    val stableVersion = "http://kevoree.org/" + getRuntimeLastRelease
     //    <?xml version="1.0" encoding="utf-8"?>
     <jnlp spec="1.0" codebase="http://kevoree.org/">
       <information>
@@ -213,6 +219,16 @@ object DownloadHelper {
           <all-permissions/>
       </security>
     </jnlp>.toString()
+  }
+
+  def getBytesForEditorLastRelease: Array[Byte] = {
+    val file = AetherUtil.resolveMavenArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+    FileNIOHelper.getBytesFromFile(file)
+  }
+
+  def getBytesForRuntimeLastRelease: Array[Byte] = {
+    val file = AetherUtil.resolveMavenArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+    FileNIOHelper.getBytesFromFile(file)
   }
 
   def getBytesForEditorLastSnapshot: Array[Byte] = {
