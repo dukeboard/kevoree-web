@@ -1,3 +1,9 @@
 .idea
 **.idea
+**.iml
 /target/
+/.cache
+/.classpath
+/.project
+/maven-eclipse.xml
+/org.kevoree.web.base.iml

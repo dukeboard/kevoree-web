@@ -12,8 +12,8 @@
     <div class="span6">
         <h4>TypeDefinition/Instance separation</h4>
 
-        <p>Every Kevoree features follow a type/instance design pattern. Similarly to Class and Object separationin OO
-            programmation, Kevoree type definitions define <code>what</code> is available in the system while instances
+        <p>Every Kevoree features follow a type/instance design pattern. Similarly to Class and Object separation in OO
+            programmation, Kevoree type definitions define <code>what</code> is available in the system, while instances
             define <code>how/where</code> each functionality is used.</p>
     </div>
 </div>
@@ -28,8 +28,9 @@
     <div class="span4">
         <h4>Dictionaries define parameters</h4>
 
-        <p>Each type may define a DictionaryType that identify the set of potential parameters. These parameters are
-            then defined when an instance is created.
+        <p>Each type may define a DictionaryType that identify the set of parameters of the component. 
+        Parameters can be optional, can have default values or can provide a finite list of choice.
+        Described at the component TypeDefinition level, parameters are however specific to each instance created.
         </p>
         <!-- TODO INSERT FIGURE -->
 
