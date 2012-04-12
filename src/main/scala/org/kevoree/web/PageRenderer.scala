@@ -38,8 +38,6 @@ class PageRenderer {
             } else {
               reqP
             }
-            println(cleanupRequest + "==" + cleanupRep)
-
             cleanupRequest == (cleanupRep)
           }) match {
             case Some(it) => {
@@ -100,11 +98,10 @@ class PageRenderer {
       "<meta name=\"description\" content=\"Kevoree : Distributed Model@Runtime project\">" +
       "<meta name=\"author\" content=\"François Fouquet\">" +
       "<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->\n    <!--[if lt IE 9]>\n    <script src=\"//html5shim.googlecode.com/svn/trunk/html5.js\"></script>\n    <![endif]-->" +
-      "<link rel=\"stylesheet/less\" type=\"text/css\" href=\"{urlpattern}less/bootstrap.less\">\n<script src=\"{urlpattern}js/less-1.3.0.min.js\" type=\"text/javascript\"></script>" +
-      "<link rel=\"stylesheet/less\" type=\"text/css\" href=\"{urlpattern}less/bootstrap-responsive.less\">" +
-      "<link rel=\"stylesheet/less\" type=\"text/css\" href=\"{urlpattern}less/carousel.less\">" +
-      //"<script type=\"text/javascript\" src=\"{urlpattern}js/bootstrap-carousel.js\"></script>" +
-      "<link href=\"{urlpattern}css/kevoree.css\" rel=\"stylesheet\">" +
+    "<script type=\"text/javascript\" src=\"{urlpattern}js/bootstrap-carousel.js\"></script>" +
+    "<link href=\"{urlpattern}css/bootstrap.min.css\" rel=\"stylesheet\">" +
+    "<link href=\"{urlpattern}css/bootstrap-responsive.min.css\" rel=\"stylesheet\">" +
+    "<link href=\"{urlpattern}css/kevoree.css\" rel=\"stylesheet\">" +
       "<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js\"></script>\n" +
       "<link href=\"{urlpattern}js/google-code-prettify/prettify.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
       "<script type=\"text/javascript\" src=\"{urlpattern}js/google-code-prettify/prettify.js\"></script>" +
