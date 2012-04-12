@@ -1,10 +1,10 @@
 package org.kevoree.web
 
 import collection.immutable.HashMap
-import org.kevoree.tools.aether.framework.AetherUtil
 import org.kevoree.library.javase.webserver.{URLHandlerScala, KevoreeHttpResponse, KevoreeHttpRequest, AbstractPage}
 import org.kevoree.framework.FileNIOHelper
 import org.slf4j.{LoggerFactory, Logger}
+import org.kevoree.api.Bootstraper
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,6 +14,13 @@ import org.slf4j.{LoggerFactory, Logger}
  */
 
 object DownloadHelper {
+
+  private var bootService : Bootstraper = null
+
+  def setBootService(b: Bootstraper){
+    bootService = b
+  }
+
   private var logger: Logger = LoggerFactory.getLogger(this.getClass)
 
   //  def getLastVersion = "1.6.0-BETA7"
@@ -222,22 +229,22 @@ object DownloadHelper {
   }
 
   def getBytesForEditorLastRelease: Array[Byte] = {
-    val file = AetherUtil.resolveMavenArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+    val file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
     FileNIOHelper.getBytesFromFile(file)
   }
 
   def getBytesForRuntimeLastRelease: Array[Byte] = {
-    val file = AetherUtil.resolveMavenArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+    val file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
     FileNIOHelper.getBytesFromFile(file)
   }
 
   def getBytesForEditorLastSnapshot: Array[Byte] = {
-    val file = AetherUtil.resolveMavenArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+    val file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
     FileNIOHelper.getBytesFromFile(file)
   }
 
   def getBytesForRuntimeLastSnapshot: Array[Byte] = {
-    val file = AetherUtil.resolveMavenArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+    val file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
     FileNIOHelper.getBytesFromFile(file)
   }
 }
