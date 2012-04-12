@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>org.kevoree.library.javase</groupId>
-            <artifactId>org.kevoree.library.javase.webserver</artifactId>
+            <artifactId>org.kevoree.library.javase.webserver.api</artifactId>
             <version>${kevoree.version}</version>
         </dependency>
     </dependencies>
@@ -94,6 +94,15 @@
                     </jvmArgs>
                 </configuration>
             </plugin>
+
+
+
+            <plugin>
+                <groupId>org.kevoree.platform</groupId>
+                <artifactId>org.kevoree.platform.mavenrunner</artifactId>
+                <version>${kevoree.version}</version>
+            </plugin>
+
         </plugins>
     </build>
 

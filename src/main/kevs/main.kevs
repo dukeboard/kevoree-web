@@ -3,11 +3,12 @@ merge "mvn:org.kevoree.library.javase/org.kevoree.library.javase.javaseNode/{kev
 merge "mvn:org.kevoree.library.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
 merge "mvn:org.kevoree.library.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
 merge "mvn:org.kevoree.library.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
+merge "mvn:org.kevoree.web/org.kevoree.web.base/{kevoree.version}"
 
 addNode node0 : JavaSENode
 
 addComponent webSrv@node0 : KTinyWebServer
-addComponent helloPage@node0 : KevoreeMainSiteDev { urlpattern='/**',folder='/Users/duke/Documents/dev/dukeboard/kevoree-web/src/main/resources/templates/html' }
+addComponent helloPage@node0 : KevoreeMainSiteDev { urlpattern='/**',folder='{basedir}/src/main/resources/' }
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req
