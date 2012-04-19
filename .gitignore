@@ -7,3 +7,4 @@
 /.project
 /maven-eclipse.xml
 /org.kevoree.web.base.iml
+**.DS_Store
