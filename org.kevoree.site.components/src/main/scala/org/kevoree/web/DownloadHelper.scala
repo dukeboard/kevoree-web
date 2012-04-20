@@ -78,21 +78,14 @@ class DownloadHelper (bootService: Bootstraper) extends Actor {
     timer.schedule(new TimerTask {
       def run () {
         try {
-        logger.debug("updating maven artifact {}", bootService)
+        logger.debug("updating maven artifact")
         var file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
-        logger.debug("WTF1")
         updateEditorLastRelease(file.getAbsolutePath)
-        logger.debug("WTF2")
         file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
-        logger.debug("WTF3")
         updateRuntimeLastRelease(file.getAbsolutePath)
-        logger.debug("WTF4")
         file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
-        logger.debug("WTF5")
         updateEditorLastSnapshot(file.getAbsolutePath)
-        logger.debug("WTF6")
         file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
-        logger.debug("WTF7")
         updateRuntimeLastSnapshot(file.getAbsolutePath)
         logger.debug("maven artifact updated")
         } catch {
@@ -117,7 +110,6 @@ class DownloadHelper (bootService: Bootstraper) extends Actor {
 
 
   def checkForDownload (index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
-    logger.info("TOTO")
     (this !? DOWNLOAD(index, origin, request, response)).asInstanceOf[Boolean]
   }
 
@@ -144,7 +136,7 @@ class DownloadHelper (bootService: Bootstraper) extends Actor {
   def act () {
     loop {
       react {
-        case DOWNLOAD(index, origin, request, response) => checkForDownloadInternals(index, origin, request, response)
+        case DOWNLOAD(index, origin, request, response) => reply(checkForDownloadInternals(index, origin, request, response))
         case UPDATE_EDITOR_LAST_RELEASE(filePath) => editorLastRelease = filePath
         case UPDATE_RUNTIME_LAST_RELEASE(filePath) => runtimeLastRelease = filePath
         case UPDATE_EDITOR_LAST_SNAPSHOT(filePath) => editorLastSnapshot = filePath
@@ -155,7 +147,6 @@ class DownloadHelper (bootService: Bootstraper) extends Actor {
   }
 
   private def checkForDownloadInternals (index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
-    logger.info("TUTU")
     val handler = new URLHandlerScala()
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {

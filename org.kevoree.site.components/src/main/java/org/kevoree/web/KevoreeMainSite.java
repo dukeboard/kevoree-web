@@ -29,11 +29,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 
 	@Override
 	public void startPage () {
-
-		logger.debug("BLABLABLA{}", getBootStrapperService());
 		downloadHelper = new DownloadHelper(getBootStrapperService());
-
-
 		downloadHelper.start();
 
 		krenderer = new PageRenderer(false, null);
