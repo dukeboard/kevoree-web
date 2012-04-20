@@ -1,10 +1,15 @@
 package org.kevoree.web
 
-import collection.immutable.HashMap
-import org.kevoree.library.javase.webserver.{URLHandlerScala, KevoreeHttpResponse, KevoreeHttpRequest, AbstractPage}
+import scala.collection.immutable.HashMap
 import org.kevoree.framework.FileNIOHelper
 import org.slf4j.{LoggerFactory, Logger}
+import scala.actors.Actor
+import java.io.File
+import scala.Predef._
+import org.kevoree.library.javase.webserver._
 import org.kevoree.api.Bootstraper
+import scala._
+import java.util.{TimerTask, Timer}
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,36 +18,43 @@ import org.kevoree.api.Bootstraper
  * Time: 23:04
  */
 
-object DownloadHelper {
+class DownloadHelper (bootService: Bootstraper) extends Actor {
 
-  private var bootService: Bootstraper = null
+  /*private var bootService: Bootstraper = null
 
   def setBootService (b: Bootstraper) {
     bootService = b
-  }
+  }*/
 
   private var logger: Logger = LoggerFactory.getLogger(this.getClass)
 
   //  def getLastVersion = "1.6.0-BETA7"
 
   /* Stable */
-  def getEditorStableJNLP = "download/KevoreeEditorStableJNLP.jnlp"
+  private def getEditorStableJNLP = "download/KevoreeEditor.jnlp"
 
-  def getPlatformStableJNLP = "download/KevoreeRuntimeStableJNLP.jnlp"
+  //  def getEditorStableJNLP = "http://dist.kevoree.org/KevoreeEditorStable.php"
 
-  def getEditorLastRelease = "download/KevoreeEditorLastRelease"
+  private def getPlatformStableJNLP = "download/KevoreeRuntime.jnlp"
 
-  def getRuntimeLastRelease = "download/KevoreeRuntimeLastRelease"
+  //   def getPlatformStableJNLP = "http://dist.kevoree.org/KevoreeRuntimeStable.php"
+
+  private def getEditorLastRelease = "download/KevoreeEditorLastRelease"
+
+  private def getRuntimeLastRelease = "download/KevoreeRuntimeLastRelease"
 
   /* Snapshot */
-  def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshotJNLP.jnlp"
+  private def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshot.jnlp"
 
-  def getPlatformSnapshotJNLP = "download/KevoreeRuntimeSnapshotJNLP.jnlp"
+  //  def getEditorSnapshotJNLP = "http://dist.kevoree.org/KevoreeEditorSnapshot.php"
 
-  def getEditorLastSnapshot = "download/KevoreeEditorLastSnapshot"
+  private def getPlatformSnapshotJNLP = "download/KevoreeRuntimeSnapshot.jnlp"
 
-  def getRuntimeLastSnapshot = "download/KevoreeRuntimeLastSnapshot"
+  //  def getPlatformSnapshotJNLP = "http://dist.kevoree.org/KevoreeRuntimeSnapshot.php"
 
+  private def getEditorLastSnapshot = "download/KevoreeEditorLastSnapshot"
+
+  private def getRuntimeLastSnapshot = "download/KevoreeRuntimeLastSnapshot"
 
   def getVariables = HashMap(
                               "editorStableJNLP" -> getEditorStableJNLP,
@@ -51,28 +63,104 @@ object DownloadHelper {
                               "platformSnapshotJNLP" -> getPlatformSnapshotJNLP
                             )
 
+  var editorLastRelease = ""
+  var editorLastSnapshot = ""
+  var runtimeLastRelease = ""
+  var runtimeLastSnapshot = ""
+
+//  var running = true
+  var timer: Timer = null
+
+
+  override def start () = {
+    super.start()
+    timer = new Timer()
+    timer.schedule(new TimerTask {
+      def run () {
+        try {
+        logger.debug("updating maven artifact {}", bootService)
+        var file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+        logger.debug("WTF1")
+        updateEditorLastRelease(file.getAbsolutePath)
+        logger.debug("WTF2")
+        file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+        logger.debug("WTF3")
+        updateRuntimeLastRelease(file.getAbsolutePath)
+        logger.debug("WTF4")
+        file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+        logger.debug("WTF5")
+        updateEditorLastSnapshot(file.getAbsolutePath)
+        logger.debug("WTF6")
+        file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+        logger.debug("WTF7")
+        updateRuntimeLastSnapshot(file.getAbsolutePath)
+        logger.debug("maven artifact updated")
+        } catch {
+          case _@e => logger.debug("Uanble to update maven artifact", e)
+        }
+      }
+    },1, 21600000)
+    this
+  }
+
+  case class DOWNLOAD (index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse)
+
+  case class UPDATE_EDITOR_LAST_RELEASE (filePath: String)
+
+  case class UPDATE_RUNTIME_LAST_RELEASE (filePath: String)
+
+  case class UPDATE_EDITOR_LAST_SNAPSHOT (filePath: String)
+
+  case class UPDATE_RUNTIME_LAST_SNAPSHOT (filePath: String)
+
+  case class STOP ()
+
+
   def checkForDownload (index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
+    logger.info("TOTO")
+    (this !? DOWNLOAD(index, origin, request, response)).asInstanceOf[Boolean]
+  }
+
+  def updateEditorLastRelease (filePath: String) {
+    this ! UPDATE_EDITOR_LAST_RELEASE(filePath)
+  }
+
+  def updateRuntimeLastRelease (filePath: String) {
+    this ! UPDATE_RUNTIME_LAST_RELEASE(filePath)
+  }
+
+  def updateEditorLastSnapshot (filePath: String) {
+    this ! UPDATE_EDITOR_LAST_SNAPSHOT(filePath)
+  }
+
+  def updateRuntimeLastSnapshot (filePath: String) {
+    this ! UPDATE_RUNTIME_LAST_SNAPSHOT(filePath)
+  }
+
+  def stop () {
+    this ! STOP()
+  }
+
+  def act () {
+    loop {
+      react {
+        case DOWNLOAD(index, origin, request, response) => checkForDownloadInternals(index, origin, request, response)
+        case UPDATE_EDITOR_LAST_RELEASE(filePath) => editorLastRelease = filePath
+        case UPDATE_RUNTIME_LAST_RELEASE(filePath) => runtimeLastRelease = filePath
+        case UPDATE_EDITOR_LAST_SNAPSHOT(filePath) => editorLastSnapshot = filePath
+        case UPDATE_RUNTIME_LAST_SNAPSHOT(filePath) => runtimeLastSnapshot = filePath
+        case STOP() => timer.cancel(); timer.purge(); this.exit()
+      }
+    }
+  }
+
+  private def checkForDownloadInternals (index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
+    logger.info("TUTU")
     val handler = new URLHandlerScala()
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {
       case Some(requestDownload) => {
-        if (requestDownload == getEditorStableJNLP) {
-          response.getHeaders.put("Content-Type", "application/x-java-jnlp-file")
-          response.setRawContent(("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + buildEditorStableJNLP).getBytes("UTF-8"))
-          true
-        } else if (requestDownload == getPlatformStableJNLP) {
-          response.getHeaders.put("Content-Type", "application/x-java-jnlp-file")
-          response.setRawContent(("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + buildRuntimeStableJNLP).getBytes("UTF-8"))
-          true
-        } else if (requestDownload == getEditorSnapshotJNLP) {
-          response.getHeaders.put("Content-Type", "application/x-java-jnlp-file")
-          response.setRawContent(("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + buildEditorSnapshotJNLP).getBytes("UTF-8"))
-          true
-        } else if (requestDownload == getPlatformSnapshotJNLP) {
-          response.getHeaders.put("Content-Type", "application/x-java-jnlp-file")
-          response.setRawContent(("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + buildRuntimeSnapshotJNLP).getBytes("UTF-8"))
-          true
-        } else if (requestDownload == getEditorLastSnapshot) {
+        if (requestDownload == getEditorLastSnapshot) {
           val bytes = getBytesForEditorLastSnapshot
           if (bytes.length > 0) {
             response.getHeaders.put("Content-Type", "application/x-java-archive")
@@ -120,151 +208,24 @@ object DownloadHelper {
     }
   }
 
-
-  /*private def getStableVersion: String = {
-    AetherUtil.resolveVersion("org.kevoree", "org.kevoree.core", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+  private def getBytesForEditorLastRelease: Array[Byte] = {
+    //    val file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+    FileNIOHelper.getBytesFromFile(new File(editorLastRelease))
   }
 
-  private def getSnapshotVersion: String = {
-    AetherUtil.resolveVersion("org.kevoree", "org.kevoree.core", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
-  }*/
-
-  def buildEditorStableJNLP: String = {
-    //    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/tools/org.kevoree.tools.ui.editor.standalone/" + getStableVersion + "/org.kevoree.tools.ui.editor.standalone-" +
-    //    getStableVersion + ".jar"
-    val stableVersion = "http://kevoree.org/" + getEditorLastRelease
-    //    <?xml version="1.0" encoding="utf-8"?>
-    <jnlp spec="1.0" codebase="http://kevoree.org/">
-      <information>
-        <title>Kevoree Model Editor</title>
-        <vendor>IRISA / INRIA Centre Rennes Bretagne Atlantique</vendor>
-          <icon href="icon/kev-logo-full.png" width="64" height="64"/>
-        <!-- allow app to run without Internet access -->
-          <offline-allowed/>
-        <shortcut online="false">
-            <desktop/>
-            <menu submenu="Kevoree"/>
-        </shortcut>
-          <association mime-type="application-x/kevmodel" extensions="kev"/>
-      </information>
-      <resources>
-          <jar href={stableVersion} main="true"/>
-      </resources>
-      <application-desc name="KevEditor" main-class="org.kevoree.tools.ui.editor.standalone.App">
-          <update check="background" policy="prompt-update"/>
-      </application-desc>
-      <security>
-          <all-permissions/>
-      </security>
-    </jnlp>.toString()
+  private def getBytesForRuntimeLastRelease: Array[Byte] = {
+    //    val file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
+    FileNIOHelper.getBytesFromFile(new File(runtimeLastRelease))
   }
 
-  def buildRuntimeStableJNLP: String = {
-    //    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone.gui/" + getStableVersion + "/org.kevoree.platform.standalone.gui-" + getStableVersion +
-    //      ".jar"
-    val stableVersion = "http://kevoree.org/" + getRuntimeLastRelease
-    //    <?xml version="1.0" encoding="utf-8"?>
-    <jnlp spec="1.0" codebase="http://kevoree.org/">
-      <information>
-        <title>Kevoree Runtime</title>
-        <vendor>IRISA / INRIA Centre Rennes Bretagne Atlantique</vendor>
-          <icon href="icon/kev-logo-full.png" width="64" height="64"/>
-        <!-- allow app to run without Internet access -->
-          <offline-allowed/>
-        <shortcut online="false">
-          <!-- create desktop shortcut -->
-            <desktop/>
-            <menu submenu="Kevoree"/>
-        </shortcut>
-          <association mime-type="application-x/kevmodel" extensions="kev"/>
-      </information>
-      <resources>
-          <jar href={stableVersion} main="true"/>
-      </resources>
-      <application-desc main-class="org.kevoree.platform.standalone.gui.App">
-          <update check="background"/>
-      </application-desc>
-      <security>
-          <all-permissions/>
-      </security>
-    </jnlp>.toString()
+  private def getBytesForEditorLastSnapshot: Array[Byte] = {
+    //    val file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+    FileNIOHelper.getBytesFromFile(new File(editorLastSnapshot))
   }
 
-  def buildEditorSnapshotJNLP: String = {
-    val stableVersion = "http://kevoree.org/" + getEditorLastSnapshot
-    //    <?xml version="1.0" encoding="utf-8"?>
-    <jnlp spec="1.0" codebase="http://kevoree.org/">
-      <information>
-        <title>Kevoree Model Editor</title>
-        <vendor>IRISA / INRIA Centre Rennes Bretagne Atlantique</vendor>
-          <icon href="icon/kev-logo-full.png" width="64" height="64"/>
-        <!-- allow app to run without Internet access -->
-          <offline-allowed/>
-        <shortcut online="false">
-            <desktop/>
-            <menu submenu="Kevoree"/>
-        </shortcut>
-          <association mime-type="application-x/kevmodel" extensions="kev"/>
-      </information>
-      <resources>
-          <jar href={stableVersion} main="true"/>
-      </resources>
-      <application-desc name="KevEditor" main-class="org.kevoree.tools.ui.editor.standalone.App">
-          <update check="background" policy="prompt-update"/>
-      </application-desc>
-      <security>
-          <all-permissions/>
-      </security>
-    </jnlp>.toString()
+  private def getBytesForRuntimeLastSnapshot: Array[Byte] = {
+    //    val file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+    FileNIOHelper.getBytesFromFile(new File(runtimeLastSnapshot))
   }
 
-  def buildRuntimeSnapshotJNLP: String = {
-    val stableVersion = "http://kevoree.org/" + getRuntimeLastSnapshot
-    //    <?xml version="1.0" encoding="utf-8"?>
-    <jnlp spec="1.0" codebase="http://kevoree.org/">
-      <information>
-        <title>Kevoree Runtime</title>
-        <vendor>IRISA / INRIA Centre Rennes Bretagne Atlantique</vendor>
-          <icon href="icon/kev-logo-full.png" width="64" height="64"/>
-        <!-- allow app to run without Internet access -->
-          <offline-allowed/>
-
-        <shortcut online="false">
-          <!-- create desktop shortcut -->
-            <desktop/>
-            <menu submenu="Kevoree"/>
-        </shortcut>
-          <association mime-type="application-x/kevmodel" extensions="kev"/>
-      </information>
-      <resources>
-          <jar href={stableVersion} main="true"/>
-      </resources>
-      <application-desc main-class="org.kevoree.platform.standalone.gui.App">
-          <update check="background"/>
-      </application-desc>
-      <security>
-          <all-permissions/>
-      </security>
-    </jnlp>.toString()
-  }
-
-  def getBytesForEditorLastRelease: Array[Byte] = {
-    val file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
-    FileNIOHelper.getBytesFromFile(file)
-  }
-
-  def getBytesForRuntimeLastRelease: Array[Byte] = {
-    val file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
-    FileNIOHelper.getBytesFromFile(file)
-  }
-
-  def getBytesForEditorLastSnapshot: Array[Byte] = {
-    val file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
-    FileNIOHelper.getBytesFromFile(file)
-  }
-
-  def getBytesForRuntimeLastSnapshot: Array[Byte] = {
-    val file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
-    FileNIOHelper.getBytesFromFile(file)
-  }
 }
