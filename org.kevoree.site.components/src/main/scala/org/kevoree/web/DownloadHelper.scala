@@ -15,9 +15,9 @@ import org.kevoree.api.Bootstraper
 
 object DownloadHelper {
 
-  private var bootService : Bootstraper = null
+  private var bootService: Bootstraper = null
 
-  def setBootService(b: Bootstraper){
+  def setBootService (b: Bootstraper) {
     bootService = b
   }
 
@@ -26,18 +26,18 @@ object DownloadHelper {
   //  def getLastVersion = "1.6.0-BETA7"
 
   /* Stable */
-  def getEditorStableJNLP = "download/KevoreeEditorStableJNLP"
+  def getEditorStableJNLP = "download/KevoreeEditorStableJNLP.jnlp"
 
-  def getPlatformStableJNLP = "download/KevoreeRuntimeStableJNLP"
+  def getPlatformStableJNLP = "download/KevoreeRuntimeStableJNLP.jnlp"
 
   def getEditorLastRelease = "download/KevoreeEditorLastRelease"
 
   def getRuntimeLastRelease = "download/KevoreeRuntimeLastRelease"
 
   /* Snapshot */
-  def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshotJNLP"
+  def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshotJNLP.jnlp"
 
-  def getPlatformSnapshotJNLP = "download/KevoreeRuntimeSnapshotJNLP"
+  def getPlatformSnapshotJNLP = "download/KevoreeRuntimeSnapshotJNLP.jnlp"
 
   def getEditorLastSnapshot = "download/KevoreeEditorLastSnapshot"
 
@@ -79,7 +79,7 @@ object DownloadHelper {
             response.setRawContent(bytes)
             true
           } else {
-            logger.debug("Unable to get the last jar for snapshot editor")
+            logger.warn("Unable to get the last jar for snapshot editor")
             false
           }
         } else if (requestDownload == getRuntimeLastSnapshot) {
@@ -89,7 +89,27 @@ object DownloadHelper {
             response.setRawContent(bytes)
             true
           } else {
-            logger.debug("Unable to get the last jar for snapshot runtime")
+            logger.warn("Unable to get the last jar for snapshot runtime")
+            false
+          }
+        } else if (requestDownload == getEditorLastRelease) {
+          val bytes = getBytesForEditorLastRelease
+          if (bytes.length > 0) {
+            response.getHeaders.put("Content-Type", "application/x-java-archive")
+            response.setRawContent(bytes)
+            true
+          } else {
+            logger.warn("Unable to get the last jar for snapshot editor")
+            false
+          }
+        } else if (requestDownload == getRuntimeLastRelease) {
+          val bytes = getBytesForRuntimeLastRelease
+          if (bytes.length > 0) {
+            response.getHeaders.put("Content-Type", "application/x-java-archive")
+            response.setRawContent(bytes)
+            true
+          } else {
+            logger.warn("Unable to get the last jar for snapshot runtime")
             false
           }
         } else {
@@ -111,7 +131,7 @@ object DownloadHelper {
 
   def buildEditorStableJNLP: String = {
     //    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/tools/org.kevoree.tools.ui.editor.standalone/" + getStableVersion + "/org.kevoree.tools.ui.editor.standalone-" +
-//    getStableVersion + ".jar"
+    //    getStableVersion + ".jar"
     val stableVersion = "http://kevoree.org/" + getEditorLastRelease
     //    <?xml version="1.0" encoding="utf-8"?>
     <jnlp spec="1.0" codebase="http://kevoree.org/">
@@ -140,8 +160,8 @@ object DownloadHelper {
   }
 
   def buildRuntimeStableJNLP: String = {
-//    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone.gui/" + getStableVersion + "/org.kevoree.platform.standalone.gui-" + getStableVersion +
-//      ".jar"
+    //    val stableVersion = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone.gui/" + getStableVersion + "/org.kevoree.platform.standalone.gui-" + getStableVersion +
+    //      ".jar"
     val stableVersion = "http://kevoree.org/" + getRuntimeLastRelease
     //    <?xml version="1.0" encoding="utf-8"?>
     <jnlp spec="1.0" codebase="http://kevoree.org/">
