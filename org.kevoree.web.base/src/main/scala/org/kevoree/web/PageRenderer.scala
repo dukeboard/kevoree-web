@@ -18,7 +18,6 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
 
   def checkForTemplateRequest(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
     val urlPattern = origin.getDictionary.get("urlpattern").toString
-    println(handler.getLastParam(request.getUrl, urlPattern))
     handler.getLastParam(request.getUrl, urlPattern) match {
       case Some(reqP) => {
         if (reqP == "" || reqP == null || reqP == "/") {
