@@ -2,6 +2,10 @@ package org.kevoree.web;
 
 
 import org.kevoree.annotation.ComponentType;
+import org.kevoree.annotation.PortType;
+import org.kevoree.annotation.ProvidedPort;
+import org.kevoree.annotation.Provides;
+import org.kevoree.framework.MessagePort;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
 import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
@@ -17,6 +21,7 @@ import java.util.HashMap;
  */
 
 @ComponentType
+//@Provides({@ProvidedPort(name = "gitnews",type = PortType.MESSAGE)})
 public class KevoreeMainSite extends ParentAbstractPage {
 
 	protected String basePage = "overview.html";
