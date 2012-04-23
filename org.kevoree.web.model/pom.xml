@@ -4,14 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.kevoree.web</groupId>
-        <artifactId>org.kevoree.web</artifactId>
+        <artifactId>org.kevoree.web.root</artifactId>
         <version>1.7.0-SNAPSHOT</version>
-        <relativePath>../org.kevoree.site.root/pom.xml</relativePath>
+        <relativePath>../org.kevoree.web.root/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>org.kevoree.web.model</artifactId>
-    <name>Kevoree :: Library :: Model :: WebSite</name>
+
+    <name>Kevoree :: Web :: Model</name>
 
     <build>
         <plugins>
