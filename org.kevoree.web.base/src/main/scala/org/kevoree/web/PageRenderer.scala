@@ -20,9 +20,6 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {
       case Some(reqP) => {
-
-        println(reqP)
-
         if (reqP == "" || reqP == null || reqP == "/") {
           response.setContent(krender(index, "/", HashMap[String, String](), urlPattern))
           true
@@ -36,7 +33,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
               patternCleaned = patternCleaned + "/";
             }
 
-            val cleanupRequest = it._2.replace("{urlpattern}", patternCleaned)
+            val cleanupRequest = it._2.replace("{urlpattern}", "/")
             val cleanupRep = if (!reqP.startsWith("/")) {
               "/" + reqP
             } else {

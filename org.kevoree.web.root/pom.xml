@@ -8,7 +8,7 @@
     <artifactId>org.kevoree.web.root</artifactId>
     <packaging>pom</packaging>
     <version>1.7.0-SNAPSHOT</version>
-    <name>Kevoree :: Web</name>
+    <name>Kevoree :: Web :: Root</name>
     
     <modules>
     	<module>../org.kevoree.web.base</module>
