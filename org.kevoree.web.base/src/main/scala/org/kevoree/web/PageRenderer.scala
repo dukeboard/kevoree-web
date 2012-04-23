@@ -33,7 +33,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
               patternCleaned = patternCleaned + "/";
             }
 
-            val cleanupRequest = it._2.replace("{urlpattern}", patternCleaned)
+            val cleanupRequest = it._2.replace("{urlpattern}", "/")
             val cleanupRep = if (!reqP.startsWith("/")) {
               "/" + reqP
             } else {
