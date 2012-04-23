@@ -13,6 +13,7 @@
     <modules>
     	<module>../org.kevoree.web.base</module>
     	<module>../org.kevoree.web.model</module>
+        <module>../org.kevoree.web.model.test</module>
     </modules>
 
     <properties>
