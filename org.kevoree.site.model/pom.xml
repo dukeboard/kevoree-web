@@ -34,7 +34,7 @@
                 <artifactId>org.kevoree.platform.mavenrunner</artifactId>
                 <version>${kevoree.version}</version>
                 <configuration>
-                    <model>${basedir}/src/main/kevs/website.kevs</model>
+                    <model>${basedir}/src/main/kevs/website_test.kevs</model>
                     <targetNode>KevoreeWebSiteNode</targetNode>
                     <viaGroup>KevoreeWebSiteGroup</viaGroup>
                 </configuration>
