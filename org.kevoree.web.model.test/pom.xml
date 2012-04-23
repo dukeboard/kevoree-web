@@ -11,6 +11,35 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>org.kevoree.web.model.test</artifactId>
+    <name>Kevoree :: Web :: Model :: Test</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.kevoree.tools</groupId>
+                <artifactId>org.kevoree.tools.marshell.mavenplugin</artifactId>
+                <version>${kevoree.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.kevoree.platform</groupId>
+                <artifactId>org.kevoree.platform.mavenrunner</artifactId>
+                <version>${kevoree.version}</version>
+                <configuration>
+                    <model>${basedir}/src/main/kevs/website_test.kevs</model>
+                    <targetNode>KevoreeWebSiteNode</targetNode>
+                    <viaGroup>KevoreeWebSiteGroup</viaGroup>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 
 
 </project>

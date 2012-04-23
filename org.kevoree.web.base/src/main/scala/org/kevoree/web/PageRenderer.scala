@@ -71,12 +71,12 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
 
     var patternCleaned = pattern
     if (patternCleaned.endsWith("**")) {
-      patternCleaned = patternCleaned.replace("**", "");
+      patternCleaned = patternCleaned.replace("**", "")
     }
     if (!patternCleaned.endsWith("/")) {
-      patternCleaned = patternCleaned + "/";
+      patternCleaned = patternCleaned + "/"
     }
-    sb.toString.replace("{urlpattern}", patternCleaned);
+    sb.toString.replace("{urlpattern}", patternCleaned)
   }
 
   def renderHtml(name: String): String = {
