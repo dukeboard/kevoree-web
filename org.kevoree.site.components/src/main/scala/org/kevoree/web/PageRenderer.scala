@@ -20,6 +20,9 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {
       case Some(reqP) => {
+
+        println(reqP)
+
         if (reqP == "" || reqP == null || reqP == "/") {
           response.setContent(krender(index, "/", HashMap[String, String](), urlPattern))
           true

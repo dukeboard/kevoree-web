@@ -89,7 +89,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (downloadHelper.checkForDownload(basePage, this, request, response)) {
 			return response;
 		}
-		response.setContent("Bad request");
+		response.setContent("Bad request from "+getName()+"@"+getNodeName());
 		return response;
 	}
 

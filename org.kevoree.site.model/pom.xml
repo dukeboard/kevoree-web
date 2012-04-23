@@ -11,7 +11,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>org.kevoree.web.model</artifactId>
-
     <name>Kevoree :: Library :: Model :: WebSite</name>
 
     <build>
