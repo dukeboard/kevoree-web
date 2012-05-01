@@ -8,7 +8,7 @@ merge "mvn:org.kevoree.web/org.kevoree.slides.display/{kevoree.version}"
 addNode node0 : JavaSENode {logLevel = "DEBUG"}
 
 addComponent webSrv@node0 : KTinyWebServer
-addComponent annotationSlides@node0 : AnnotationSlides { urlpattern="/"}
+addComponent annotationSlides@node0 : AnnotationSlides { urlpattern="/slides"}
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req
