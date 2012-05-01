@@ -13,26 +13,22 @@
 
     <artifactId>org.kevoree.slides.template</artifactId>
     <name>Kevoree :: Slideshow :: Template</name>
-    <properties>
-           <kevoree.version>1.7.0-SNAPSHOT</kevoree.version>
-           <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-       </properties>
 
-       <dependencies>
-           <dependency>
-               <groupId>org.kevoree.tools</groupId>
-               <artifactId>org.kevoree.tools.javase.framework</artifactId>
-               <version>${kevoree.version}</version>
-           </dependency>
-           <dependency>
-               <groupId>org.kevoree.tools</groupId>
-               <artifactId>org.kevoree.tools.annotation.api</artifactId>
-               <version>${kevoree.version}</version>
-           </dependency>
-           <dependency>
-               <groupId>org.kevoree.corelibrary.javase</groupId>
-               <artifactId>org.kevoree.library.javase.webserver.api</artifactId>
-               <version>${kevoree.version}</version>
-           </dependency>
-       </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.kevoree.tools</groupId>
+            <artifactId>org.kevoree.tools.javase.framework</artifactId>
+            <version>${kevoree.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kevoree.tools</groupId>
+            <artifactId>org.kevoree.tools.annotation.api</artifactId>
+            <version>${kevoree.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kevoree.corelibrary.javase</groupId>
+            <artifactId>org.kevoree.library.javase.webserver.api</artifactId>
+            <version>${kevoree.version}</version>
+        </dependency>
+    </dependencies>
 </project>

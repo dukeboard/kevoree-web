@@ -12,10 +12,6 @@
 
     <artifactId>org.kevoree.slides.adam</artifactId>
     <name>Kevoree :: Slideshow :: Adam</name>
-    <properties>
-        <kevoree.version>1.7.0-SNAPSHOT</kevoree.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <dependency>

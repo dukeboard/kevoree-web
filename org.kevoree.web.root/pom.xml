@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
     <version>1.7.0-SNAPSHOT</version>
     <name>Kevoree :: Web :: Root</name>
-    
+
     <modules>
-    	<module>../org.kevoree.web.base</module>
-    	<module>../org.kevoree.web.model</module>
+        <module>../org.kevoree.web.base</module>
+        <module>../org.kevoree.web.model</module>
         <module>../org.kevoree.web.model.test</module>
         <module>../org.kevoree.slides.display</module>
         <module>../org.kevoree.slides.template</module>
@@ -22,6 +22,7 @@
     <properties>
         <kevoree.include>*:*</kevoree.include>
         <kevoree.version>${project.version}</kevoree.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>
