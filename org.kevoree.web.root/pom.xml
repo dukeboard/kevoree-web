@@ -14,6 +14,9 @@
     	<module>../org.kevoree.web.base</module>
     	<module>../org.kevoree.web.model</module>
         <module>../org.kevoree.web.model.test</module>
+        <module>../org.kevoree.slides.display</module>
+        <module>../org.kevoree.slides.template</module>
+        <module>../org.kevoree.slides.adam</module>
     </modules>
 
     <properties>

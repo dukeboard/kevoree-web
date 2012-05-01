@@ -1,19 +1,20 @@
-
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.api/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
-merge "mvn:org.kevoree.web/org.kevoree.web.base/{kevoree.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.adam/{kevoree.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.display/{kevoree.version}"
 
-addNode node0 : JavaSENode {logLevel="DEBUG"}
+addNode node0 : JavaSENode {logLevel = "DEBUG"}
 
 addComponent webSrv@node0 : KTinyWebServer
-addComponent helloPage@node0 : KevoreeMainSiteDev { urlpattern='/test',folder='{basedir}/src/main/resources/' }
+addComponent adamSlides@node0 : AdamSlides { urlpattern="/slides"}
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req
-bind helloPage.request@node0 => req
-bind helloPage.content@node0 => res
+bind adamSlides.request@node0 => req
+bind adamSlides.content@node0 => res
 bind webSrv.response@node0 => res
 
 addGroup sync : NanoRestGroup

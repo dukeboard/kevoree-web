@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<meta charset="utf8">
+<title>Kevoree slides</title>
+
+<div id="present">
+    <iframe></iframe>
+</div>
+
+<div id="future">
+    <iframe></iframe>
+</div>
+
+<div id="slideidx" onclick="setCursor(prompt('Go to slide...','1'));">?</div>
+<div id="nextslideidx">?</div>
+
+<div id="notes">
+    <p id="content"></p>
+</div>
+
+<div id="slidecount">?</div>
+<button id="popup-button" onclick="popup()">Pop-up</button>
+
+<div id="time">
+    <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+</div>
+<style>
+    html, body {
+        height: 100%;
+        color: white;
+    }
+
+    body {
+        font-family: sans-serif;
+        overflow: hidden;
+    }
+
+    #present, #future {
+        bottom: 234px;
+        position: absolute;
+        top: 0;
+        z-index: 5;
+    }
+
+    #present {
+        left: 0;
+        right: 50%;
+        border-right: 4px solid #555;
+    }
+
+    #future {
+        left: 50%;
+        right: 0;
+        border-left: 4px solid #555;
+    }
+
+    #notes {
+        background: #EEE;
+        border-top: 8px solid #555;
+        bottom: 0;
+        color: #444;
+        font-size: 30px;
+        height: 226px;
+        left: 0;
+        padding: 0 240px 0 20px;
+        position: absolute;
+        right: 0;
+    }
+
+    #time {
+        background: #888;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        bottom: 0;
+        font-size: 40px;
+        font-weight: bold;
+        height: 52px;
+        line-height: 52px;
+        right: 20px;
+        position: absolute;
+        text-align: center;
+        width: 200px;
+    }
+
+    iframe {
+        border: none;
+        height: 100%;
+        pointer-events: none;
+        width: 100%;
+    }
+
+    #slideidx,
+    #nextslideidx,
+    #slidecount {
+        background: #888;
+        font-size: 40px;
+        font-weight: bold;
+        height: 52px;
+        line-height: 52px;
+        margin: 0;
+        position: absolute;
+        text-align: center;
+        z-index: 10;
+    }
+
+    #slideidx,
+    #nextslideidx {
+        border-bottom: 4px solid #555;
+        bottom: 230px;
+        padding: 0 10px;
+    }
+
+    #slideidx {
+        border-right: 4px solid #555;
+        border-top-left-radius: 10px;
+        cursor: pointer;
+        right: 50%;
+    }
+
+    #nextslideidx {
+        border-left: 4px solid #555;
+        border-top-right-radius: 10px;
+        left: 50%;
+    }
+
+    #slidecount {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top: 4px solid #555;
+        bottom: 174px;
+        width: 200px;
+        right: 20px;
+    }
+
+    #popup-button {
+        bottom: 88px;
+        background: #888;
+        border: none;
+        border-radius: 10px;
+        color: #FFF;
+        cursor: pointer;
+        height: 52px;
+        font-size: 30px;
+        font-weight: bold;
+        position: absolute;
+        right: 20px;
+        width: 200px;
+        z-index: 10;
+    }
+</style>
+<script src="scripts/display_script.js"></script>
+<script>
+    // Helpers
+    /*if (!Function.prototype.bind) {
+        Function.prototype.bind = function (oThis) {
+
+            // closest thing possible to the ECMAScript 5 internal IsCallable
+            // function
+            if (typeof this !== "function") {
+                throw new TypeError(
+                        "Function.prototype.bind - what is trying to be fBound is not callable"
+                );
+            }
+
+            var aArgs = Array.prototype.slice.call(arguments, 1),
+                    fToBind = this,
+                    fNOP = function () {
+                    },
+                    fBound = function () {
+                        return fToBind.apply(this instanceof fNOP ? this : oThis || window,
+                                aArgs.concat(Array.prototype.slice.call(arguments)));
+                    };
+
+            fNOP.prototype = this.prototype;
+            fBound.prototype = new fNOP();
+
+            return fBound;
+        };
+    }*/
+
+    /*var $ = (HTMLElement.prototype.$ = function (aQuery) {
+        return this.querySelector(aQuery);
+    }).bind(document);
+
+    var $$ = (HTMLElement.prototype.$$ = function (aQuery) {
+        return this.querySelectorAll(aQuery);
+    }).bind(document);*/
+    window.onload = init;
+</script>
