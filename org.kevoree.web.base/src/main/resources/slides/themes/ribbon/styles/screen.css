@@ -37,7 +37,7 @@ body {
 
 /* Text */
 .slide p {
-	margin:0 0 50px;
+	margin:0 0 30px;
 	}
 .slide p.note {
 	color:#999;
@@ -446,8 +446,8 @@ body {
 		}
 		.full .slide:after {
 			position:absolute;
-			left:120px;
-			bottom:80px;
+			left:80px;
+			bottom:12px;
 			color:#CCC;
 			line-height:18px;
 			font-size:25px;
@@ -489,7 +489,7 @@ body {
 .full .progress {
 	position:absolute;
 	right:118px;
-	bottom:40px;
+	bottom:15px;
 	left:118px;
 	}
 	.full .progress div {
