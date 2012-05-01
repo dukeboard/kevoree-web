@@ -21,16 +21,26 @@ import org.kevoree.library.javase.webserver.ParentAbstractPage;
 public abstract class KevoreeSlidesShowerTemplate extends ParentAbstractPage {
 	private final String basePage = "index.html";
 
-	public boolean loadTemplate (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+	@Override
+	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+		logger.info("Try to get page");
+		if (!load(request, response)) {
+			response.setStatus(404);
+		}
+		return response;
+	}
+
+	public boolean load (KevoreeHttpRequest request, KevoreeHttpResponse response) {
 		if (FileServiceHelper.checkStaticFile(basePage, this, request, response)) {
-			if (request.getUrl().equals("/") || request.getUrl().endsWith(".html")) {
-				String pattern = getDictionary().get("urlpattern").toString();
-				if (pattern.endsWith("**")) {
-					pattern = pattern.replace("**", "");
-				}
-				if (!pattern.endsWith("/")) {
-					pattern = pattern + "/";
-				}
+			String pattern = getDictionary().get("urlpattern").toString();
+			if (pattern.endsWith("**")) {
+				pattern = pattern.replace("**", "");
+			}
+			if (!pattern.endsWith("/")) {
+				pattern = pattern + "/";
+			}
+			if (pattern.equals(request.getUrl() + "/") || request.getUrl().endsWith(".html")) {
+				logger.info("replace pattern");
 
 				if (response.getRawContent() != null) {
 					response.setRawContent(new String(response.getRawContent()).replace("{urlpattern}", pattern).getBytes());
