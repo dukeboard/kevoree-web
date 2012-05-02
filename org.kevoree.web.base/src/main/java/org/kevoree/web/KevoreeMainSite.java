@@ -2,10 +2,6 @@ package org.kevoree.web;
 
 
 import org.kevoree.annotation.ComponentType;
-import org.kevoree.annotation.PortType;
-import org.kevoree.annotation.ProvidedPort;
-import org.kevoree.annotation.Provides;
-import org.kevoree.framework.MessagePort;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
 import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
@@ -71,6 +67,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 
 		if (FileServiceHelper.checkStaticFile(basePage, this, request, response)) {
 			if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
+				// FIXME according to KevoreeSlidesShowerTemplate
 				String pattern = getDictionary().get("urlpattern").toString();
 				if (pattern.endsWith("**")) {
 					pattern = pattern.replace("**", "");

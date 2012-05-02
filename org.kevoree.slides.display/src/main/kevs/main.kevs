@@ -8,13 +8,18 @@ merge "mvn:org.kevoree.web/org.kevoree.slides.display/{kevoree.version}"
 addNode node0 : JavaSENode {logLevel = "DEBUG"}
 
 addComponent webSrv@node0 : KTinyWebServer
-addComponent annotationSlides@node0 : AnnotationSlidesDev { urlpattern="/annotations",folder="{basedir}/src/main/resources/",templateFolder="{basedir}/../org.kevoree.slides.template/src/main/resources/"}
+addComponent annotationSlides@node0 : AnnotationSlidesDev { urlpattern="/annotations",folder="{basedir}/../org.kevoree.slides.annotation/src/main/resources/",templateFolder="{basedir}/../org.kevoree.slides.template/src/main/resources/"}
+addComponent slideshow@node0 : SlideshowDisplayDev { urlpattern="/slides",folder="{basedir}/src/main/resources/"}
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req
+bind webSrv.response@node0 => res
 bind annotationSlides.request@node0 => req
 bind annotationSlides.content@node0 => res
-bind webSrv.response@node0 => res
+bind slideshow.request@node0 => req
+bind slideshow.content@node0 => res
 
 addGroup sync : NanoRestGroup
 addToGroup sync node0
+
+
