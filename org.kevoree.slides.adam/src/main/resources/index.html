@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Kevoree Annotation API</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1274, user-scalable=no">
+    <link rel="stylesheet" href="{urlpattern}themes/ribbon/styles/screen.css">
+    <link rel="stylesheet" href="{urlpattern}themes/ribbon/styles/print.css" media="print">
+    <link type="text/css" rel="stylesheet" href="{urlpattern}styles/shCoreDefault.css"/>
+    <script type="text/javascript" src="{urlpattern}scripts/shCore.js"></script>
+    <script type="text/javascript" src="{urlpattern}scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="{urlpattern}scripts/shBrushXml.js"></script>
+    <script type="text/javascript" src="{urlpattern}scripts/shBrushJava.js"></script>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+    <!--<link rel="stylesheet/less" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"> -->
+    <!--
+    <link rel="stylesheet/less" type="text/css" href="less/code.less">    <script src="scripts/less-1.3.0.min.js" type="text/javascript"></script>
+    -->
+    <!--
+         To apply styles to the certain slides         set slide ID to get needed elements
+         -->
+    <style>
+        #Cover {
+        background: #3d3d3d;
+        font: 12px 'Lucida Grande', Arial, sans-serif;
+        }
+        #Cover header {
+        font-size: 40px;
+        color: black;
+        background: white;
+        margin: 250px -120px;
+        padding: 0.6em 120px 0.3em;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        }
+        #Cover h2 {
+        font-size: 1.4em;
+        margin: 0.3em 0
+        }
+        #Cover p {
+        font-weight: normal;
+        }
+        #Picture h2 {
+        color:#FFF;
+        }
+        .codebox {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -o-pre-wrap;
+        background: #3d3d3d;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        font-size: 16px;
+        }
+        details { display: none; }
+    </style>
+</head>
+<body class="list">
+<header class="caption">
+    <h1>Kevoree Overview</h1>
+
+    <p><a href="http://www.kevoree.org/">Kevoree Team</a></p>
+</header>
+<section class="slide cover" id="Cover">
+    <header>
+        <h2>Kevoree : Model@Runtime for Distributed Systems</h2>
+
+        <p>Fouquet Francois, Erwan Daubert, Olivier Barais</p>
+        <p>Triskell Team / INRIA / IRISA , 2012</p>
+    </header>
+    <object data="{urlpattern}figures/kevoree-logo.png" type="image/png" class="low_middle" height="227"
+                       width="400"></object>
+    <details>Salut</details>
+</section>
+
+<section class="slide" id="outline">
+            <header>
+                <h2>Talk outline</h2>
+            </header>
+            <ul>
+                <li>
+                    Kevoree backgrounds and overview
+                </li>
+                <li>
+                    Research
+                </li>
+                <ul>
+                    <li>
+                        Dissemination of model at runtime
+                    </li>
+                    <li>
+                        Plannification of adaptations
+                    </li>
+                    <li>Cross-layer adaptation for cloud stack using Models@runtime</li>
+                </ul>
+                <li>
+                    Discussions around Frascati/Kevoree integration/merge/collaborations ...
+                </li>
+
+            </ul>
+</section>
+
+
+<section class="slide" id="innerTest">
+    <h2>Compilation process</h2>
+
+    <p>In a nushell Kevoree compile time process is composed by these steps :</p>
+    <ul>
+        <li class="next">Parse Kevoree annotation with javax.annotation standard processor</li>
+        <li class="next">Generate a lib.kev file in KEV-INF directory</li>
+        <li class="next">Compile your Java or Scala classes</li>
+        <li class="next">Generate &amp; compile Kevoree Scala runtime classes</li>
+        <li class="next">Package everything in a jar, embedded KEV-INF/lib.kev file</li>
+    </ul>
+    <details>TOTO</details>
+</section>
+<section class="slide">
+    <h2>Maven plugin (2)</h2>
+
+    <p>Add the following dependencies to your Maven Project</p>
+          <pre class="brush: xml">
+<dependencies>
+    <dependency>
+        <groupId>org.kevoree.tools</groupId>
+        <artifactId>org.kevoree.tools.javase.framework</artifactId>
+        <version>${kevoree.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.kevoree.tools</groupId>
+        <artifactId>org.kevoree.tools.annotation.api</artifactId>
+        <version>${kevoree.version}</version>
+    </dependency>
+</dependencies></pre>
+</section>
+
+
+
+
+
+
+<section class="slide cover">
+            <img src="{urlpattern}figures/TT16s.jpg" alt="">
+            <object data="{urlpattern}figures/kevoree-logo-full.png" type="image/png" style="position:absolute;top:0%;left:0%;" height="75"
+                    width="200"></object>
+            <h2 style="color: #ffffff">Kevoree : Model@Runtime for Distributed Systems</h2>
+
+</section>
+
+<!-- Kevoree Overview -->
+<!-- Kevoree Overview -->
+
+<div class="slide" id="mr">
+    <div>
+        <section>
+            <header>
+                <h2>Backgrounds: Model@Runtime</h2>
+            </header>
+            <object style="top: 380px;" data="{urlpattern}figures/modelATruntime.png" type="image/png" class="middle" height="400"
+                    width="750"></object>
+        </section>
+    </div>
+</div>
+
+
+<section class="slide" id="Goals">
+            <header>
+                <h2>Kevoree Goals</h2>
+            </header>
+            <p><code>Model@Runtime</code> layer for distributed dynamic adaptive system</p>
+            <ul>
+                Motivating questions : Benefits of Model@Runtime for:
+                <li>dynamic reconfiguration challenges ?</li>
+                <li>dynamic distribution (<em>topology</em>) challenges ?</li>
+                <li>heterogeneity of computational nodes challenges</li>
+            </ul>
+        </section>
+
+
+<section class="slide" id="overview1">
+            <header>
+                <h2>Model@Runtime for DDAS</h2>
+            </header>
+            <ul style="top: 18px;">
+                <li>MDE@Runtime</li>
+                <ul>
+                    <li style="font-size: 18px;">Shared model representation for distributed nodes</li>
+                    <li style="font-size: 18px;">Offline & online operation, compute@Model level, apply @Runtime</li>
+                </ul>
+                <li>Component-based</li>
+                <ul>
+                    <li style="font-size: 18px;">Actor semantics on each ports to closely separate component behavior
+                    </li>
+                    <li style="font-size: 18px;">Communication semantics between component in channel</li>
+                </ul>
+                <li>Continuous Design, type definition continuous definition</li>
+                <ul>
+                    <li style="font-size: 18px;">Hot (re-)deploy & provisioning</li>
+                </ul>
+                <li>Heterogeneity management with NodeType</li>
+                <ul>
+                    <li style="font-size: 18px;"> Java Node, Dalvik Node, Arduino Node, Cloud Node (Jails/*BSD, JCloud,
+                        mini-cloud, EC2)
+                    </li>
+                </ul>
+            </ul>
+
+        </section>
+
+
+<section class="slide" id="overview2">
+            <header>
+                <h2>Type & Instance separation
+                </h2>
+            </header>
+
+
+            <ul style="top: 18px;">
+                <li>Type & Instance separation</li>
+                <ul>
+                    <li style="font-size: 18px;">Similar to object/class</li>
+                </ul>
+                <li>High level type relationship</li>
+                <ul>
+                    <li style="font-size: 18px;">Inheritance, Composition, etc ...</li>
+                </ul>
+            </ul>
+            <object style="position:absolute;top: 180px; left: 600px;" data="{urlpattern}figures/fig1.png" type="image/png"
+                    width="400"></object>
+        </section>
+
+
+<section class="slide" id="overview3">
+            <header>
+                <h2>Kevoree concepts
+                </h2>
+            </header>
+
+            <ul style="top: 18px;">
+                <li> ComponentType</li>
+                <ul>
+                    <li style="font-size: 18px;">Encapsulate domain features/li>
+                </ul>
+                <li>ChannelType</li>
+                <ul>
+                    <li style="font-size: 18px;">Encapsulate communication semantics</li>
+                </ul>
+                <li>GroupType</li>
+                <ul>
+                    <li style="font-size: 18px;">Encapsulate model@runtime dissemination semantics</li>
+                </ul>
+                <li>NodeType</li>
+                <ul>
+                    <li style="font-size: 18px;">Encapsulate adaptation semantics</li>
+                </ul>
+            </ul>
+            <object style="position:absolute;top: 250px;right: 10px;" data="{urlpattern}figures/fig2.png" type="image/png"
+                    height="270"></object>
+
+
+        </section>
+
+<section class="slide" id="overview4">
+            <header>
+                <h2> NodeType - Adaptive container</h2>
+            </header>
+
+            <ul style="top: 18px;">
+                <li> NodeType host adaptation semantics</li>
+                <ul>
+                    <li style="font-size: 18px;">AdaptationPrimitives Type</li>
+                    <li style="font-size: 18px;">Compare algorithm</li>
+                    <li style="font-size: 18px;">Plan algorithm</li>
+                    <li style="font-size: 18px;">Adaptation Primitives</li>
+                </ul>
+                <li>Can host child nodes by delegation</li>
+                <li>Can be deployed dynamically</li>
+            </ul>
+            <object style="position:absolute;top: 250px;right: 10px;" data="{urlpattern}figures/KevoreeNodeType.png"
+                    type="image/png" height="320"></object>
+
+
+        </section>
+
+<section class="slide" id="overview5">
+            <header>
+                <h2> NodeType - Adaptive container</h2>
+            </header>
+            JavaSE example workflow
+	          <pre class="brush: java">
+Transaction(targetModel){
+	 validate(targetModel)
+	 adaptationModel = compare(currentModel, targetModel)
+	 plan(adaptationModel)
+	 adaptationPrimives = translateToPrimitives(adaptationModel)
+	 if( interprete(adaptationPrimives) ){
+	 trackModelHistory(currentModel)
+	 SetCurrentModel(targetModel)
+	 } else {
+	 rollback(invert(adaptationPrimives))
+	 }
+}
+			
+			</pre>
+
+        </section>
+
+
+<!-- -->
+
+<section class="slide" id="channel_problem">
+            <header>
+                <h2>Communication semantics encapsulation</h2>
+            </header>
+            <ul>
+                <li>Communication concerns are often mixed with business code</li>
+                <li>Modules relationships (<em>e.g bindings</em>) can lead to implicit complex distribution semantics,
+                    especially in distributed system. (<em>transactionality, distribution, ...</em>)
+                </li>
+            </ul>
+            There is a strong need to provide a <em>Connector/Medium/Channel</em> abstraction to:
+            <ul>
+                <li>Extract communication semantics from component</li>
+                <li>Explicit complex distribution scenario</li>
+            </ul>
+        </section>
+<section class="slide" id="channel">
+            <header>
+                <h2>Introducing Kevoree Channel : Communication semantics encapsulation</h2>
+            </header>
+            Channel role:
+            <ul>
+                <li>Extract the communication semantics from component</li>
+                <li>A ChannelType defines a message distribution semantics, composed by :</li>
+                <ol>
+                    <li>Message exchange pattern</li>
+                    <li>Lower and Upper binding bounds</li>
+                    <li>Lower and Upper distribution bounds</li>
+                </ol>
+            </ul>
+            <object data="{urlpattern}figures/fig5.png" type="image/png" style="position:absolute;top:75%;right:5%;"
+                    width="350"></object>
+        </section>
+<section class="slide" id="channel2">
+            <header>
+                <h2>Kevoree Channel fragment</h2>
+            </header>
+            <ul>
+                <li>Channel Instance : deployed by fragments</li>
+                <li>One fragment on each node using channel, FIFO semantics</li>
+                <li>ChannelFragment communicates with Local bound ports</li>
+                <li>ChannelFragment is not allowed to communicate with remote port</li>
+                <li>ChannelFragment communicates each others</li>
+            </ul>
+            <object data="{urlpattern}figures/fig3.png" type="image/png" style="position:absolute;top:65%;right:50%;" width="250"></object>
+        </section>
+
+
+<section class="slide" id="concurrency">
+            <header>
+                <h2>Kevoree Concurrency model</h2>
+            </header>
+            Concurrency managment is difficult for component developers
+            <ul>
+                <li>Kevoree concurrency model aims at declaring concurrency properties on ports</li>
+                <li>Kevoree embeds Actor semantics to protect port from concurrent access</li>
+                <li>Default behavior: inject an actor for each port</li>
+                <li>Advanced feature like @NonConcurrency(port1,port2) can inject an actor to protect several ports</li>
+            </ul>
+            <object data="{urlpattern}figures/fig6.png" type="image/png" style="position:absolute;top:80%;right:5%;" width="580"></object>
+        </section>
+
+
+<section class="slide" id="overview6">
+            <header>
+                <h2>Kevoree feature summary</h2>
+            </header>
+            <ul style="top: 18px;">
+                <li> Architecture DSL</li>
+                <ul>
+                    <li style="font-size: 18px;">KevEditor, KevScript, Code2Model, Model2Code</li>
+                </ul>
+                <li>Dynamic runtime adaptation</li>
+                <ul>
+                    <li style="font-size: 18px;">Java OSGi, Dalvik OSGi, Arduino runtime, MiniCloud, FreeBSD/Jails, ....
+                    </li>
+                    <li style="font-size: 18px;">Planification</li>
+                </ul>
+                <li>Distributed model propagation algorithm (& reasoner ...)</li>
+                <ul>
+                    <li style="font-size: 18px;">Gossiper, Paxos, VectorClock</li>
+                </ul>
+                <li>Model multi-criteria optimization</li>
+                <ul>
+                    <li style="font-size: 18px;">Genetic algorithm</li>
+                </ul>
+            </ul>
+        </section>
+
+<!-- TODO
+DETAIL KEVOREE CORE Compare&Swap
+-->
+
+
+<!-- End Kevoree Overview -->
+
+
+<!-- Kevoree Group M@R dissemination -->
+<section class="slide cover" id="groupCover">
+            <img src="{urlpattern}figures/TT16s.jpg" alt="">
+            <header>
+                <h2 style="color: white">Kevoree : M@R dissemination</h2>
+                <h1 style="color: white">Group entities & propagation strategies</h1>
+            </header>
+            <object data="{urlpattern}figures/kevoree-logo-full.png" type="image/png" style="position:absolute;top:0%;left:0%;" height="75"
+                    width="200"></object>
+        </section>
+<!--  -->
+<section class="slide" id="DistributedProblems">
+            <header>
+                <h2>Distributed adaptive systems need reflexion</h2>
+            </header>
+            but direct access on reflexive layer is problematic in several distributed architectures
+            <ul class="inner">
+                <li class="active"><strong>Sporadic nodes</strong> : direct reflexive access are not always <code>reachable</code>
+                </li>
+                <li><strong>Heterogenous nodes</strong> : direct access is not always provided by restrictive runtime
+                </li>
+                <li><strong>Embedded nodes</strong> : direct access can be an issue for the <code>battery life</code>
+                </li>
+            </ul>
+            Offline adaptation is required !
+        </section>
+<section class="slide" id="DistributedHeterogenity">
+            <header>
+                <h2>Heterogenous dissemination strategy</h2>
+            </header>
+            Distributed system usually organized in clusters (<code>group of nodes</code>)
+            Considering a cluster of nodes (A,B,C) sharing a configuration model :
+            <ul class="inner">
+                <li class="active"><strong>Sporadic context</strong> : A can update B without synchronizing C</li>
+                <li><strong>Cluster context</strong> : A must synchronize B & C in the <em>same logical time</em></li>
+                <li><strong>Opportunistic nodes</strong> : A can synchronize B or C depend of previous configurations
+                </li>
+            </ul>
+            Total order, Partial order: common challenges in distributed softwares
+        </section>
+<section class="slide" id="StrategyHeterogenity">
+            <header>
+                <h2>Dissemination strategy heterogeneity</h2>
+            </header>
+            Complex architectures, especially on field sporadic usage, lead to composition of dissemination strategies
+            <ul>
+                <li>A & B are mobile nodes, injected group will use partial order</li>
+                <li>S1 & S2 are cluster nodes, injected group will use total order</li>
+                <li>A partial order group is injected between B & S1.</li>
+            </ul>
+            <object data="{urlpattern}figures/multiScope.png" type="image/png"
+                    style="position:absolute;right:30px;top:370px;"></object>
+        </section>
+<section class="slide" id="m@r_dissemination_distributedScope">
+            <header>
+                <h2>M@R Dissemination scope</h2>
+            </header>
+            Cluster also ensures a strong synchronization of members. The scope of this synchronization depends is
+            defined by the group
+            Considering two group of nodes: (A,B) & (B,C)
+            <ul>
+                <li>A & B share a M@R, B & C share another M@R</li>
+                <li>A & C don't share anything, cluster defines synchronized elements</li>
+                <li>A & C can be desynchronized if cluster 2 ensures a partial order</li>
+            </ul>
+        </section>
+<section class="slide" id="m@r_dissemination_problem_overview">
+            <header>
+                <h2>Architectural abstraction needed !</h2>
+            </header>
+            <code>Claim : </code>
+            <blockquote>To address all these problems, we need to provide an abstraction to manipulate and compose
+                dissemination strategies
+            </blockquote>
+        </section>
+<!--
+<div class="slide shout" id="Shout">
+  <div>
+    <section>
+      <header>
+        <h2>Introducing<br>
+          Kevoree Group feature</h2>
+      </header>
+    </section>
+  </div>
+</div>
+-->
+<section class="slide" id="m@r_dissemination_introducingKevoreeGroup">
+            <header>
+                <h2>Introducing Kevoree Groups</h2>
+            </header>
+            <code>Definition</code>
+            <blockquote>Entity dedicated to M@R propagation and synchronization of linked nodes.</blockquote>
+            <ol>
+                <li>Follow Kevoree type/instance pattern</li>
+                <li>Encapsulate synchronization semantics</li>
+                <li>Host M@R dissemination protocol</li>
+                <li>In charge of selecting synchronized elements (<em>scope definition</em>)</li>
+                <li>In charge of ensuring security of update (<em>i.e control policy access</em>)</li>
+            </ol>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroupFragment">
+            <header>
+                <h2>Group Fragments</h2>
+            </header>
+            Like <code>Channels</code>, Group type definition host distributed algorithms.<br/>
+            Group instances are splitted into fragments.<br/>
+            Fragment instances are dispatched to every linked node (<em>Stub/skeletton pattern</em>)<br/>
+            <object data="{urlpattern}figures/goup_def.png" type="image/png" style="position:absolute;top:60%;left:30%;" height="214" width="392"></object>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroupFragement2">
+            <header>
+                <h2>Group Fragments</h2>
+            </header>
+            <code>Group</code> instances are mandatory to interact with <code>Nodes</code><br/>
+            Two main types of implementation, derived on different protocol :
+            <ul>
+                <li>Called before a model update to allow (or not) a reconfiguration <em>(i.e Consensus approach)</em>
+                </li>
+                <li>Called after a model update to propagate a new model <em>(i.e Gossiper approach)</em></li>
+            </ul>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroup_implementations">
+            <header>
+                <h2>Group Implementations</h2>
+            </header>
+            Most used implementations
+            <ul>
+                <li><strong>RestGroup : </strong>Basic listener for small clusters</li>
+                <li><strong>GossiperNetty : </strong>Gossiper propagation on IP networks with vector clock failure
+                    reconciliation<em>(UDP/TDP)</em></li>
+                <li><strong>JPaxosGroup : </strong>Consensus implementation (<em>i.e KevoreeKloud grid, work in
+                    progress</em>)
+                </li>
+            </ul>
+        </section>
+
+<section class="slide" id="m@r_dissemination_KevoreeGroup_gossipEvaluation">
+            <header>
+                <h2>Gossiper Cluster Experiment</h2>
+            </header>
+            <ul>
+                <li>A quantitative and qualitative experimental evaluation has been done on Gossiper+VectorClock group
+                    implementation.
+                </li>
+                <li>Experimental setup ~66 computational nodes</li>
+                <li>Connected through a local area network at 100MB/s</li>
+                <li>Topology model is randomly generated</li>
+                <li>Global time axis logger for metrics mesurement</li>
+            </ul>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroup_gossipEvaluation2">
+            <header>
+                <h2>Gossiper Cluster Experiment</h2>
+            </header>
+            Evaluated questions:
+            <ol>
+                <li>Influence of the communication strategy on <code>M@R</code>propagation delay ?</li>
+                <li>Does the algorithm detect concurrent models updates ?</li>
+                <li>Does the algorithm handle reconciliation correctly ?</li>
+                <li>Does a high rate of node link failure prevent the propagation of <code>M@R</code> ?</li>
+                <li>How does it impact propagation delays ?</li>
+            </ol>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroup_gossipEvaluation_protocol">
+            <header>
+                <h2>Gossiper Protocol</h2>
+            </header>
+            Variation points :
+            <ol>
+                <li>Pull / Push-Pull</li>
+                <li>2 step / 1 step<br/> vector clock exchange</li>
+            </ol>
+            <object data="{urlpattern}figures/seqPushPull.png" type="image/png" style="position:absolute;top:30%;left:40%;"></object>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroup_gossipEvaluation_protocol2">
+            <header>
+                <h2>Gossiper Protocol</h2>
+            </header>
+            Variation points :
+            <ol>
+                <li>Pull / Push-Pull</li>
+                <li>2 step / 1 step<br/> vector clock exchange</li>
+            </ol>
+            <object data="{urlpattern}figures/seqPushPull2.png" type="image/png"  style="position:absolute;top:30%;left:35%;"></object>
+        </section>
+
+
+<section class="slide" id="m@r_dissemination_KevoreeGroup_gossipEvaluation_propagationdelay_vs_networkload">
+            <header>
+                <h2>Propagation delay versus network load</h2>
+            </header>
+            <object data="{urlpattern}figures/topology_exp1.png" type="image/png" style="position:absolute;top:30%;left:0%;"></object>
+            <object data="{urlpattern}figures/result_exp1.png" type="image/png" width="520px" height="363px"
+                    style="position:absolute;top:30%;left:45%;"></object>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroup_gossipEvaluation_propagationdelay_vs_networkload_2">
+            <header>
+                <h2>Propagation delay versus network load 2</h2>
+            </header>
+            <object data="{urlpattern}figures/topology_exp1.png" type="image/png" class="middle" style="position:absolute;top:30%;left:0%;"></object>
+            <object data="{urlpattern}figures/result2_exp1.png" type="image/png" class="middle" width="517px" height="363px"
+                    style="position:absolute;top:30%;left:45%;"></object>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroup_gossipEvaluation_reconciliation">
+            <header>
+                <h2>Concurrency reconfiguration reconciliation</h2>
+            </header>
+            <object data="{urlpattern}figures/result_exp2.png" type="image/png" class="middle" width="600px" height="429px"
+                    style="left:50%;top:55%;"></object>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroup_gossipEvaluation_nodelink_failure">
+            <header>
+                <h2>Node link failure impact ?</h2>
+            </header>
+            <object data="{urlpattern}figures/topology_exp3.png" type="image/png" class="middle" style="position:absolute;top:30%;left:5%;"></object>
+            <object data="{urlpattern}figures/result_exp3.png" type="image/png" class="middle" width="470px" height="363px"
+                    style="position:absolute;top:30%;left:50%;"></object>
+        </section>
+<section class="slide" id="m@r_dissemination_KevoreeGroup_conclusion">
+            <header>
+                <h2>Gossiper Experiment conclusion</h2>
+            </header>
+            Lesson learned and conclusion :
+            <ul>
+                <li>Vector Clock size has serious impact on performance
+                    <ul>
+                        <li>must manage scalability using several hierarchical groups</li>
+                    </ul>
+                </li>
+                <li>Distributed reconfiguration capability is usable</li>
+                <li>Inverted communication and propagation delay reduce the impact for sporadic network</li>
+                <li>Hybrid approach seems to be suitable for non reliable network</li>
+            </ul>
+        </section>
+
+
+<!-- Planning -->
+<!-- What we call Planning
+        How is it possible to do planning
+            How is it generally done
+        Why do we need Planning
+                Why the first solution may be unefficient
+        How do we do Planning
+        -->
+<section class="slide cover" id="Planning">
+            <img src="{urlpattern}figures/TT16s.jpg" alt="">
+            <header>
+                <h2 style="color: white">Kevoree : Planning</h2>
+
+                <h1 style="color: white">How to successfully update a configuration</h1>
+            </header>
+            <object data="{urlpattern}figures/kevoree-logo-full.png" type="image/png" style="position:absolute;top:0%;left:0%;" height="75"
+                    width="200"></object>
+        </section>
+
+<!-- What we call Planning / Why we need Planning-->
+<section class="slide" id="Planning_Definition">
+            <header>
+                <h2>What is Planning ?</h2>
+            </header>
+            <ul class="inner" id="1">
+                <li class="active">The process to prepare the execution of an adaptation
+                    <ul>
+                        <li><code>Selecting concrete actions</code>
+                            <ul>
+                                <li>According to the adaptation to applied (model comparison)</li>
+                                <li>In many case, mixed with analysis</li>
+                            </ul>
+                        </li>
+                        <li><code>Scheduling them</code>
+                            <ul>
+                                <li>According to relations between actions (<em>e.g install before start</em>)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+<section class="slide" id="Planning_Definition_2">
+            <header>
+                <h2>Why we need Planning ?</h2>
+            </header>
+            <ul>
+                <li><strong>Why we need Planning ?</strong>
+                    <ul class="inner">
+                        <li class="active">To ensure <code>system consistency</code>
+                            <ul>
+                                <li>Between dependent components
+                                    <ul>
+                                        <li>For instance on starts and stops</li>
+                                    </ul>
+                                </li>
+                                <div><img src="{urlpattern}figures/startInstancesUsecase.png"/></div>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+
+<!-- The standard implementation of the Planning Phase -->
+<section class="slide" id="Planning_Standard_Solution">
+            <header>
+                <h2>How to do Planning ?</h2>
+
+                <h3>The basic approach: <strong>static action ordering</strong></h3>
+            </header>
+                        <pre style="font-size: smaller">
+                            <code>execute sequentially all addThirdParties</code>
+                            <code>execute sequentially all addDeployUnits</code>
+                            <!--<code> ... </code>-->
+                            <code>execute sequentially all AddInstances</code>
+                            <code>execute sequentially all startInstances</code>
+                        </pre>
+            <code>Limitations</code>
+            <ul>
+                <li>Efficiency</li>
+                <li>Dependencies between actions of the same type</li>
+            </ul>
+        </section>
+
+<!-- The standard implementation fails on dependencies between actions -->
+<section class="slide" id="Planning_Standard_Solution_usecase">
+            <header>
+                <h2>How to do Planning ?</h2>
+
+                <h3>The basic approach: <strong>static action ordering</strong></h3>
+            </header>
+            <ul>
+                <li>Possible failure of the startInstances</li>
+
+                <div style="float: left; padding-right: 1em">
+                    <strong>A possible result:</strong><br/>
+                    <ol>
+                        <li>start Kinect</li>
+                        <li>start VideoViewer</li>
+                        <li>start defMsG</li>
+                    </ol>
+                </div>
+                <div><img src="{urlpattern}figures/startInstancesUsecase.png"/></div>
+            </ul>
+        </section>
+
+<!-- Our proposal -->
+<section class="slide" id="Planning_Proposal">
+            <header>
+                <h2>How to do Planning ?</h2>
+
+                <h3>Our approach: <!--<strong>dynamic actions ordering</strong>--></h3>
+            </header>
+            <ul class="inner">
+                <li class="active"><strong>Group Dissemination</strong>
+                    <ul>
+                        <li>Synchronization before applying the adaptation</li>
+                    </ul>
+                </li>
+                <li><strong>Dynamic action ordering</strong>
+                    <ul>
+                        <li>Using graph representation
+                            <ul>
+                                <li>Actions are vertices</li>
+                                <li>Dependencies between actions are edges</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+<!-- The standard implementation of the Planning Phase -->
+<section class="slide" id="Planning_Proposal_usecase">
+            <header>
+                <h2>How to do Planning ?</h2>
+
+                <h3>The basic approach:</h3>
+            </header>
+            <ul>
+                <li><strong>Dynamic action ordering</strong></li>
+
+                <div style="float: left; padding-right: 1em">
+                    <strong>Unique result:</strong><br/>
+                    <ol>
+                        <li>start VideoViewer</li>
+                        <li>start defMsG</li>
+                        <li>start Kinect</li>
+                    </ol>
+                    <strong>How ?</strong><br/>
+                    Use bindings to find dependencies
+                </div>
+                <div><img src="{urlpattern}figures/startInstancesUsecase.png"/></div>
+            </ul>
+        </section>
+
+<!-- TODO mini conclusion ? -->
+<section class="slide" id="Planning_Conclusion">
+            <header>
+                <h2>Kevoree: Planning</h2>
+            </header>
+            <ul>
+                <li>Selecting concrete actions
+                    <ul>
+                        <li>Model comparison</li>
+                    </ul>
+                </li>
+                <li><strong>Schedule them to do efficient and consistent adaptation of the system</strong>
+                    <ul>
+                        <li><code>Group Dissemination</code></li>
+                        <li><code>Dynamic action ordering</code>
+                            <ul>
+                                <li>Using graph representation
+                                    <ul>
+                                        <li>To manage dependencies between actions</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+<!-- End Planning -->
+
+
+<section class="slide cover" id="Kloud">
+            <img src="{urlpattern}figures/kloud_init.png" alt="">
+            <header>
+                <h2 style="color: white">Kevoree Kloud</h2>
+
+                <h2 style="color: white">M@R driven IaaS</h2>
+            </header>
+        </section>
+
+<!-- KLOUD
+Using model@runtime to manage Cloud infrastructure
+Cloud Stack (IaaS, PaaS, SaaS)
+SaaS is already manage with component-based model and with kevoree
+PaaS is represented with the nodes (maaging adaptation primitive)
+IaaS is defined with specific node types that host other nodes
+
+Our implementation : minicloud, BSD jails
+    Demo
+-->
+<!-- What is Cloud computing -->
+<section class="slide" id="Kloud_Concepts">
+            <header>
+                <h2>How to manage Cloud with our model@runtime techniques ?</h2>
+            </header>
+            <ul class="inner">
+                <li class="active"><strong>SaaS</strong>
+                    <ul>
+                        <li>The software (components and channels)</li>
+                        <li>Already manage with component-based models</li>
+                    </ul>
+                </li>
+                <li><strong>PaaS/IaaS</strong>
+                    <ul>
+                        <li>A set of nodes</li>
+                    </ul>
+                </li>
+                <li><strong>Difference between IaaS and PaaS</strong>
+                    <ul>
+                        <li>The node types</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+<!-- Difference between PaaS and IaaS Node types -->
+<section class="slide" id="Kloud_Concepts_PaaS_IaaS">
+            <header>
+                <h2>How to manage Cloud with our model@runtime techniques ?</h2>
+            </header>
+            <ul class="inner">
+                <li class="active"><strong>PaaS node types:</strong>
+                    <ul>
+                        <li>Manage the adaptation of SaaS
+                            <ul>
+                                <li>hosting the set of adaptation primitives</li>
+                            </ul>
+                        </li>
+                        <li>Each node define some specific properties about virtualization needs
+                            <ul>
+                                <li>architecture (x86_64, x86),RAM, CPU frequency, ...</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>IaaS node types:</strong>
+                    <ul>
+                        <li>Manage the virtualization layer and its adaptation</li>
+                        <li>Each node is able to host some PaaS nodes</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+<section class="slide" id="Kloud_Implementation">
+            <header>
+                <h2>How to manage Cloud with our model@runtime techniques ?</h2>
+            </header>
+            <strong>Available implementations for IaaS node types:</strong>
+            <ul class="inner">
+                <li class="active"><code>MiniCloud</code> : Allows to instanciate new node on separate JVM</li>
+                <li><code>Jailsd</code> : Uses BSD jails to isolate nodes
+                    <ul>
+                        <li>Filesystem, RAM and network isolation</li>
+                        <li>Only kernel is shared</li>
+                    </ul>
+                </li>
+                <li><code>VirtualBox</code> (on going work)</li>
+                <li><code>KVM</code> (on going work)</li>
+            </ul>
+        </section>
+
+
+<section class="slide" id="Kloud_Scenario_kloudModel">
+            <header>
+                <h2>How to manage Cloud with our model@runtime techniques ?</h2>
+            </header>
+            <strong>Basic scenario: the IaaS model</strong><br/>
+            <a href="{urlpattern}figures/kloud_model.png"><img height="250" src="{urlpattern}figures/kloud_model.png"/></a>
+        </section>
+
+<section class="slide" id="Kloud_Scenario_userModel">
+            <header>
+                <h2>How to manage Cloud with our model@runtime techniques ?</h2>
+
+            </header>
+            <strong>Basic scenario : the user model</strong><br/>
+            <a href="{urlpattern}figures/user_model.png"><img height="250" src="{urlpattern}figures/user_model.png"/></a>
+        </section>
+
+<section class="slide" id="Kloud_Scenario_user_kloud_model">
+            <header>
+                <h2>How to manage Cloud with our model@runtime techniques ?</h2>
+            </header>
+            <strong>Basic scenario:The IaaS model after the deployement of the user model</strong><br/>
+            <a href="{urlpattern}figures/kloud_user_model.png"><img height="250" src="{urlpattern}figures/kloud_user_model.png"/></a>
+        </section>
+
+<!-- END KLOUD -->
+
+
+<!-- Frascati -->
+
+<section class="slide cover" id="frascati">
+            <img src="{urlpattern}figures/TT16s.jpg" alt="">
+            <header>
+                <h2 style="color: white">Kevoree / Frascati integration/merge/collaborations </h2>
+            </header>
+            <object data="{urlpattern}figures/kevoree-logo-full.png" type="image/png" style="position:absolute;top:0%;left:0%;" height="75"
+                    width="200"></object>
+        </section>
+
+
+<section class="slide" id="kevoree_frascati_1">
+            <header>
+                <h2>Frascati / Kevoree complementarity</h2>
+            </header>
+            <h2><strong>Common Backgrounds</strong></h2>
+            <table>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th style="width: 150px">
+                        Frascati
+                    </th>
+                    <th style="width: 150px">
+                        Kevoree
+                    </th>
+                </tr>
+                <tr>
+                    <td>Reconfigurable, reflexive and distributed Component model</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>Tools (Scripting language, designer, ...)</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>Standard component library</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+
+            </table>
+            </td>
+
+
+        </section>
+
+
+<section class="slide" id="kevoree_frascati_2">
+            <header>
+                <h2>Frascati / Kevoree complementarity</h2>
+            </header>
+            <table>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th style="width: 150px">
+                        Frascati
+                    </th>
+                    <th>
+                        Kevoree
+                    </th>
+                </tr>
+                <tr>
+                    <td>Legacy integration from the model</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/remove.png"></td>
+                </tr>
+                <tr>
+                    <td>Aspects at the architecture level</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/remove.png"></td>
+                </tr>
+                <tr>
+                    <td>Standard</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/remove.png"></td>
+                </tr>
+                <tr>
+                    <td>Language/model extensibility</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/remove.png"></td>
+                </tr>
+                <tr>
+                    <td>Hierachical component model</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/remove.png"></td>
+                </tr>
+                <tr>
+                    <td>Component implementation heterogeneity and interoperability</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/remove.png"></td>
+                </tr>
+                <tr>
+                    <td>Explicit SPL of the platform</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/remove.png"></td>
+                </tr>
+
+            </table>
+            </td>
+
+
+        </section>
+
+
+<section class="slide" id="kevoree_frascati_3">
+            <header>
+                <h2>Frascati / Kevoree complementarity</h2>
+            </header>
+            <table>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th style="width: 150px">
+                        Frascati
+                    </th>
+                    <th style="width: 150px">
+                        Kevoree
+                    </th>
+                </tr>
+                <tr>
+                    <td>Type/Instance/Package in the model</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/help.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>Hot provisioning from the model</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/help.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>Concurrency management on port</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/help.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>NodeType Heterogenity</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/help.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>IaaS adaptation from the model</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/help.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>Distribution partition in the model</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/help.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>Channel with distributed deployment</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/help.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+                <tr>
+                    <td>Automatic reconfiguration planification</td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/help.png"></td>
+                    <td align="center"><img width="25px" alt="" src="{urlpattern}figures/ok.png"></td>
+                </tr>
+            </table>
+        </section>
+
+
+<section class="slide shout" id="kevoree_frascati_4">
+            <h2 style="font-size: 90px">Frascati / Kevoree Integration:<br>
+                Is there a scientific/technical interests ?
+            </h2>
+        </section>
+
+
+<section class="slide" id="kevoree_frascati_5">
+            <header>
+                <h2>First experiments</h2>
+            </header>
+            <h2><code>Consider Frascati as a node Type for Kevoree</code></h2>
+            <ol>
+                <li>Build a mojo that considers all SCA composites and components as a Kevoree component type
+                    <span></span><img width="25px" alt="" src="{urlpattern}figures/ok.png"></li>
+                <li>Implement a node type that launch Frascati container <span></span> <img width="25px" alt=""
+                                                                                            src="{urlpattern}figures/help.png"></li>
+                <li>Wrap node type adaptation primitives to Frascati reconfiguration API <span></span><img width="25px"
+                                                                                                           alt=""
+                                                                                                           src="{urlpattern}figures/remove.png">
+                </li>
+                <li>Generate specific skeleton to bind Kevoree channel to Frascati component interfaces
+                    <span></span><img width="25px" alt="" src="{urlpattern}figures/remove.png"></li>
+            </ol>
+        </section>
+
+
+<section class="slide" id="kevoree_frascati_6">
+            <header>
+                <h2>Other solutions</h2>
+            </header>
+            <h2><code>Merge Kevoree in Frascati</code></h2>
+            <ol>
+                <li>Extends SCA with Deply-Unit / Component Type / Group / Node & Node type concepts</li>
+                <li>Remove depency with EMF and CXF in the core ;)</li>
+            </ol>
+        </section>
+
+<section class="slide shout" id="kevoree_frascati_7">
+            <header>
+                <h2>Other ideas ?</h2>
+            </header>
+        </section>
+
+<section class="slide cover" id="conclusion_cover">
+            <img src="{urlpattern}figures/TT16s.jpg" alt="">
+            <header>
+                <h2 style="color: white">Conclusion</h2>
+            </header>
+            <object data="{urlpattern}figures/kevoree-logo-full.png" type="image/png" style="position:absolute;top:0%;left:0%;" height="75"
+                    width="200"></object>
+        </section>
+
+
+<!-- Conclusion -->
+<section class="slide" id="Conclusion">
+            <header>
+                <h2>Conclusion and perspectives</h2>
+            </header>
+            <ul>
+                <li>Platform to support distributed model@runtime</li>
+
+                <li>Leverage concepts of:</li>
+                <ul>
+                    <li>NodeType (platform heterogeneity),</li>
+                    <li>DeployUnit (hot provisioning),</li>
+                    <li>Group (model@runtime management),</li>
+                    <li>ComponentType</li>
+                </ul>
+            </ul>
+        </section>
+<section class="slide" id="Conclusion2">
+            <header>
+                <h2>Conclusion and perspectives</h2>
+            </header>
+            Two main scientific challenges:
+            <ul>
+                <li>Meaning of models at runtime in highly distributed environment</li>
+                <li>Cross-layer adaptation of cloud stacks using model@runtime</li>
+            </ul>
+            <blockquote>Merge/Integrate/... Kevoree (ideas/codes) in Frascati/Fractal 3.0 ?</blockquote>
+        </section>
+
+
+<section class="slide" id="ThankYou">
+            <header>
+                <h2>Thank you</h2>
+            </header>
+            <p>INRIA/UR1/IRISA software, in the context of S-cube, Daum, Diva project</p>
+            <ul>
+                <li>Kevoree: <a href="http://kevoree.org">www.kevoree.org</a></li>
+                <li>JNLP: <a href="http://dist.kevoree.org">dist.kevoree.org</a></li>
+                <li>github: <a href="http://git.kevoree.org">git.kevoree.org</a></li>
+                <li>Kevoree cloud: <a href="http://kloud.kevoree.org">kloud.kevoree.org</a></li>
+                <li>Tutorial: <a href="http://git.kevoree.org/wiki">git.kevoree.org/wiki</a></li>
+            </ul>
+        </section>
+
+
+<section class="slide" id="ref">
+            <header>
+                <h2>Reference</h2>
+            </header>
+            <ul>
+                <li style="font-size: 14px;">F. Fleurey, B. Morin, A. Solberg and O. Barais. -- MDE to Manage
+                    Communications with and between Resource-Constrained Systems. -- In MODELS'11: ACM/IEEE 14th
+                    International Conference on Model Driven Engineering Languages and Systems, Wellington, New Zealand,
+                    October 2011
+                </li>
+                <li style="font-size: 14px;">Brice Morin, Tejeddine Mouelhi, Franck Fleurey, Yves Le Traon, Olivier
+                    Barais, Jean-Marc Jézéquel: Security-driven model-based dynamic adaptation. ASE 2010
+                </li>
+                <li style="font-size: 14px;">Nain, Grégory , Fouquet, François , Morin, Brice , Barais, Olivier and
+                    Jézéquel, Jean-Marc (2010) Integrating IoT and IoS with a Component-Based approach. In Procedings of
+                    the 36th EUROMICRO Conference on Software Engineering and Advanced Applications (SEAA 2010). Lille,
+                    France.
+                </li>
+                <li style="font-size: 14px;">André, Francoise, Daubert, Erwan , Nain Grégory , Morin, Brice and Barais,
+                    Olivier (2010) F4Plan: An Approach to build Efficient Adaptation Plans. In MobiQuitous.
+                </li>
+                <li style="font-size: 14px;">Brice Morin, Olivier Barais, Grégory Nain, Jean-Marc Jézéquel: Taming
+                    Dynamically Adaptive Systems using models and aspects. ICSE 2009: 122-132
+                </li>
+                <li style="font-size: 14px;">Brice Morin, Olivier Barais, Jean-Marc Jézéquel, Franck Fleurey, Arnor
+                    Solberg: Models@ Run.time to Support Dynamic Adaptation. IEEE Computer 42(10): 44-51 (2009)
+                </li>
+                <li style="font-size: 14px;">NIER 2012</li>
+            </ul>
+        </section>
+
+    
+<div class="progress">
+    <div></div>
+</div>
+<script src="{urlpattern}scripts/script.js"></script>
+<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+</body>
+</html>
