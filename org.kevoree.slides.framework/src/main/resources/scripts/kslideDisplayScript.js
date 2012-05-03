@@ -287,7 +287,7 @@ function connectWS () {
         ws.onmessage = function (aEvent) {
 
         };
-        var slideurl = url.replace("ws", "keynote");
-        alert(slideurl + "ws"+roomId)
+        var slideurl = url.replace("keynote", "ws");
+        alert(slideurl + roomId)
     }
 }

@@ -30,4 +30,3 @@ ws.onmessage = function (aEvent) {
         goToSlide(argv[1]);
     }
 };
-enterSlideMode();
