@@ -1,3 +1,5 @@
+
+
 var ws = new WebSocket('{wsurl}');
 ws.onopen = function (e) {
     console.log('* Connected!');
@@ -28,3 +30,4 @@ ws.onmessage = function (aEvent) {
         goToSlide(argv[1]);
     }
 };
+enterSlideMode();
