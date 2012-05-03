@@ -193,7 +193,7 @@ window.onmessage = function (aEvent) {
     });
     if (argv[0] === "CURSOR" && argc === 2) {
         if (aEvent.source === views.present && argv[1] != -1) {
-            if (views.currentSlide != argv[1]) {
+            if (views.currentSlide != argv[1] && ws != null) {
                 ws.send("SET_CURSOR " + argv[1])
             }
             views.currentSlide = argv[1];
@@ -252,10 +252,11 @@ window.onmessage = function (aEvent) {
 
 // allow to close the popup when the window is unload
 window.onunload = function () {
-    views.remote.close();
+    if (views.remote != null) {
+        views.remote.close();
+    }
 };
 var ws = null
-
 
 function connectWS () {
     var roomId = window.prompt("Keynote id:");
