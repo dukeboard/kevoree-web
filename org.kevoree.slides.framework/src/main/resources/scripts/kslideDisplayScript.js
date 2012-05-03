@@ -57,6 +57,9 @@ function back () {
         if (views.remote != null) {
             postMsg(views.remote, "BACK");
         }
+        if (ws != null) {
+            ws.send("BACK");
+        }
     }
 }
 
@@ -69,6 +72,9 @@ function forward () {
         if (views.remote != null) {
             postMsg(views.remote, "FORWARD");
         }
+        if (ws != null) {
+            ws.send("FORWARD");
+        }
     }
 }
 
@@ -80,6 +86,9 @@ function goStart () {
     if (views.remote != null) {
         postMsg(views.remote, "START");
     }
+    if (ws != null) {
+        ws.send("START");
+    }
 }
 
 function goEnd () {
@@ -89,6 +98,9 @@ function goEnd () {
     updateSlideNumbers();
     if (views.remote != null) {
         postMsg(views.remote, "END");
+    }
+    if (ws != null) {
+        ws.send("END");
     }
 }
 
