@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<meta charset="utf8">
+<title>...</title>
+
+<div id="slides">
+    <iframe allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+</div>
+<div id="controls">
+    <button title="prev" id="back" onclick="back()">&#9664;</button>
+    <button title="next" id="forward" onclick="forward()">&#9654;</button>
+    <div id="rightcontrols">
+        <input onchange="setCursor(this.value)" size="2" id="slideidx" value="1"/>/<span id="slidecount">...</span>
+        <button title="Go fullscreen or open in a new window" id="fullscreen" onclick="goFullscreen()">&#8689;</button>
+    </div>
+</div>
+
+<style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        background-color: black;
+        height: 100%;
+        width: 100%;
+    }
+
+    #slides, #controls {
+        left: 0;
+        position: absolute;
+        right: 0;
+    }
+
+    #controls {
+        color: white;
+        font-family: monospace;
+        height: 30px;
+        line-height: 30px;
+        padding: 5px;
+    }
+
+    #slides {
+        bottom: 40px;
+        top: 0;
+    }
+
+    iframe {
+        border: none;
+        background-color: white;
+        pointer-events: none;
+        height: 100%;
+        width: 100%;
+    }
+
+    #controls {
+        bottom: 0;
+        float: right;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    #controls button[disabled] {
+        color: #333;
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: #bbb;
+        padding: 0;
+        font-size: 20px;
+        line-height: 100%;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        position: relative;
+    }
+
+    button:hover {
+        color: white;
+    }
+
+    button:active {
+        top: 1px;
+        left: 1px;
+    }
+
+    #slideidx {
+        border: none;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        text-align: center;
+    }
+
+    #rightcontrols * {
+        vertical-align: middle;
+    }
+
+    #rightcontrols {
+        bottom: 4px;
+        position: absolute;
+        top: 4px;
+        right: 10px;
+    }
+
+    #fullscreen {
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -ms-transform: scaleX(-1);
+        transform: scaleX(-1);
+    }
+</style>
+<script src="scripts/kslideEmbedderScript.js"></script>
+<script>
+    window.onload = init;
+</script>
