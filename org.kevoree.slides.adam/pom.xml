@@ -15,23 +15,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.kevoree.tools</groupId>
-            <artifactId>org.kevoree.tools.javase.framework</artifactId>
-            <version>${kevoree.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kevoree.tools</groupId>
-            <artifactId>org.kevoree.tools.annotation.api</artifactId>
-            <version>${kevoree.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kevoree.corelibrary.javase</groupId>
-            <artifactId>org.kevoree.library.javase.webserver.api</artifactId>
-            <version>${kevoree.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.kevoree.web</groupId>
-            <artifactId>org.kevoree.slides.template</artifactId>
+            <artifactId>org.kevoree.slides.framework</artifactId>
             <version>${kevoree.version}</version>
         </dependency>
     </dependencies>

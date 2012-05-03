@@ -1,8 +1,7 @@
 package org.kevoree.slides.annotation;
 
 import org.kevoree.annotation.ComponentType;
-import org.kevoree.annotation.Library;
-import org.kevoree.slides.template.KevoreeSlidesShowerTemplate;
+import org.kevoree.slides.framework.KevoreeSlidePage;
 
 /**
  * User: Erwan Daubert - erwan.daubert@gmail.com
@@ -12,7 +11,6 @@ import org.kevoree.slides.template.KevoreeSlidesShowerTemplate;
  * @author Erwan Daubert
  * @version 1.0
  */
-@Library(name = "slideshow")
 @ComponentType
-public class AnnotationSlides extends KevoreeSlidesShowerTemplate {
+public class AnnotationSlides extends KevoreeSlidePage {
 }

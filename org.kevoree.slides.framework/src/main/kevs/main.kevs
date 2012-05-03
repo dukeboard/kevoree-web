@@ -4,15 +4,14 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChan
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.framework/{kevoree.version}"
 
-addNode node0 : JavaSENode {logLevel = "DEBUG"}
+addNode node0 : JavaSENode {logLevel = "WARN"}
 addComponent webSrv@node0 : KTinyWebServer
-addComponent annotationSlides@node0 : AnnotationSlidesDev { urlpattern="/",templateFolder="{basedir}/src/main/resources/"}
+addComponent annotationSlides@node0 : KevoreeSlidePageDev { urlpattern="/",templateFolder="{basedir}/src/main/resources/"}
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req
 bind annotationSlides.request@node0 => req
 bind annotationSlides.content@node0 => res
 bind webSrv.response@node0 => res
-
 addGroup sync : NanoRestGroup
 addToGroup sync node0

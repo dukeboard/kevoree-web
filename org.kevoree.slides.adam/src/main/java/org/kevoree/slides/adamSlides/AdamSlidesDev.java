@@ -1,9 +1,8 @@
 package org.kevoree.slides.adamSlides;
 
 import org.kevoree.annotation.*;
-import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
-import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
-import org.kevoree.slides.template.KevoreeSlidesShowerTemplateDev;
+import org.kevoree.slides.framework.KevoreeSlidePageDev;
+
 
 import java.io.File;
 
@@ -15,27 +14,8 @@ import java.io.File;
  * @author Erwan Daubert
  * @version 1.0
  */
-@Library(name = "slideshow")
 @ComponentType
-@DictionaryType({@DictionaryAttribute(name = "folder")})
-public class AdamSlidesDev extends KevoreeSlidesShowerTemplateDev {
+public class AdamSlidesDev extends KevoreeSlidePageDev {
 
-	private File devDirectory;
 
-	@Start
-	public void startPage () {
-		super.startPage();
-		File f1 = new File((String) super.getDictionary().get("folder"));
-		if (f1.isDirectory()) {
-			devDirectory = f1;
-		}
-	}
-
-	@Override
-	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
-		if (!load(request, response, devDirectory.getAbsolutePath())) {
-			super.process(request, response);
-		}
-		return response;
-	}
 }
