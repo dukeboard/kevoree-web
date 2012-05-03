@@ -14,29 +14,39 @@ import java.util.Set;
  */
 public class BroadCastConf extends BaseWebSocketHandler {
 
-    private int connectionCount;
     private Set<WebSocketConnection> connections = new HashSet<WebSocketConnection>();
+    private static String keynoteID = "KEYID";
+    private static String joinID = "JOIN";
 
     @Override
     public void onOpen(WebSocketConnection connection) throws Exception {
         connections.add(connection);
     }
 
-    private void broadcast(String msg) {
+    private void broadcast(String msg, WebSocketConnection conn, String roomID) {
         for (WebSocketConnection connection : connections) {
-            connection.send(msg);
+            if (!connection.equals(conn)) {
+                if (connection.data(keynoteID) != null && connection.data(keynoteID).toString().equals(roomID)) {
+                    connection.send(msg);
+                }
+            }
         }
     }
-
 
     @Override
     public void onClose(WebSocketConnection connection) throws Exception {
         connections.remove(connection);
     }
 
-
     public void onMessage(WebSocketConnection connection, String message) {
-       broadcast(message);
+        System.out.println("on msg "+message);
+        if (connection.data(keynoteID) != null) {
+            broadcast(message, connection, connection.data(keynoteID).toString());
+        } else {
+            if(message.contains(joinID)){
+                connection.data(keynoteID,message.replace(keynoteID,""));
+            }
+        }
     }
 
 }

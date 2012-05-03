@@ -24,11 +24,10 @@ public class WsServer extends AbstractComponentType {
     @Start
     public void startServer(){
         webServer = WebServers.createWebServer(8092)
-                .add("/bws", new BroadCastConf())
-                .add(new StaticFileHandler("/web"));
+                .add("/keynote", new BroadCastConf())
+                .add(new StaticFileHandler("/keynote"));
         webServer.start();
         System.out.println("Server running at " + webServer.getUri());
-
     }
     @Stop
     public void stopServer(){
