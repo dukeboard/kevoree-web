@@ -1,0 +1,10 @@
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.ws/{kevoree.version}"
+
+addNode node0 : JavaSENode {logLevel = "DEBUG"}
+addComponent webSrv@node0 : WsServer
+
+addGroup sync : NanoRestGroup
+addToGroup sync node0

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.kevoree.web</groupId>
+        <artifactId>org.kevoree.web.root</artifactId>
+        <version>1.7.0-SNAPSHOT</version>
+        <relativePath>../org.kevoree.web.root/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>org.kevoree.slides.ws</artifactId>
+    <name>Kevoree :: Slideshow :: WebSocket</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.kevoree.tools</groupId>
+            <artifactId>org.kevoree.tools.javase.framework</artifactId>
+            <version>${kevoree.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kevoree.tools</groupId>
+            <artifactId>org.kevoree.tools.annotation.api</artifactId>
+            <version>${kevoree.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webbitserver</groupId>
+            <artifactId>webbit</artifactId>
+            <version>0.4.7</version>
+        </dependency>
+    </dependencies>
+
+</project>
