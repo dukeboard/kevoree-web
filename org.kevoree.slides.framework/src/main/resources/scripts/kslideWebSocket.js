@@ -28,12 +28,5 @@ ws.onmessage = function (aEvent) {
         goToSlide(argv[1]);
     }
 };
-//history.pushState(null, null, url.pathname + '?full' + getSlideHash(0));
-//enterSlideMode();
-/*var evt = document.createEvent("KeyboardEvent");
-evt.initKeyEvent("keypress", true, true, window, 0, 0, 0, 0, 0, 13);
-body.dispatchEvent(evt);
-*/
 nav= false;
 window.postMessage("FULL", "*");
-//goToSlide(0);
