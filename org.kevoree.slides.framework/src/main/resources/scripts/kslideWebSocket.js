@@ -34,6 +34,12 @@ ws.onmessage = function (aEvent) {
 evt.initKeyEvent("keypress", true, true, window, 0, 0, 0, 0, 0, 13);
 body.dispatchEvent(evt);
 */
-nav= false;
+//nav= false;
+
+document.removeEventListener('touchstart', touchStartEvent, false);
+document.removeEventListener('touchmove', touchMoveEvent, false);
+document.removeEventListener('touchend', dispatchSingleSlideModeFromEvent, false);
+document.removeEventListener('click', dispatchSingleSlideModeFromEvent, false);
+document.removeEventListener('keydown', keyEventListener, false);
 window.postMessage("FULL", "*");
-//goToSlide(0);
+

@@ -242,6 +242,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 }, false);
 
+
 window.addEventListener('popstate', function (e) {
     if (isListMode()) {
         enterListMode();
@@ -257,9 +258,8 @@ window.addEventListener('resize', function (e) {
     }
 }, false);
 
-
-document.addEventListener('keydown', function (e) {
-    if (!nav) {return;}
+function keyEventListener (e) {
+//    if (!nav) {return;}
     // Shortcut for alt, shift and meta keys
     if (e.altKey || e.ctrlKey || e.metaKey) {
         return;
@@ -333,12 +333,9 @@ document.addEventListener('keydown', function (e) {
         default:
         // Behave as usual
     }
-}, false);
+}
 
-document.addEventListener('click', dispatchSingleSlideModeFromEvent, false);
-document.addEventListener('touchend', dispatchSingleSlideModeFromEvent, false);
-
-document.addEventListener('touchstart', function (e) {
+function touchStartEvent (e) {
     if (!isListMode()) {
         var currentSlideNumber = getCurrentSlideNumber(),
             x = e.touches[0].pageX;
@@ -350,13 +347,17 @@ document.addEventListener('touchstart', function (e) {
 
         goToSlide(currentSlideNumber);
     }
-}, false);
-
-document.addEventListener('touchmove', function (e) {
+}
+function touchMoveEvent (e) {
     if (!isListMode()) {
         e.preventDefault();
     }
-}, false);
+}
+document.addEventListener('touchstart', touchStartEvent, false);
+document.addEventListener('touchmove', touchMoveEvent, false);
+document.addEventListener('touchend', dispatchSingleSlideModeFromEvent, false);
+document.addEventListener('click', dispatchSingleSlideModeFromEvent, false);
+document.addEventListener('keydown', keyEventListener, false);
 
 // function that allow to interact with display script
 
