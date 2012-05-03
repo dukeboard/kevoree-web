@@ -287,6 +287,6 @@ function connectWS () {
         ws.onmessage = function (aEvent) {
 
         };
-        alert(slideURL + "ws/"+roomId)
+        alert(slideURL + "ws"+roomId)
     }
 }

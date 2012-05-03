@@ -51,25 +51,20 @@ public class KevoreeSlidePage extends ParentAbstractPage {
                 logger.error("", e);
             }
         }
-		boolean isWS = false;
-        String roomID = getLastParam(request.getUrl()).replace("ws/","");
-		if (getLastParam(request.getUrl()).contains("ws/")) {
-			isWS = true;
-		}
+        if (getLastParam(request.getUrl()).contains("ws")) {
+            try {
+                String roomID = getLastParam(request.getUrl()).replace("ws","");
+                String newScript = "<script>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}",roomID).replace("{wsurl}",getDictionary().get("wsurl").toString()) + "</script></body>";
+                response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream(getDictionary().get("main").toString())));
+                response.setRawContent(new String(response.getRawContent()).replace("</body>", newScript).getBytes());
+                response.getHeaders().put("Content-Type", "text/html");
+                return response;
+            } catch (Exception e) {
+                logger.error("", e);
+            }
+        }
 		if (!load(request, response)) {
 			response.setStatus(404);
-		}
-		if (isWS) {
-			try {
-				response.setRawContent(new String(response.getRawContent()).replace("</body>",
-						"<script>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}",roomID).replace("{wsurl}",getDictionary().get("wsurl").toString()) + "</script></body>")
-						.getBytes());
-				response.getHeaders().put("Content-Type", "text/html");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace(); // TODO log
-			} catch (Exception e) {
-				e.printStackTrace(); // TODO log
-			}
 		}
 		return response;
 	}
