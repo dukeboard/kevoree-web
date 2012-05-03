@@ -7,19 +7,22 @@ var view = null,
 /* Get url from hash or prompt and store it */
 
 function getUrl () {
-    var u = window.location.hash.split("#")[1];
-    if (!u) {
-        u = window.prompt("What is the URL of the slides?");
-        if (u) {
-            window.location.hash = u.split("#")[0];
-            return u;
+
+    if (typeof(slideURL) == 'undefined') {
+        slideURL = window.prompt("What is the URL of the slides?");
+        if (slideURL) {
+            window.location.hash = slideURL.split("#")[0];
+            return slideURL;
         }
-        u = "<style>body{background-color:white;color:black}</style>";
-        u += "<strong>ERROR:</strong> No URL specified.<br>";
-        u += "Try<em>: " + document.location + "#yourslides.html</em>";
-        u = "data:text/html," + encodeURIComponent(u);
+        slideURL = "<style>body{background-color:white;color:black}</style>";
+        slideURL += "<strong>ERROR:</strong> No URL specified.<br>";
+        slideURL += "Try<em>: " + document.location + "#yourslides.html</em>";
+        slideURL = "data:text/html," + encodeURIComponent(slideURL);
     }
-    return u + "?full";
+
+    return slideURL + "?full";
+
+
 }
 
 function loadIFrame () {
