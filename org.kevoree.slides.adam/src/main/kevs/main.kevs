@@ -2,13 +2,12 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
-merge "mvn:org.kevoree.web/org.kevoree.slides.adam/{kevoree.version}"
-merge "mvn:org.kevoree.web/org.kevoree.slides.display/{kevoree.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.framework/{kevoree.version}"
 
 addNode node0 : JavaSENode {logLevel = "DEBUG"}
 
 addComponent webSrv@node0 : KTinyWebServer
-addComponent adamSlides@node0 : AdamSlidesDev { urlpattern="/slides",folder="{basedir}/src/main/resources/",templateFolder="{basedir}/../org.kevoree.slides.template/src/main/resources/"}
+addComponent adamSlides@node0 : AdamSlidesDev { urlpattern="/slides",templateFolder="{basedir}/../org.kevoree.slides.template/src/main/resources/"}
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req
