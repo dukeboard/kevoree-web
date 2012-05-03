@@ -19,16 +19,20 @@ import java.io.UnsupportedEncodingException;
 
 @Library(name = "KevoreeWeb")
 @ComponentType
-@DictionaryType({@DictionaryAttribute(name = "main", defaultValue = "index.html")})
+@DictionaryType({
+        @DictionaryAttribute(name = "main", defaultValue = "index.html"),
+        @DictionaryAttribute(name = "wsurl", defaultValue = "ws://localhost:8092/keynote", optional = true)
+})
 public class KevoreeSlidePage extends ParentAbstractPage {
 
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
-		if (getLastParam(request.getUrl()).equals("pres")) {
+		if (getLastParam(request.getUrl()).equals("keynote")) {
 			try {
-				String slideURL = request.getUrl().replace("pres", "");
+				String slideURL = request.getUrl().replace("keynote", "");
 				response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("display.html")));
 				response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
+                response.setRawContent(new String(response.getRawContent()).replace("ws://localhost:8092/keynote", getDictionary().get("wsurl").toString()).getBytes());
 				response.getHeaders().put("Content-Type", "text/html");
 			} catch (Exception e) {
 				logger.error("", e);
