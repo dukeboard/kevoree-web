@@ -28,7 +28,6 @@ ws.onmessage = function (aEvent) {
         goToSlide(argv[1]);
     }
 };
-nav= false;
 
 document.removeEventListener('touchstart', touchStartEvent, false);
 document.removeEventListener('touchmove', touchMoveEvent, false);
