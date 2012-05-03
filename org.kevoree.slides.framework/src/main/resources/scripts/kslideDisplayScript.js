@@ -1,3 +1,5 @@
+
+
 var views = {
         id:null,
         present:null,
@@ -11,6 +13,8 @@ var views = {
 
 /* Get url from hash or prompt and store it */
 function getUrl () {
+	
+	/*
     var u = window.location.hash.split("#")[1];
     if (!u) {
         u = window.prompt("What is the URL of the slides?");
@@ -24,6 +28,11 @@ function getUrl () {
         u = "data:text/html," + encodeURIComponent(u);
     }
     return u + "?full";
+    */
+    
+    return slideURL+ "?full";
+    
+    
 }
 
 function loadIframes () {

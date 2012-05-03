@@ -22,6 +22,16 @@ public class KevoreeSlidePage extends ParentAbstractPage {
 
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+        if(getLastParam(request.getUrl()).equals("pres")){
+            try {
+                String slideURL = request.getUrl().replace("pres","");
+                response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("display.html")));
+                response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
+                response.getHeaders().put("Content-Type","text/html");
+            } catch (Exception e) {
+                logger.error("",e);
+            }
+        }
 		if (!load(request, response)) {
 			response.setStatus(404);
 		}
