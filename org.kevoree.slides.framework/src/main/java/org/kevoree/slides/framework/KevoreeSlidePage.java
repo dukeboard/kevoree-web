@@ -1,12 +1,13 @@
 package org.kevoree.slides.framework;
 
-import org.kevoree.annotation.*;
+import org.kevoree.annotation.ComponentType;
+import org.kevoree.annotation.DictionaryAttribute;
+import org.kevoree.annotation.DictionaryType;
+import org.kevoree.annotation.Library;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
 import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
 import org.kevoree.library.javase.webserver.ParentAbstractPage;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * User: Erwan Daubert - erwan.daubert@gmail.com
@@ -57,6 +58,7 @@ public class KevoreeSlidePage extends ParentAbstractPage {
                 String newScript = "<script>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}",roomID).replace("{wsurl}",getDictionary().get("wsurl").toString()) + "</script></body>";
                 response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream(getDictionary().get("main").toString())));
                 response.setRawContent(new String(response.getRawContent()).replace("</body>", newScript).getBytes());
+				response.setRawContent(new String(response.getRawContent()).replace("</body>", "<style>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("styles/kslideEmbedder.css")), "UTF-8") + "</style></body>").getBytes());
                 response.getHeaders().put("Content-Type", "text/html");
                 return response;
             } catch (Exception e) {
