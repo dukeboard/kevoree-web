@@ -127,17 +127,11 @@
             enterSlideMode();
             if (slideList[getCurrentSlideNumber()].hasInnerNavigation) {
                 // fix active inner transition => may introduce overhead
-                var activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next .active');
-
-                while (activeNodes.length > 1) {
-                    var currentNode = activeNodes[activeNodes.length - 1];
-                    var previousNode = currentNode.previousElementSibling;
-
-                    if (previousNode) {
-                        currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
-                        previousNode.className = previousNode.className + " .active";
+                var activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next');
+                for (var i = 0, ii = activeNodes.length; i < ii; i++) {
+                    if (activeNodes[i].className.indexOf("active") != -1) {
+                        activeNodes[i].className = activeNodes[i].className.substring(0, activeNodes[i].className.length - " active".length);
                     }
-                    activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' active');
                 }
                 activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next');
                 activeNodes[0].className = activeNodes[0].className + ' active';
@@ -158,17 +152,11 @@
             slideNumber++;
             // fix active inner transition => may introduce overhead
             if (slideList[slideNumber].hasInnerNavigation) {
-                var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next .active');
-
-                while (activeNodes.length > 1) {
-                    var currentNode = activeNodes[activeNodes.length - 1];
-                    var previousNode = currentNode.previousElementSibling;
-
-                    if (previousNode) {
-                        currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
-                        previousNode.className = previousNode.className + " .active";
+                var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next');
+                for (var i = 0, ii = activeNodes.length; i < ii; i++) {
+                    if (activeNodes[i].className.indexOf("active") != -1) {
+                        activeNodes[i].className = activeNodes[i].className.substring(0, activeNodes[i].className.length - " active".length);
                     }
-                    activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' active');
                 }
                 activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next');
                 activeNodes[0].className = activeNodes[0].className + ' active';
@@ -233,21 +221,14 @@
             if (-1 === getCurrentSlideNumber()) {
                 history.replaceState(null, null, url.pathname + '?full' + getSlideHash(0));
             }
-
             enterSlideMode();
             if (slideList[getCurrentSlideNumber()].hasInnerNavigation) {
                 // fix active inner transition => may introduce overhead
-                var activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next .active');
-
-                while (activeNodes.length > 1) {
-                    var currentNode = activeNodes[activeNodes.length - 1];
-                    var previousNode = currentNode.previousElementSibling;
-
-                    if (previousNode) {
-                        currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
-                        previousNode.className = previousNode.className + " .active";
+                var activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next');
+                for (var i = 0, ii = activeNodes.length; i < ii; i++) {
+                    if (activeNodes[i].className.indexOf("active") != -1) {
+                        activeNodes[i].className = activeNodes[i].className.substring(0, activeNodes[i].className.length - " active".length);
                     }
-                    activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' active');
                 }
                 activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next');
                 activeNodes[0].className = activeNodes[0].className + ' active';
@@ -445,9 +426,10 @@
                 enterSlideMode();
                 updateProgress(getCurrentSlideNumber());
             }
-        }/* else if () {
+        }
+        /* else if () {
 
-        }*/
+         }*/
     };
 
     /*window.addEventListener("hashchange", function () {
