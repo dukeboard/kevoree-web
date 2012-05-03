@@ -9,6 +9,8 @@ import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
 import org.kevoree.library.javase.webserver.ParentAbstractPage;
 
+import java.io.InputStream;
+
 /**
  * User: Erwan Daubert - erwan.daubert@gmail.com
  * Date: 30/04/12
@@ -26,12 +28,16 @@ import org.kevoree.library.javase.webserver.ParentAbstractPage;
 })
 public class KevoreeSlidePage extends ParentAbstractPage {
 
+    protected InputStream loadInternal(String name){
+        return getClass().getClassLoader().getResourceAsStream(name);
+    }
+
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
 		if (getLastParam(request.getUrl()).equals("keynote")) {
 			try {
 				String slideURL = request.getUrl().replace("keynote", "");
-				response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("display.html")));
+				response.setRawContent(FileServiceHelper.convertStream(loadInternal("display.html")));
 				response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
                 response.setRawContent(new String(response.getRawContent()).replace("ws://localhost:8092/keynote", getDictionary().get("wsurl").toString()).getBytes());
 				response.getHeaders().put("Content-Type", "text/html");
@@ -44,7 +50,7 @@ public class KevoreeSlidePage extends ParentAbstractPage {
         if (getLastParam(request.getUrl()).equals("embed")) {
             try {
                 String slideURL = request.getUrl().replace("embed", "");
-                response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("embedder.html")));
+                response.setRawContent(FileServiceHelper.convertStream(loadInternal("embedder.html")));
                 response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
                 response.getHeaders().put("Content-Type", "text/html");
                 return response;
@@ -55,9 +61,10 @@ public class KevoreeSlidePage extends ParentAbstractPage {
         if (getLastParam(request.getUrl()).contains("ws")) {
             try {
                 String roomID = getLastParam(request.getUrl()).replace("ws","");
-                String newScript = "<script>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}",roomID).replace("{wsurl}",getDictionary().get("wsurl").toString()) + "</script></body>".replace("</body>", "<style>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("styles/kstyleEmbedder.css")), "UTF-8") + "</style></body>");
-                response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream(getDictionary().get("main").toString())));
+                String newScript = "<script>" + new String(FileServiceHelper.convertStream(loadInternal("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}",roomID).replace("{wsurl}",getDictionary().get("wsurl").toString()) + "</script></body>";
+                response.setRawContent(FileServiceHelper.convertStream(loadInternal(getDictionary().get("main").toString())));
                 response.setRawContent(new String(response.getRawContent()).replace("</body>", newScript).getBytes());
+				response.setRawContent(new String(response.getRawContent()).replace("</body>", "<style>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("styles/kslideEmbedder.css")), "UTF-8") + "</style></body>").getBytes());
                 response.getHeaders().put("Content-Type", "text/html");
                 return response;
             } catch (Exception e) {
