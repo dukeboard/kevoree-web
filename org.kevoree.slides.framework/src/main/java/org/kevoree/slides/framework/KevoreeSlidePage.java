@@ -34,14 +34,27 @@ public class KevoreeSlidePage extends ParentAbstractPage {
 				response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
                 response.setRawContent(new String(response.getRawContent()).replace("ws://localhost:8092/keynote", getDictionary().get("wsurl").toString()).getBytes());
 				response.getHeaders().put("Content-Type", "text/html");
+                return response;
 			} catch (Exception e) {
 				logger.error("", e);
 			}
 		}
+
+        if (getLastParam(request.getUrl()).equals("embed")) {
+            try {
+                String slideURL = request.getUrl().replace("embed", "");
+                response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("embedder.html")));
+                response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
+                response.getHeaders().put("Content-Type", "text/html");
+                return response;
+            } catch (Exception e) {
+                logger.error("", e);
+            }
+        }
 		boolean isWS = false;
-		if (getLastParam(request.getUrl()).equals("ws")) {
+        String roomID = getLastParam(request.getUrl()).replace("ws/","");
+		if (getLastParam(request.getUrl()).contains("ws/")) {
 			isWS = true;
-			String slideURL = request.getUrl().replace("ws", "");
 		}
 		if (!load(request, response)) {
 			response.setStatus(404);
@@ -49,9 +62,8 @@ public class KevoreeSlidePage extends ParentAbstractPage {
 		if (isWS) {
 			try {
 				response.setRawContent(new String(response.getRawContent()).replace("</body>",
-						"<script>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("scripts/kslideWebSocket.js")), "UTF-8") + "</script></body>")
+						"<script>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}",roomID).replace("{wsurl}",getDictionary().get("wsurl").toString()) + "</script></body>")
 						.getBytes());
-				response.setRawContent(new String(response.getRawContent()).replace("ws://localhost:8092/bws", "ws://duke.irisa.fr:8092/bws"/*, wsURL*/).getBytes());
 				response.getHeaders().put("Content-Type", "text/html");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace(); // TODO log

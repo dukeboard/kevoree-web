@@ -1,7 +1,7 @@
-var ws = new WebSocket('ws://localhost:8092/keynote');
+var ws = new WebSocket('{wsurl}');
 ws.onopen = function (e) {
     console.log('* Connected!');
-    ws.send("JOIN"); // TODO replace by an id
+    ws.send("JOIN{roomID}"); // TODO replace by an id
 };
 ws.onclose = function (e) {
     console.log('* Disconnected');
