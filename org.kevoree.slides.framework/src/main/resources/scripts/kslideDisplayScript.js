@@ -1,5 +1,3 @@
-
-
 var views = {
         id:null,
         present:null,
@@ -13,8 +11,8 @@ var views = {
 
 /* Get url from hash or prompt and store it */
 function getUrl () {
-	
-    if(typeof(slideURL)=='undefined'){
+
+    if (typeof(slideURL) == 'undefined') {
         slideURL = window.prompt("What is the URL of the slides?");
         if (slideURL) {
             window.location.hash = slideURL.split("#")[0];
@@ -26,9 +24,9 @@ function getUrl () {
         slideURL = "data:text/html," + encodeURIComponent(slideURL);
     }
 
-    return slideURL+ "?full";
-    
-    
+    return slideURL + "?full";
+
+
 }
 
 function loadIframes () {
@@ -195,6 +193,9 @@ window.onmessage = function (aEvent) {
     });
     if (argv[0] === "CURSOR" && argc === 2) {
         if (aEvent.source === views.present && argv[1] != -1) {
+            if (views.currentSlide != argv[1]) {
+                ws.send("SET_CURSOR " + argv[1])
+            }
             views.currentSlide = argv[1];
             document.querySelector("#slideidx").innerHTML = +argv[1] == (views.nbSlides - 1) ? "END" : (+argv[1] + 1);
         } else if (aEvent.source === views.future) {
@@ -253,4 +254,26 @@ window.onmessage = function (aEvent) {
 window.onunload = function () {
     views.remote.close();
 };
+var ws = null
 
+
+function connectWS () {
+    var roomId = window.prompt("Keynote id:");
+    if (roomId) {
+        ws = new WebSocket('ws://duke.irisa.fr:8092/keynote');
+        ws.onopen = function (e) {
+            console.log('* Connected!');
+            ws.send("JOIN" + roomId); // TODO replace by an id
+        };
+        ws.onclose = function (e) {
+            console.log('* Disconnected');
+        };
+        ws.onerror = function (e) {
+            console.log('* Unexpected error');
+        };
+        ws.onmessage = function (aEvent) {
+
+        };
+        alert(slideURL + "ws/"+roomId)
+    }
+}

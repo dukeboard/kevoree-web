@@ -6,6 +6,8 @@ import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
 import org.kevoree.library.javase.webserver.ParentAbstractPage;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * User: Erwan Daubert - erwan.daubert@gmail.com
  * Date: 30/04/12
@@ -22,18 +24,36 @@ public class KevoreeSlidePage extends ParentAbstractPage {
 
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
-        if(getLastParam(request.getUrl()).equals("pres")){
-            try {
-                String slideURL = request.getUrl().replace("pres","");
-                response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("display.html")));
-                response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
-                response.getHeaders().put("Content-Type","text/html");
-            } catch (Exception e) {
-                logger.error("",e);
-            }
-        }
+		if (getLastParam(request.getUrl()).equals("pres")) {
+			try {
+				String slideURL = request.getUrl().replace("pres", "");
+				response.setRawContent(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("display.html")));
+				response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
+				response.getHeaders().put("Content-Type", "text/html");
+			} catch (Exception e) {
+				logger.error("", e);
+			}
+		}
+		boolean isWS = false;
+		if (getLastParam(request.getUrl()).equals("ws")) {
+			isWS = true;
+			String slideURL = request.getUrl().replace("ws", "");
+		}
 		if (!load(request, response)) {
 			response.setStatus(404);
+		}
+		if (isWS) {
+			try {
+				response.setRawContent(new String(response.getRawContent()).replace("</body>",
+						"<script>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("scripts/kslideWebSocket.js")), "UTF-8") + "</script></body>")
+						.getBytes());
+				response.setRawContent(new String(response.getRawContent()).replace("ws://localhost:8092/bws", "ws://duke.irisa.fr:8092/bws"/*, wsURL*/).getBytes());
+				response.getHeaders().put("Content-Type", "text/html");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace(); // TODO log
+			} catch (Exception e) {
+				e.printStackTrace(); // TODO log
+			}
 		}
 		return response;
 	}

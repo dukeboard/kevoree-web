@@ -20,6 +20,7 @@
 
 <div id="slidecount">?</div>
 <button id="popup-button" onclick="popup()">Pop-up</button>
+<button id="keynoteButton" onclick="connectWS()">Keynote</button>
 
 <div id="time">
     <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
@@ -133,7 +134,7 @@
     }
 
     #popup-button {
-        bottom: 88px;
+        bottom: 115px;
         background: #888;
         border: none;
         border-radius: 10px;
@@ -146,6 +147,21 @@
         right: 20px;
         width: 200px;
         z-index: 10;
+    }
+    #keynoteButton {
+            bottom: 58px;
+            background: #888;
+            border: none;
+            border-radius: 10px;
+            color: #FFF;
+            cursor: pointer;
+            height: 52px;
+            font-size: 30px;
+            font-weight: bold;
+            position: absolute;
+            right: 20px;
+            width: 200px;
+            z-index: 10;
     }
 </style>
 <script language="JavaScript">
