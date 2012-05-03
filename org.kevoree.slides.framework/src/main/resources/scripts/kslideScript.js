@@ -3,7 +3,8 @@ var url = window.location,
     slides = document.querySelectorAll('.slide'),
     progress = document.querySelector('div.progress div'),
     slideList = [],
-    l = slides.length, i;
+    l = slides.length, i,
+    nav = true;
 
 for (i = 0; i < l; i++) {
     // Slide ID's are optional. In case of missing ID we set it to the slide number
@@ -114,12 +115,17 @@ function getContainingSlideId (el) {
     return '';
 }
 
-function dispatchSingleSlideMode (e) {
+function dispatchSingleSlideModeFromEvent (e) {
     var slideId = getContainingSlideId(e.target);
-
     if ('' !== slideId && isListMode()) {
         e.preventDefault();
+        dispatchSingleSlideMode(slideId)
+    }
+}
 
+function dispatchSingleSlideMode (slideId) {
+
+    if ('' !== slideId && isListMode()) {
         // NOTE: we should update hash to get things work properly
         url.hash = '#' + slideId;
         history.replaceState(null, null, url.pathname + '?full#' + slideId);
@@ -251,7 +257,9 @@ window.addEventListener('resize', function (e) {
     }
 }, false);
 
+
 document.addEventListener('keydown', function (e) {
+    if (!nav) {return;}
     // Shortcut for alt, shift and meta keys
     if (e.altKey || e.ctrlKey || e.metaKey) {
         return;
@@ -327,8 +335,8 @@ document.addEventListener('keydown', function (e) {
     }
 }, false);
 
-document.addEventListener('click', dispatchSingleSlideMode, false);
-document.addEventListener('touchend', dispatchSingleSlideMode, false);
+document.addEventListener('click', dispatchSingleSlideModeFromEvent, false);
+document.addEventListener('touchend', dispatchSingleSlideModeFromEvent, false);
 
 document.addEventListener('touchstart', function (e) {
     if (!isListMode()) {
@@ -355,13 +363,6 @@ document.addEventListener('touchmove', function (e) {
 function notifyCurrentSlideNumber (message, args) {
     if (window.opener != null) {
         postMsg(window.opener, message, args);
-    }
-    if (typeof(ws) != 'undefined') {
-        var aMsg = [message, args];
-        for (var i = 2; i < arguments.length; i++) {
-            aMsg.push(encodeURIComponent(arguments[i]));
-        }
-        ws.send(aMsg.join(" "))
     }
 }
 
@@ -428,24 +429,12 @@ window.onmessage = function (aEvent) {
         }
     } else if (argv[0] === "FULL" && argc === 1) {
         if (isListMode()) {
-            history.pushState(null, null, url.pathname + '?full' + getSlideHash(getCurrentSlideNumber()));
-            enterSlideMode();
-            updateProgress(getCurrentSlideNumber());
+            var slideNumber = getCurrentSlideNumber()
+            if (slideNumber == -1) {
+                slideNumber = 0;
+            }
+            dispatchSingleSlideMode(slideList[slideNumber].id)
         }
     }
-    /* else if () {
-
-     }*/
 };
-
-/*window.addEventListener("hashchange", function () {
- if (slideList[getCurrentSlideNumber()].hasInnerNavigation) {
- var activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next');
- activeNodes[0].className = activeNodes[0].className + ' active';
- }
- }, true);*/
-
-//    window.addEventListener("") //
-
-
 

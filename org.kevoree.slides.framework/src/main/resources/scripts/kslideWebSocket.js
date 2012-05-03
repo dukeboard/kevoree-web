@@ -1,9 +1,7 @@
-
-
 var ws = new WebSocket('{wsurl}');
 ws.onopen = function (e) {
     console.log('* Connected!');
-    ws.send("JOIN{roomID}"); // TODO replace by an id
+    ws.send("JOIN{roomID}");
 };
 ws.onclose = function (e) {
     console.log('* Disconnected');
@@ -30,4 +28,12 @@ ws.onmessage = function (aEvent) {
         goToSlide(argv[1]);
     }
 };
-enterSlideMode();
+//history.pushState(null, null, url.pathname + '?full' + getSlideHash(0));
+//enterSlideMode();
+/*var evt = document.createEvent("KeyboardEvent");
+evt.initKeyEvent("keypress", true, true, window, 0, 0, 0, 0, 0, 13);
+body.dispatchEvent(evt);
+*/
+nav= false;
+window.postMessage("FULL", "*");
+//goToSlide(0);
