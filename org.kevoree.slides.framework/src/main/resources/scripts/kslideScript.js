@@ -379,15 +379,20 @@
     }
 
     function getDetails (slideNumber) {
-        try {
-            // the nth equals slideNumber+1 because the slide 0 is the first
-            slideNumber++;
-            var activeNodes = document.querySelectorAll(".slide:nth-of-type(" + slideNumber + ")");
-            var d = activeNodes[activeNodes.length - 1].querySelector("details");
-        } catch (e) {
-            alert("Unable to get DOMElement.\nPlease check special characters on the id: " + getSlideHash(slideNumber))
+        if (document.body.className == "full") {
+            try {
+                // the nth equals slideNumber+1 because the slide 0 is the first
+                slideNumber++;
+                var activeNodes = document.querySelectorAll(".slide:nth-of-type(" + slideNumber + ")");
+                var d = activeNodes[activeNodes.length - 1].querySelector("details");
+            } catch (e) {
+                alert("Unable to get DOMElement.\nPlease check special characters on the id: " + getSlideHash(slideNumber))
+            }
+            return d ? d.innerHTML : "";
+        } else {
+            return "";
         }
-        return d ? d.innerHTML : "";
+
     }
 
     function postMsg (aWin, aMsg) { // [arg0, [arg1...]]
@@ -428,7 +433,21 @@
             postMsg(win, "CURSOR", getCurrentSlideNumber());
         } else if (argv[0] === "GET_NOTES" && argc === 1) {
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
-        }
+        } else if (argv[0] === "LIST" && argc === 1) {
+            if (!isListMode()) {
+                history.pushState(null, null, url.pathname + getSlideHash(getCurrentSlideNumber()));
+                enterListMode();
+                scrollToCurrentSlide();
+            }
+        } else if (argv[0] === "FULL" && argc === 1) {
+            if (isListMode()) {
+                history.pushState(null, null, url.pathname + '?full' + getSlideHash(getCurrentSlideNumber()));
+                enterSlideMode();
+                updateProgress(getCurrentSlideNumber());
+            }
+        }/* else if () {
+
+        }*/
     };
 
     /*window.addEventListener("hashchange", function () {

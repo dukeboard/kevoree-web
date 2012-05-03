@@ -14,22 +14,18 @@ var views = {
 /* Get url from hash or prompt and store it */
 function getUrl () {
 	
-	/*
-    var u = window.location.hash.split("#")[1];
-    if (!u) {
-        u = window.prompt("What is the URL of the slides?");
-        if (u) {
-            window.location.hash = u.split("#")[0];
-            return u;
+    if(typeof(slideURL)=='undefined'){
+        slideURL = window.prompt("What is the URL of the slides?");
+        if (slideURL) {
+            window.location.hash = slideURL.split("#")[0];
+            return slideURL;
         }
-        u = "<style>body{background-color:white;color:black}</style>";
-        u += "<strong>ERROR:</strong> No URL specified.<br>";
-        u += "Try<em>: " + document.location + "#yourslides.html</em>";
-        u = "data:text/html," + encodeURIComponent(u);
+        slideURL = "<style>body{background-color:white;color:black}</style>";
+        slideURL += "<strong>ERROR:</strong> No URL specified.<br>";
+        slideURL += "Try<em>: " + document.location + "#yourslides.html</em>";
+        slideURL = "data:text/html," + encodeURIComponent(slideURL);
     }
-    return u + "?full";
-    */
-    
+
     return slideURL+ "?full";
     
     
@@ -59,7 +55,7 @@ function back () {
         if (moveFuture) {
             postMsg(views.future, "BACK");
         }
-        updateSlideNumbers(views.currentSlide - 1);
+        updateSlideNumbers();
         if (views.remote != null) {
             postMsg(views.remote, "BACK");
         }
@@ -71,7 +67,7 @@ function forward () {
     if (views.currentSlide != (views.nbSlides - 1)) {
         postMsg(views.present, "FORWARD");
         postMsg(views.future, "FORWARD");
-        updateSlideNumbers(views.currentSlide + 1);
+        updateSlideNumbers();
         if (views.remote != null) {
             postMsg(views.remote, "FORWARD");
         }
@@ -92,7 +88,7 @@ function goEnd () {
     postMsg(views.present, "END");
     postMsg(views.future, "END");
     postMsg(views.future, "FORWARD");
-    updateSlideNumbers(views.nbSlides - 1);
+    updateSlideNumbers();
     if (views.remote != null) {
         postMsg(views.remote, "END");
     }
@@ -123,7 +119,7 @@ function setCursor (aCursor) {
     if (views.remote != null) {
         postMsg(views.remote, "SET_CURSOR", aCursor);
     }
-    updateSlideNumbers(aCursor)
+    updateSlideNumbers()
 }
 
 function popup () {
