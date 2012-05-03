@@ -17,6 +17,7 @@
     <properties>
         <kevoree.include>*:*</kevoree.include>
         <kevoree.version>${project.version}</kevoree.version>
+        <kevoree.log.level>DEBUG</kevoree.log.level>
     </properties>
 
     <dependencies>
@@ -31,7 +32,7 @@
             <version>${kevoree.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.kevoree.library.javase</groupId>
+            <groupId>org.kevoree.corelibrary.javase</groupId>
             <artifactId>org.kevoree.library.javase.webserver.api</artifactId>
             <version>${kevoree.version}</version>
         </dependency>
