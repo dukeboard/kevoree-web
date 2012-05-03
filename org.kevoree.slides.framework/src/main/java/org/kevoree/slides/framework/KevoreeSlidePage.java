@@ -64,7 +64,7 @@ public class KevoreeSlidePage extends ParentAbstractPage {
                 String newScript = "<script>" + new String(FileServiceHelper.convertStream(loadInternal("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}",roomID).replace("{wsurl}",getDictionary().get("wsurl").toString()) + "</script></body>";
                 response.setRawContent(FileServiceHelper.convertStream(loadInternal(getDictionary().get("main").toString())));
                 response.setRawContent(new String(response.getRawContent()).replace("</body>", newScript).getBytes());
-				response.setRawContent(new String(response.getRawContent()).replace("</body>", "<style>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("styles/kslideEmbedder.css")), "UTF-8") + "</style></body>").getBytes());
+				//response.setRawContent(new String(response.getRawContent()).replace("</body>", "<style>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("styles/kslideEmbedder.css")), "UTF-8") + "</style></body>").getBytes());
                 response.getHeaders().put("Content-Type", "text/html");
                 return response;
             } catch (Exception e) {
