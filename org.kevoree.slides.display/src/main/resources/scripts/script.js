@@ -188,20 +188,16 @@ window.onmessage = function (aEvent) {
     argv.forEach(function (e, i, a) {
         a[i] = decodeURIComponent(e)
     });
-    if (argv[0] === "CURSOR" && (argc === 2 || argc === 3)) {
+    if (argv[0] === "CURSOR" && argc === 2) {
         if (aEvent.source === views.present && argv[1] != -1) {
             views.currentSlide = argv[1];
             document.querySelector("#slideidx").innerHTML = +argv[1] == (views.nbSlides - 1) ? "END" : (+argv[1] + 1);
-        } else if (aEvent.source === views.future /*&& argv[1] != -1*/) {
+        } else if (aEvent.source === views.future) {
             document.querySelector("#nextslideidx").innerHTML = +argv[1] < 0 || +argv[1] == (views.nbSlides - 1) ? "END" : (+argv[1] + 1);
         } else if (aEvent.source === views.remote) {
-            if (argc == 3) {
-                postMsg(views.present, "SET_CURSOR", argv[1], argv[2]);
-                postMsg(views.future, "SET_CURSOR", argv[1], argv[2]);
-            } else {
-                postMsg(views.present, "SET_CURSOR", argv[1]);
-                postMsg(views.future, "SET_CURSOR", argv[1]);
-            }
+            postMsg(views.present, "SET_CURSOR", argv[1]);
+            postMsg(views.future, "SET_CURSOR", argv[1]);
+
             postMsg(views.future, "FORWARD");
         }
     }
@@ -238,6 +234,11 @@ window.onmessage = function (aEvent) {
         if (argv[0] == "END") {
             postMsg(views.present, "END");
             postMsg(views.future, "END");
+        }
+        if (argv[0] == "SET_CURSOR") {
+            postMsg(views.present, "SET_CURSOR", argv[1]);
+            postMsg(views.future, "SET_CURSOR", argv[1]);
+            postMsg(views.future, "FORWARD");
         }
         updateSlideNumbers()
     }

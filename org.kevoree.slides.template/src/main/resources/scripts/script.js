@@ -127,7 +127,7 @@
 
             updateProgress(getCurrentSlideNumber());
             // used to synchronize with the display manager
-            notifyCurrentSlideNumber()
+            notifyCurrentSlideNumber("SET_CURSOR", getCurrentSlideNumber())
         }
     }
 
@@ -337,45 +337,10 @@
     }, false);
 
     // function that allow to interact with display script
-    function getInnerSlides (slideNumber) {
-        var length = 0;
-        if (slideList[slideNumber].hasInnerNavigation) {
-            length = document.querySelectorAll(getSlideHash(slideNumber) + ' .active').length;
-        }
-        return length;
-    }
 
-    function putInnerSlides (slideNumber, innerSlideNumber) {
-
-        if (slideList[slideNumber].hasInnerNavigation) {
-            var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next .active');
-
-            while (activeNodes.length > 1) {
-                var currentNode = activeNodes[activeNodes.length - 1];
-                var previousNode = currentNode.previousElementSibling;
-
-                if (previousNode) {
-                    currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
-                    previousNode.className = previousNode.className + " .active";
-                }
-                activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' active');
-            }
-            if (innerSlideNumber > 0) {
-                var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next');
-                if (innerSlideNumber > activeNodes.length - 1) {
-                    innerSlideNumber = activeNodes.length;
-                }
-                for (var i = 0; i < innerSlideNumber; i++) {
-                    activeNodes[i].className = activeNodes[i].className + ' active';
-                }
-            }
-        }
-    }
-
-
-    function notifyCurrentSlideNumber (message) {
+    function notifyCurrentSlideNumber (message, args) {
         if (window.opener != null) {
-            postMsg(window.opener, message/*, getCurrentSlideNumber(), getInnerSlides(getCurrentSlideNumber())*/);
+            postMsg(window.opener, message, args);
         }
     }
 
@@ -407,38 +372,26 @@
         var win = aEvent.source;
         if (argv[0] === "REGISTER" && argc === 1) {
             postMsg(win, "REGISTERED", document.title, slides.length);
-//            postMsg(win, "CURSOR", getCurrentSlideNumber());
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
         } else if (argv[0] === "BACK" && argc === 1) {
             goToPreviousSlide(getCurrentSlideNumber());
-//            postMsg(win, "CURSOR", getCurrentSlideNumber());
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
         } else if (argv[0] === "FORWARD" && argc === 1) {
             if (slideList.length > getCurrentSlideNumber() + 1) {
                 goToNextSlide(getCurrentSlideNumber());
-//                postMsg(win, "CURSOR", getCurrentSlideNumber());
                 postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
             }
-            /* else {
-             goToSlide(-1);
-             postMsg(win, "CURSOR", -1);
-             }*/
         } else if (argv[0] === "START" && argc === 1) {
             goToSlide(0);
-//            postMsg(win, "CURSOR", getCurrentSlideNumber());
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
         } else if (argv[0] === "END" && argc === 1) {
             goToSlide(slideList.length - 1);
-//            postMsg(win, "CURSOR", getCurrentSlideNumber());
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
-        } else if (argv[0] === "SET_CURSOR" && (argc === 2 || argc === 3)) {
+        } else if (argv[0] === "SET_CURSOR" && argc === 2) {
             goToSlide(argv[1]);
-            if (argc == 3) {
-                putInnerSlides(argv[1], argv[2]);
-            }
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
         } else if (argv[0] === "GET_CURSOR" && argc === 1) {
-            postMsg(win, "CURSOR", getCurrentSlideNumber(), getInnerSlides(getCurrentSlideNumber()));
+            postMsg(win, "CURSOR", getCurrentSlideNumber());
         } else if (argv[0] === "GET_NOTES" && argc === 1) {
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
         }
