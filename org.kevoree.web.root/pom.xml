@@ -17,6 +17,7 @@
         <module>../org.kevoree.slides.display</module>
         <module>../org.kevoree.slides.template</module>
         <module>../org.kevoree.slides.annotation</module>
+        <module>../org.kevoree.slides.adam</module>
     </modules>
 
     <properties>

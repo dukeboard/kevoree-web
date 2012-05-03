@@ -68,6 +68,7 @@
         }
     }
 
+
     function isListMode () {
         return 'full' !== url.search.substr(1);
     }
@@ -124,7 +125,23 @@
             url.hash = '#' + slideId;
             history.replaceState(null, null, url.pathname + '?full#' + slideId);
             enterSlideMode();
+            if (slideList[getCurrentSlideNumber()].hasInnerNavigation) {
+                // fix active inner transition => may introduce overhead
+                var activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next .active');
 
+                while (activeNodes.length > 1) {
+                    var currentNode = activeNodes[activeNodes.length - 1];
+                    var previousNode = currentNode.previousElementSibling;
+
+                    if (previousNode) {
+                        currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
+                        previousNode.className = previousNode.className + " .active";
+                    }
+                    activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' active');
+                }
+                activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next');
+                activeNodes[0].className = activeNodes[0].className + ' active';
+            }
             updateProgress(getCurrentSlideNumber());
             // used to synchronize with the display manager
             notifyCurrentSlideNumber("SET_CURSOR", getCurrentSlideNumber())
@@ -218,6 +235,23 @@
             }
 
             enterSlideMode();
+            if (slideList[getCurrentSlideNumber()].hasInnerNavigation) {
+                // fix active inner transition => may introduce overhead
+                var activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next .active');
+
+                while (activeNodes.length > 1) {
+                    var currentNode = activeNodes[activeNodes.length - 1];
+                    var previousNode = currentNode.previousElementSibling;
+
+                    if (previousNode) {
+                        currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
+                        previousNode.className = previousNode.className + " .active";
+                    }
+                    activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' active');
+                }
+                activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next');
+                activeNodes[0].className = activeNodes[0].className + ' active';
+            }
             updateProgress(getCurrentSlideNumber());
         }
     }, false);
@@ -396,4 +430,15 @@
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
         }
     };
+
+    /*window.addEventListener("hashchange", function () {
+     if (slideList[getCurrentSlideNumber()].hasInnerNavigation) {
+     var activeNodes = document.querySelectorAll(getSlideHash(getCurrentSlideNumber()) + ' .next');
+     activeNodes[0].className = activeNodes[0].className + ' active';
+     }
+     }, true);*/
+
+//    window.addEventListener("") //
+
+
 }());
