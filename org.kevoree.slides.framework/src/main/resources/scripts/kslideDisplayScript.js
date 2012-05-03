@@ -273,10 +273,10 @@ var ws = null
 function connectWS () {
     var roomId = window.prompt("Keynote id:");
     if (roomId) {
-        ws = new WebSocket('ws://duke.irisa.fr:8092/keynote');
+        ws = new WebSocket(wsURL);
         ws.onopen = function (e) {
             console.log('* Connected!');
-            ws.send("JOIN" + roomId); // TODO replace by an id
+            ws.send("JOIN" + roomId);
         };
         ws.onclose = function (e) {
             console.log('* Disconnected');
