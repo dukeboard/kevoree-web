@@ -342,26 +342,40 @@ function keyEventListener (e) {
     }
 }
 
-function touchStartEvent (e) {
-    if (!isListMode()) {
-        var currentSlideNumber = getCurrentSlideNumber(),
-            x = e.touches[0].pageX;
-        if (x > window.innerWidth / 2) {
-            currentSlideNumber++;
-        } else {
-            currentSlideNumber--;
-        }
 
-        goToSlide(currentSlideNumber);
-    }
+
+
+
+var orgX, newX;
+var tracking = false;
+var db = document.body;
+db.addEventListener("touchstart", start.bind(this), false);
+db.addEventListener("touchmove", move.bind(this), false);
+
+function start(aEvent) {
+  aEvent.preventDefault();
+  tracking = true;
+  orgX = aEvent.changedTouches[0].pageX;
 }
-function touchMoveEvent (e) {
-    if (!isListMode()) {
-        e.preventDefault();
+
+function move(aEvent) {
+  if (!tracking) return;
+  newX = aEvent.changedTouches[0].pageX;
+  if (orgX - newX > 100) {
+    tracking = false;
+    goToNextSlide(getCurrentSlideNumber());
+  } else {
+    if (orgX - newX < -100) {
+      tracking = false;
+      goToPreviousSlide(getCurrentSlideNumber());
     }
+  }
 }
-document.addEventListener('touchstart', touchStartEvent, false);
-document.addEventListener('touchmove', touchMoveEvent, false);
+
+
+
+
+
 document.addEventListener('touchend', dispatchSingleSlideModeFromEvent, false);
 document.addEventListener('click', dispatchSingleSlideModeFromEvent, false);
 document.addEventListener('keydown', keyEventListener, false);
