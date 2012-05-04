@@ -124,6 +124,21 @@ public class KevoreeSlidePage extends ParentAbstractPage {
                 logger.error("", e);
             }
         }
+		if (getLastParam(request.getUrl()).contains("master")) {
+		            try {
+		                String roomID = getLastParam(request.getUrl()).replace("master", "");
+		                String newScript = "<script>" + new String(FileServiceHelper.convertStream(loadInternal("scripts/kslideWebSocketMaster.js")), "UTF-8").replace("{roomID}", roomID).replace("{wsurl}", getDictionary().get("wsurl").toString()) + "</script></body>";
+		                response.setRawContent(FileServiceHelper.convertStream(loadInternal(getDictionary().get("main").toString())));
+		                response.setRawContent(new String(response.getRawContent()).replace("</body>", newScript).getBytes());
+		                response.getHeaders().put("Content-Type", "text/html");
+		                if (useCache) {
+		                    cacheResponse(request, response);
+		                }
+		                return response;
+		            } catch (Exception e) {
+		                logger.error("", e);
+		            }
+		        }
         if (!load(request, response)) {
             response.setStatus(404);
         }
