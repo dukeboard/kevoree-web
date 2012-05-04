@@ -39,7 +39,7 @@ public class BroadCastConf extends BaseWebSocketHandler {
     }
 
     public void onMessage(WebSocketConnection connection, String message) {
-        System.out.println("on msg "+message);
+        //System.out.println("on msg "+message);
         if (connection.data(keynoteID) != null) {
             broadcast(message, connection, connection.data(keynoteID).toString());
         } else {
