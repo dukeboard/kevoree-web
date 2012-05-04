@@ -22,7 +22,7 @@ function getUrl () {
         slideURL += "Try<em>: " + document.location + "#yourslides.html</em>";
         slideURL = "data:text/html," + encodeURIComponent(slideURL);
     }
-    return slideURL + "?full";
+    return slideURL/* + "?full"*/;
 }
 
 function loadIframes () {
@@ -253,6 +253,7 @@ window.onmessage = function (aEvent) {
             document.querySelector("#notes > #content").innerHTML = this.notes = argv[1];
         }
         if (argv[0] === "REGISTERED" && argc === 3) {
+            postMsg(views.present, "FULL")
             views.nbSlides = argv[2];
             document.querySelector("#slidecount").innerHTML = argv[2];
             updateSlideNumbers();
@@ -260,6 +261,7 @@ window.onmessage = function (aEvent) {
     }
     if (aEvent.source === views.future) {
         if (argv[0] === "REGISTERED" && argc === 3) {
+            postMsg(views.future, "FULL")
             postMsg(views.future, "FORWARD");
             updateSlideNumbers();
         }

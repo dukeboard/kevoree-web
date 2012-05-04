@@ -20,7 +20,7 @@ function getUrl () {
         slideURL = "data:text/html," + encodeURIComponent(slideURL);
     }
 
-    return slideURL + "?full";
+    return slideURL/* + "?full"*/;
 
 
 }
@@ -153,6 +153,7 @@ window.onmessage = function (aEvent) {
             document.querySelector("#forward").disabled = idx == count;
         }
         if (argv[0] === "REGISTERED" && argc === 3) {
+            postMsg(view, "FULL")
             document.querySelector("#slidecount").innerHTML = count = argv[2];
             document.title = argv[1];
         }
