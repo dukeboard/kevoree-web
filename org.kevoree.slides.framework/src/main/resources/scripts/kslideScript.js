@@ -123,7 +123,6 @@ function dispatchSingleSlideModeFromEvent (e) {
 }
 
 function dispatchSingleSlideMode (slideId) {
-
     if ('' !== slideId && isListMode()) {
         // NOTE: we should update hash to get things work properly
         url.hash = '#' + slideId;
