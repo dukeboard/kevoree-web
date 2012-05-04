@@ -35,7 +35,6 @@ document.removeEventListener('touchend', dispatchSingleSlideModeFromEvent, false
 document.removeEventListener('click', dispatchSingleSlideModeFromEvent, false);
 document.removeEventListener('keydown', keyEventListener, false);
 
-
 function newKeyEventListener (e) {
 //    if (!nav) {return;}
     // Shortcut for alt, shift and meta keys
