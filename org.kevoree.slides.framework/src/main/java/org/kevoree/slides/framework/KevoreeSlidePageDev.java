@@ -29,6 +29,7 @@ public class KevoreeSlidePageDev extends KevoreeSlidePage {
     @Start
     public void startPage() {
         super.startPage();
+        useCache = false;
         File f1 = new File((String) super.getDictionary().get("templateFolder"));
         if (f1.isDirectory()) {
             logger.info(f1.getAbsolutePath());

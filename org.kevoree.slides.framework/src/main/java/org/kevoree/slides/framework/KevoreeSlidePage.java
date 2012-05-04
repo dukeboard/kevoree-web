@@ -10,6 +10,7 @@ import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
 import org.kevoree.library.javase.webserver.ParentAbstractPage;
 
 import java.io.InputStream;
+import java.util.HashMap;
 
 /**
  * User: Erwan Daubert - erwan.daubert@gmail.com
@@ -28,24 +29,71 @@ import java.io.InputStream;
 })
 public class KevoreeSlidePage extends ParentAbstractPage {
 
-    protected InputStream loadInternal(String name){
+    private HashMap<String, byte[]> contentRawCache = new HashMap<String, byte[]>();
+    private HashMap<String, String> contentTypeCache = new HashMap<String, String>();
+    protected Boolean useCache = true;
+
+    @Override
+    public void startPage() {
+        super.startPage();
+        contentRawCache.clear();
+        contentTypeCache.clear();
+    }
+
+    @Override
+    public void updatePage() {
+        super.updatePage();
+        contentRawCache.clear();
+        contentTypeCache.clear();
+    }
+
+    @Override
+    public void stopPage() {
+        super.stopPage();
+        contentRawCache.clear();
+        contentTypeCache.clear();
+    }
+
+    public void cacheResponse (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+        if (response.getRawContent() != null) {
+            contentRawCache.put(request.getUrl(), response.getRawContent());
+        } else {
+            contentRawCache.put(request.getUrl(), response.getContent().getBytes());
+        }
+        contentTypeCache.put(request.getUrl(), response.getHeaders().get("Content-Type"));
+    }
+
+    protected InputStream loadInternal(String name) {
         return getClass().getClassLoader().getResourceAsStream(name);
     }
 
-	@Override
-	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
-		if (getLastParam(request.getUrl()).equals("keynote")) {
-			try {
-				String slideURL = request.getUrl().replace("keynote", "");
-				response.setRawContent(FileServiceHelper.convertStream(loadInternal("display.html")));
-				response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
-                response.setRawContent(new String(response.getRawContent()).replace("ws://localhost:8092/keynote", getDictionary().get("wsurl").toString()).getBytes());
-				response.getHeaders().put("Content-Type", "text/html");
+    @Override
+    public KevoreeHttpResponse process(KevoreeHttpRequest request, KevoreeHttpResponse response) {
+
+        /* Serve File directly from local cache */
+        if (useCache) {
+            if (contentTypeCache.containsKey(request.getUrl())) {
+                response.setRawContent(contentRawCache.get(request.getUrl()));
+                response.getHeaders().put("Content-Type", contentTypeCache.get(request.getUrl()));
                 return response;
-			} catch (Exception e) {
-				logger.error("", e);
-			}
-		}
+            }
+        }
+
+        if (getLastParam(request.getUrl()).equals("keynote")) {
+            try {
+                String slideURL = request.getUrl().replace("keynote", "");
+                response.setRawContent(FileServiceHelper.convertStream(loadInternal("display.html")));
+                response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
+                response.setRawContent(new String(response.getRawContent()).replace("ws://localhost:8092/keynote", getDictionary().get("wsurl").toString()).getBytes());
+                response.getHeaders().put("Content-Type", "text/html");
+                if (useCache) {
+                    cacheResponse(request, response);
+                }
+                return response;
+            } catch (Exception e) {
+                logger.error("", e);
+            }
+        }
 
         if (getLastParam(request.getUrl()).equals("embed")) {
             try {
@@ -53,6 +101,9 @@ public class KevoreeSlidePage extends ParentAbstractPage {
                 response.setRawContent(FileServiceHelper.convertStream(loadInternal("embedder.html")));
                 response.setRawContent(new String(response.getRawContent()).replace("http://localhost:8080/", slideURL).getBytes());
                 response.getHeaders().put("Content-Type", "text/html");
+                if (useCache) {
+                    cacheResponse(request, response);
+                }
                 return response;
             } catch (Exception e) {
                 logger.error("", e);
@@ -60,42 +111,47 @@ public class KevoreeSlidePage extends ParentAbstractPage {
         }
         if (getLastParam(request.getUrl()).contains("ws")) {
             try {
-                String roomID = getLastParam(request.getUrl()).replace("ws","");
-                String newScript = "<script>" + new String(FileServiceHelper.convertStream(loadInternal("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}",roomID).replace("{wsurl}",getDictionary().get("wsurl").toString()) + "</script></body>";
+                String roomID = getLastParam(request.getUrl()).replace("ws", "");
+                String newScript = "<script>" + new String(FileServiceHelper.convertStream(loadInternal("scripts/kslideWebSocket.js")), "UTF-8").replace("{roomID}", roomID).replace("{wsurl}", getDictionary().get("wsurl").toString()) + "</script></body>";
                 response.setRawContent(FileServiceHelper.convertStream(loadInternal(getDictionary().get("main").toString())));
                 response.setRawContent(new String(response.getRawContent()).replace("</body>", newScript).getBytes());
-				//response.setRawContent(new String(response.getRawContent()).replace("</body>", "<style>" + new String(FileServiceHelper.convertStream(getClass().getClassLoader().getResourceAsStream("styles/kslideEmbedder.css")), "UTF-8") + "</style></body>").getBytes());
                 response.getHeaders().put("Content-Type", "text/html");
+                if (useCache) {
+                    cacheResponse(request, response);
+                }
                 return response;
             } catch (Exception e) {
                 logger.error("", e);
             }
         }
-		if (!load(request, response)) {
-			response.setStatus(404);
-		}
-		return response;
-	}
+        if (!load(request, response)) {
+            response.setStatus(404);
+        }
+        return response;
+    }
 
-	public boolean load (KevoreeHttpRequest request, KevoreeHttpResponse response) {
-		if (FileServiceHelper.checkStaticFile(getDictionary().get("main").toString(), this, request, response)) {
-			String pattern = getDictionary().get("urlpattern").toString();
-			if (pattern.endsWith("**")) {
-				pattern = pattern.replace("**", "");
-			}
-			if (!pattern.endsWith("/")) {
-				pattern = pattern + "/";
-			}
-			if (pattern.equals(request.getUrl() + "/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
-				if (response.getRawContent() != null) {
-					response.setRawContent(new String(response.getRawContent()).replace("{urlpattern}", pattern).getBytes());
-				} else {
-					response.setContent(response.getContent().replace("{urlpattern}", pattern));
-				}
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public boolean load(KevoreeHttpRequest request, KevoreeHttpResponse response) {
+        if (FileServiceHelper.checkStaticFile(getDictionary().get("main").toString(), this, request, response)) {
+            String pattern = getDictionary().get("urlpattern").toString();
+            if (pattern.endsWith("**")) {
+                pattern = pattern.replace("**", "");
+            }
+            if (!pattern.endsWith("/")) {
+                pattern = pattern + "/";
+            }
+            if (pattern.equals(request.getUrl() + "/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
+                if (response.getRawContent() != null) {
+                    response.setRawContent(new String(response.getRawContent()).replace("{urlpattern}", pattern).getBytes());
+                } else {
+                    response.setContent(response.getContent().replace("{urlpattern}", pattern));
+                }
+            }
+            if (useCache) {
+                cacheResponse(request, response);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
