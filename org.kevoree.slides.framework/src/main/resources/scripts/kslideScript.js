@@ -192,6 +192,14 @@ function goToPreviousSlide (slideNumber) {
             return -1;
         }
         slideNumber--;
+         if (slideList[slideNumber].hasInnerNavigation) {
+            var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next');
+            for (var i = 0, ii = activeNodes.length; i < ii; i++) {
+                if (activeNodes[i].className.indexOf("active") == -1) {
+                   activeNodes[i].className = activeNodes[i].className + " active";
+                }
+            }
+         }
         goToSlide(slideNumber);
         return slideNumber
     } else {
