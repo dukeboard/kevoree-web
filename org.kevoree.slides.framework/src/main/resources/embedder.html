@@ -15,6 +15,12 @@
     </div>
 </div>
 
+<script language="javascript">
+    document.querySelector('#back').addEventListener("touchstart", function(e){back();}, false);
+    document.querySelector('#forward').addEventListener("touchstart", function(e){forward();}, false);
+    document.querySelector('#fullscreen').addEventListener("touchstart", function(e){fullscreen();}, false);
+</script>
+
 <style>
     html {
         height: 100%;
