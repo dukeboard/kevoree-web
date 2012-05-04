@@ -163,18 +163,14 @@ function move(aEvent) {
   newX = aEvent.changedTouches[0].pageX;
   if (orgX - newX > 100) {
     tracking = false;
-    this.forward();
+    forward();
   } else {
     if (orgX - newX < -100) {
       tracking = false;
-      this.back();
+      back();
     }
   }
 }
-
-
-
-
 
 window.onkeydown = function (e) {
     // Shortcut for alt, shift and meta keys

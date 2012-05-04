@@ -7,7 +7,6 @@ var view = null,
 /* Get url from hash or prompt and store it */
 
 function getUrl () {
-
     if (typeof(slideURL) == 'undefined') {
         slideURL = window.prompt("What is the URL of the slides?");
         if (slideURL) {
@@ -19,10 +18,7 @@ function getUrl () {
         slideURL += "Try<em>: " + document.location + "#yourslides.html</em>";
         slideURL = "data:text/html," + encodeURIComponent(slideURL);
     }
-
     return slideURL + "?full";
-
-
 }
 
 function loadIFrame () {
@@ -79,6 +75,32 @@ function postMsg (aWin, aMsg) { // [arg0, [arg1...]]
     for (var i = 2; i < arguments.length; i++)
         aMsg.push(encodeURIComponent(arguments[i]));
     aWin.postMessage(aMsg.join(" "), "*");
+}
+
+var orgX, newX;
+var tracking = false;
+var db = document.body;
+db.addEventListener("touchstart", start.bind(this), false);
+db.addEventListener("touchmove", move.bind(this), false);
+
+function start(aEvent) {
+  aEvent.preventDefault();
+  tracking = true;
+  orgX = aEvent.changedTouches[0].pageX;
+}
+
+function move(aEvent) {
+  if (!tracking) return;
+  newX = aEvent.changedTouches[0].pageX;
+  if (orgX - newX > 100) {
+    tracking = false;
+    forward();
+  } else {
+    if (orgX - newX < -100) {
+      tracking = false;
+      back();
+    }
+  }
 }
 
 window.onkeydown = function (e) {
