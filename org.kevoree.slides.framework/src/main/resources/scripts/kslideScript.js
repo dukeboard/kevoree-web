@@ -3,8 +3,7 @@ var url = window.location,
     slides = document.querySelectorAll('.slide'),
     progress = document.querySelector('div.progress div'),
     slideList = [],
-    l = slides.length, i,
-    nav = true;
+    l = slides.length, i;
 
 for (i = 0; i < l; i++) {
     // Slide ID's are optional. In case of missing ID we set it to the slide number
