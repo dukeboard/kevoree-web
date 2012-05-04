@@ -15,21 +15,16 @@ ws.onmessage = function (aEvent) {
         a[i] = decodeURIComponent(e)
     });
     if (argv[0] === "BACK") {
-    console.log("BACK")
         goToPreviousSlide(getCurrentSlideNumber());
     } else if (argv[0] === "FORWARD") {
-    console.log("FORWARD")
         if (slideList.length > getCurrentSlideNumber() + 1) {
             goToNextSlide(getCurrentSlideNumber());
         }
     } else if (argv[0] === "START") {
-    console.log("START")
         goToSlide(0);
     } else if (argv[0] === "END") {
-    console.log("END")
         goToSlide(slideList.length - 1);
     } else if (argv[0] === "SET_CURSOR" && argc === 2) {
-        console.log("SET_CURSOR " + argv[1])
         goToSlide(argv[1]);
     }
 };
