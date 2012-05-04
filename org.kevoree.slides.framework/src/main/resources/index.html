@@ -12,6 +12,19 @@
     <script type="text/javascript" src="scripts/brush/shBrushJScript.js"></script>
     <script type="text/javascript" src="scripts/brush/shBrushXml.js"></script>
     <script type="text/javascript">SyntaxHighlighter.all();</script>
+    <script type="text/javascript" src="scripts/showdown.js"></script>
+    <script>
+        function parseMarkdown(){
+            var divs = document.getElementsByClassName('markdown');
+            for (var i = 0; i < divs.length; i++){
+                var d = divs[i];
+                var markup = new Showdown.converter().makeHtml(d.innerHTML);
+                d.innerHTML = markup;
+            }
+        }
+        window.onload = parseMarkdown;
+    </script>
+
 
     <!--<link rel="stylesheet/less" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"> -->
     <!--
@@ -54,6 +67,20 @@
                        width="400"></object>
     <details>Salut</details>
 </section>
+
+
+<section class="slide">
+    <div class="markdown">
+##MarkDown
+then a little list
+
+        - Type Markdown text in the left window
+        - See the HTML in the right
+
+    </div>
+</section>
+
+
 <section class="slide">
     <h2>Java annotation API</h2>
 
@@ -126,6 +153,8 @@
     </executions>
 </plugin></pre>
 </section>
+
+
 
 <div class="progress">
     <div></div>
