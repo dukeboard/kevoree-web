@@ -348,16 +348,16 @@ function keyEventListener (e) {
 var orgX, newX;
 var tracking = false;
 var db = document.body;
-db.addEventListener("touchstart", start.bind(this), false);
-db.addEventListener("touchmove", move.bind(this), false);
+db.addEventListener("touchstart", touchStartEvent, false);
+db.addEventListener("touchmove", touchMoveEvent, false);
 
-function start(aEvent) {
+function touchStartEvent(aEvent) {
   aEvent.preventDefault();
   tracking = true;
   orgX = aEvent.changedTouches[0].pageX;
 }
 
-function move(aEvent) {
+function touchMoveEvent(aEvent) {
   if (!tracking) return;
   newX = aEvent.changedTouches[0].pageX;
   if (orgX - newX > 100) {
