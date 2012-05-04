@@ -11,7 +11,6 @@ var views = {
 
 /* Get url from hash or prompt and store it */
 function getUrl () {
-
     if (typeof(slideURL) == 'undefined') {
         slideURL = window.prompt("What is the URL of the slides?");
         if (slideURL) {
@@ -23,10 +22,7 @@ function getUrl () {
         slideURL += "Try<em>: " + document.location + "#yourslides.html</em>";
         slideURL = "data:text/html," + encodeURIComponent(slideURL);
     }
-
     return slideURL + "?full";
-
-
 }
 
 function loadIframes () {
@@ -146,6 +142,39 @@ window.init = function init () {
     startClock();
     loadIframes();
 };
+
+
+
+
+var orgX, newX;
+var tracking = false;
+var db = document.body;
+db.addEventListener("touchstart", start.bind(this), false);
+db.addEventListener("touchmove", move.bind(this), false);
+
+function start(aEvent) {
+  aEvent.preventDefault();
+  tracking = true;
+  orgX = aEvent.changedTouches[0].pageX;
+}
+
+function move(aEvent) {
+  if (!tracking) return;
+  newX = aEvent.changedTouches[0].pageX;
+  if (orgX - newX > 100) {
+    tracking = false;
+    this.forward();
+  } else {
+    if (orgX - newX < -100) {
+      tracking = false;
+      this.back();
+    }
+  }
+}
+
+
+
+
 
 window.onkeydown = function (e) {
     // Shortcut for alt, shift and meta keys
