@@ -29,7 +29,7 @@ public class WsServer extends AbstractComponentType {
                 .add("/keynote", new BroadCastConf())
                 .add(new StaticFileHandler("/keynote"));
         webServer.start();
-       // System.out.println("Server running at " + webServer.getUri());
+        System.out.println("Server running at " + webServer.getUri());
     }
     @Stop
     public void stopServer(){
