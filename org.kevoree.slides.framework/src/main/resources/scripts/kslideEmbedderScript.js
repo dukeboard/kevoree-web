@@ -149,14 +149,6 @@ window.onkeydown = function (e) {
             e.preventDefault();
             fullscreen();
             break;
-        case 27: // Esc
-            e.preventDefault();
-            list();
-            break;
-        case 13: // Enter
-            e.preventDefault();
-            full();
-            break;
         default:
         // Behave as usual
     }
