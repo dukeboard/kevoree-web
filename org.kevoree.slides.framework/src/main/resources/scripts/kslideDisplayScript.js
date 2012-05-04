@@ -263,6 +263,9 @@ window.onmessage = function (aEvent) {
         }
     }
     if (aEvent.source === views.remote) {
+        if (argv[0] === "REGISTERED" && argc === 3) {
+            postMsg(views.future, "FULL")
+        }
         if (argv[0] == "BACK") {
             postMsg(views.present, "BACK");
             postMsg(views.future, "BACK");
