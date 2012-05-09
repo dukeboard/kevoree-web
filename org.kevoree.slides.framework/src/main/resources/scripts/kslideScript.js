@@ -484,7 +484,7 @@ function notifyWebSocket (message, previousSlideNumber, currentSlideNumber) {
             for (var i = 2; i < arguments.length; i++) {
                 aMsg.push(encodeURIComponent(arguments[i]));
             }
-            ws.send(aMsg.join(" "));
+            wsMaster.send(aMsg.join(" "));
         }
     } catch (e) {
     }

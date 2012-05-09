@@ -4,7 +4,7 @@ try {
     wsMaster = new WebSocket('{wsurl}');
     wsMaster.onopen = function (e) {
         console.log('* Connected!');
-        ws.send("JOIN" + roomId);
+        wsMaster.send("JOIN" + roomId);
     };
     wsMaster.onclose = function (e) {
         console.log('* Disconnected');
