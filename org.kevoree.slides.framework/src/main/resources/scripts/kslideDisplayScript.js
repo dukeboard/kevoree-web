@@ -7,7 +7,8 @@ var views = {
         nbSlides:0
     },
     notes = null,
-    url = null;
+    url = null,
+    ws = null;
 
 /* Get url from hash or prompt and store it */
 function getUrl () {
@@ -53,9 +54,7 @@ function back () {
         if (views.remote != null) {
             postMsg(views.remote, "BACK");
         }
-        if (ws != null) {
-            ws.send("BACK");
-        }
+        notifyWebSocket("BACK");
     }
 }
 
@@ -68,9 +67,7 @@ function forward () {
         if (views.remote != null) {
             postMsg(views.remote, "FORWARD");
         }
-        if (ws != null) {
-            ws.send("FORWARD");
-        }
+        notifyWebSocket("FORWARD");
     }
 }
 
@@ -78,13 +75,11 @@ function goStart () {
     postMsg(views.present, "START");
     postMsg(views.future, "START");
     postMsg(views.future, "FORWARD");
-    updateSlideNumbers(0);
+    updateSlideNumbers();
     if (views.remote != null) {
         postMsg(views.remote, "START");
     }
-    if (ws != null) {
-        ws.send("START");
-    }
+    notifyWebSocket("START");
 }
 
 function goEnd () {
@@ -95,9 +90,7 @@ function goEnd () {
     if (views.remote != null) {
         postMsg(views.remote, "END");
     }
-    if (ws != null) {
-        ws.send("END");
-    }
+    notifyWebSocket("END");
 }
 
 function postMsg (aWin, aMsg) { // [arg0, [arg1...]]
@@ -144,32 +137,30 @@ window.init = function init () {
 };
 
 
-
-
 var orgX, newX;
 var tracking = false;
 var db = document.body;
 db.addEventListener("touchstart", touchStartEvent, false);
 db.addEventListener("touchmove", touchMoveEvent, false);
 
-function touchStartEvent(aEvent) {
-  aEvent.preventDefault();
-  tracking = true;
-  orgX = aEvent.changedTouches[0].pageX;
+function touchStartEvent (aEvent) {
+    aEvent.preventDefault();
+    tracking = true;
+    orgX = aEvent.changedTouches[0].pageX;
 }
 
-function touchMoveEvent(aEvent) {
-  if (!tracking) return;
-  newX = aEvent.changedTouches[0].pageX;
-  if (orgX - newX > 100) {
-    tracking = false;
-    forward();
-  } else {
-    if (orgX - newX < -100) {
-      tracking = false;
-      back();
+function touchMoveEvent (aEvent) {
+    if (!tracking) return;
+    newX = aEvent.changedTouches[0].pageX;
+    if (orgX - newX > 100) {
+        tracking = false;
+        forward();
+    } else {
+        if (orgX - newX < -100) {
+            tracking = false;
+            back();
+        }
     }
-  }
 }
 
 window.onkeydown = function (e) {
@@ -230,8 +221,11 @@ window.onmessage = function (aEvent) {
     });
     if (argv[0] === "CURSOR" && argc === 2) {
         if (aEvent.source === views.present && argv[1] != -1) {
-            if (views.currentSlide != argv[1] && ws != null) {
-                ws.send("SET_CURSOR " + argv[1])
+            if (views.currentSlide < argv[1] && ws != null) {
+                ws.send("SET_CURSOR " + argv[1]);
+            } else if (views.currentSlide > argv[1] && ws != null) {
+                ws.send("SET_CURSOR " + (+argv[1] + 1));
+                ws.send("BACK");
             }
             views.currentSlide = argv[1];
             document.querySelector("#slideidx").innerHTML = +argv[1] == (views.nbSlides - 1) ? "END" : (+argv[1] + 1);
@@ -249,7 +243,7 @@ window.onmessage = function (aEvent) {
             document.querySelector("#notes > #content").innerHTML = this.notes = argv[1];
         }
         if (argv[0] === "REGISTERED" && argc === 3) {
-            postMsg(views.present, "FULL")
+            postMsg(views.present, "FULL");
             views.nbSlides = argv[2];
             document.querySelector("#slidecount").innerHTML = argv[2];
             updateSlideNumbers();
@@ -298,7 +292,6 @@ window.onunload = function () {
         views.remote.close();
     }
 };
-var ws = null
 
 function connectWS () {
     var roomId = window.prompt("Keynote id:");
@@ -319,5 +312,18 @@ function connectWS () {
         };
         var slideurl = document.URL.replace("keynote", "ws");
         alert(slideurl + roomId)
+    }
+}
+// function that allow to interact with WebSocket script
+function notifyWebSocket (message) {
+    try {
+        if (typeof(ws) != 'undefined') {
+            var aMsg = [message];
+            for (var i = 2; i < arguments.length; i++) {
+                aMsg.push(encodeURIComponent(arguments[i]));
+            }
+            ws.send(aMsg.join(" "));
+        }
+    } catch (e) {
     }
 }
