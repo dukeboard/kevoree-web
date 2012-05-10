@@ -9,7 +9,7 @@ addNode node0 : JavaSENode {logLevel = "WARN"}
 addComponent webSrv@node0 : KTinyWebServer
 addComponent wsSrv@node0 : WsServer
 
-addComponent annotationSlides@node0 : KevoreeSlidePageDev { urlpattern="/",templateFolder="{basedir}/src/main/resources/",wsurl="ws://192.168.1.124:8092/keynote"}
+addComponent annotationSlides@node0 : KevoreeSlidePageDev { urlpattern="/",templateFolder="{basedir}/src/main/resources/",wsurl="ws://192.168.1.7:8092/keynote"}
 //addComponent annotationSlides@node0 : KevoreeSlidePage { urlpattern="/",wsurl="ws://duke.irisa.fr:8092/keynote"}
 
 addChannel req : defMSG

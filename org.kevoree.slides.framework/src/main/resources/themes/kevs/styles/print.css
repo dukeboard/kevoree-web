@@ -1,14 +1,20 @@
 /*
-	Ribbon theme for Shower HTML presentation template: github.com/pepelsbey/shower
-	Copyright © 2010–2012 Vadim Makeev, pepelsbey.net
-	Licensed under MIT license: github.com/pepelsbey/shower/wiki/License-En
+	Ribbon theme for Shower presentation template: http://github.com/pepelsbey/shower
+	Copyright © 2010–2011 Vadim Makeev, http://pepelsbey.net/
+	Licensed under MIT license: https://github.com/pepelsbey/shower/wiki/License
 */
 
+@page {
+	margin:0;
+	size:1024px 640px;
+	}
+
 /* List
-------------------------------- */
+---------------------------------------- */
 .list {
+	float:none;
 	padding:0;
-	background:none;
+	background:#888;
 	}
 
 /* Caption */
@@ -20,39 +26,31 @@
 .list .slide {
 	float:none;
 	margin:0;
-	-webkit-transform:none;
-	-moz-transform:none;
-	-ms-transform:none;
-	-o-transform:none;
-	transform:none;
+	padding:0;
 	}
-	.list .slide:before {
-		display:none;
+	.list .slide > DIV {
+		width:1024px;
+		height:640px;
+		background:none;
 		}
-	.list .slide:after {
-		position:absolute;
-		left:120px;
-		bottom:80px;
-		color:#CCC;
-		text-shadow:none;
-		line-height:18px;
-		font-weight:normal;
-		font-size:25px;
+	.list .slide > div,
+	.list .slide > div:hover {
+		-webkit-box-shadow:none;
+		-moz-box-shadow:none;
+		box-shadow:none;
 		}
-
-/* Cover */
-.list .slide.cover {
-	background:#000;
-	z-index:1;
-	}
-	.list .slide.cover:after {
-		content:'';
+	.list .slide section {
+		-webkit-transform:none;
+		-moz-transform:none;
+		-ms-transform:none;
+		-o-transform:none;
+		transform:none;
 		}
-
-/* Shout */
-.list .slide.shout {
-	z-index:1;
-	}
-	.list .slide.shout:after {
-		content:'';
-		}
+		.list .slide:after {
+			position:absolute;
+			bottom:85px;
+			left:120px;
+			color:#BBB;
+			line-height:1;
+			text-shadow:none;
+			}
