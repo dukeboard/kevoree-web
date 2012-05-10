@@ -1,0 +1,13 @@
+.DS_Store
+*~
+target
+tmp
+sourcePowerpoints
+slideshows
+
+# Don't include IntelliJ IDEA files
+.idea
+pptx2html.iml
+/.settings/
+/*.classpath
+/*.project
