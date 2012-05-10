@@ -1,0 +1,18 @@
+To setup the template
+
+find . -name "*.xml" -exec sed -i 's/VOTRE_NOM_DE_PROJET/exemple1/g' {} +
+find . -name "*.kevs" -exec sed -i 's/VOTRE_NOM_DE_PROJET/exemple1/g' {} +
+
+Let us go, you can modify index.html in src/main/resources/
+
+------------------------------------------------------------------------------
+
+Pour configurer le projet. 
+
+find . -name "*.xml" -exec sed -i 's/VOTRE_NOM_DE_PROJET/exemple1/g' {} +
+find . -name "*.kevs" -exec sed -i 's/VOTRE_NOM_DE_PROJET/exemple1/g' {} +
+
+C'est parti
+y a plus qu'à modifier le index.html
+
+
