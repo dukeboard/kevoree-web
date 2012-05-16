@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.kevoree.web</groupId>
         <artifactId>org.kevoree.web.root</artifactId>
-        <version>1.7.1-SNAPSHOT</version>
+        <version>1.7.1</version>
         <relativePath>../org.kevoree.web.root/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.kevoree.web.base</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.1-SNAPSHOT</version>
+    <version>1.7.1</version>
     <name>Kevoree :: Web :: Base</name>
 
     <properties>
