@@ -54,7 +54,7 @@ object MenuRenderer {
           ("Core Features", "{urlpattern}core", "core_features.html",HashMap[String,String]()),
          // ("Tools", "/tools", ""),
           //("Platforms", "/platform", ""),
-          ("Download", "{urlpattern}download", "download.html",new DownloadHelper(null).getVariables),
+          ("Download", "{urlpattern}download", "download.html",DownloadHelper.getVariables),
           ("Related Projects", "{urlpattern}related", "related_projects.html",HashMap[String,String]()),
           ("Blog", "http://blog.kevoree.org", "",HashMap[String,String]())
         )

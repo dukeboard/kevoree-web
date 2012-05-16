@@ -20,7 +20,15 @@ import util.matching.Regex
  * Time: 23:04
  */
 
+object DownloadHelper {
+  var downloadHelper = new DownloadHelper(null)
+
+  def getVariables = downloadHelper.getVariables
+}
+
 class DownloadHelper (bootService: Bootstraper) extends Actor {
+
+  DownloadHelper.downloadHelper = this
 
   private val logger: Logger = LoggerFactory.getLogger(this.getClass)
 
