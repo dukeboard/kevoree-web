@@ -97,7 +97,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
   }
 
   def kheader: String = {
-    "<html lang=\"en\">" +
+    "<!DOCTYPE html>\n<html lang=\"en\">" +
       "<head><meta charset=\"utf-8\">" +
       "<title>Kevoree Project</title>" +
       "<meta name=\"description\" content=\"Kevoree : Distributed Model@Runtime project\">" +

@@ -30,7 +30,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 
 	@Override
 	public void startPage () {
-		downloadHelper = new DownloadHelper(getBootStrapperService());
+		downloadHelper = new DownloadHelper(getBootStrapperService(), this);
 		downloadHelper.start();
 
 		krenderer = new PageRenderer(false, null);
@@ -91,17 +91,24 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (downloadHelper.checkForDownload(basePage, this, request, response)) {
 			return response;
 		}
-		response.setContent("Bad request from "+getName()+"@"+getNodeName());
+		response.setContent("Bad request from " + getName() + "@" + getNodeName());
 		return response;
 	}
 
 	public void cacheResponse (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+		logger.debug("put cache: {}", request.getUrl());
 		if (response.getRawContent() != null) {
 			contentRawCache.put(request.getUrl(), response.getRawContent());
 		} else {
 			contentRawCache.put(request.getUrl(), response.getContent().getBytes());
 		}
 		contentTypeCache.put(request.getUrl(), response.getHeaders().get("Content-Type"));
+	}
+
+	public void invalidateCacheResponse (String url) {
+		if (contentRawCache.remove(url) == null && contentTypeCache.remove(url) == null) {
+			logger.debug("nothing to invalidate for {}", url);
+		}
 	}
 
 }

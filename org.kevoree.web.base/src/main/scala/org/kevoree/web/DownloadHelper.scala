@@ -21,12 +21,12 @@ import util.matching.Regex
  */
 
 object DownloadHelper {
-  var downloadHelper = new DownloadHelper(null)
+  var downloadHelper = new DownloadHelper(null, null)
 
   def getVariables = downloadHelper.getVariables
 }
 
-class DownloadHelper (bootService: Bootstraper) extends Actor {
+class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) extends Actor {
 
   DownloadHelper.downloadHelper = this
 
@@ -185,8 +185,30 @@ class DownloadHelper (bootService: Bootstraper) extends Actor {
         case UPDATE_RUNTIME_LAST_RELEASE(filePath) => runtimeLastRelease = filePath
         case UPDATE_EDITOR_LAST_SNAPSHOT(filePath) => editorLastSnapshot = filePath
         case UPDATE_RUNTIME_LAST_SNAPSHOT(filePath) => runtimeLastSnapshot = filePath
-        case UPDATE_RELEASE_VERSION(version) => variables = variables.filterNot(v => v._1 == "kevoree.version.release") + ("kevoree.version.release" -> version)
-        case UPDATE_SNAPSHOT_VERSION(version) => variables = variables.filterNot(v => v._1 == "kevoree.version.snapshot") + ("kevoree.version.snapshot" -> version)
+        case UPDATE_RELEASE_VERSION(version) => {
+          variables = variables.filterNot(v => v._1 == "kevoree.version.release") + ("kevoree.version.release" -> version)
+          var pattern: String = mainSite.getDictionary.get("urlpattern").toString
+          if (pattern.endsWith("**")) {
+            pattern = pattern.replace("**", "")
+          }
+          if (!pattern.endsWith("/")) {
+            pattern = pattern + "/"
+          }
+          logger.debug("invalidate download page: {}", pattern + "download")
+          mainSite.invalidateCacheResponse(pattern + "download")
+        }
+        case UPDATE_SNAPSHOT_VERSION(version) => {
+          variables = variables.filterNot(v => v._1 == "kevoree.version.snapshot") + ("kevoree.version.snapshot" -> version)
+          var pattern: String = mainSite.getDictionary.get("urlpattern").toString
+          if (pattern.endsWith("**")) {
+            pattern = pattern.replace("**", "")
+          }
+          if (!pattern.endsWith("/")) {
+            pattern = pattern + "/"
+          }
+          logger.debug("invalidate download page: {}", pattern + "download")
+          mainSite.invalidateCacheResponse(pattern + "download")
+        }
         case STOP() => timer.cancel(); timer.purge(); this.exit()
       }
     }
