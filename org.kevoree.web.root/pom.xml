@@ -7,7 +7,7 @@
     <groupId>org.kevoree.web</groupId>
     <artifactId>org.kevoree.web.root</artifactId>
     <packaging>pom</packaging>
-    <version>1.7.1</version>
+    <version>1.1.1</version>
     <name>Kevoree :: Web :: Root</name>
 
     <modules>
@@ -21,8 +21,9 @@
     </modules>
 
     <properties>
+        <site.version>1.1.1</site.version>
         <kevoree.include>*:*</kevoree.include>
-        <kevoree.version>${project.version}</kevoree.version>
+        <kevoree.version>1.7.1</kevoree.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
