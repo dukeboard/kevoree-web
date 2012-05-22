@@ -1,11 +1,11 @@
-
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.sky.api/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 
-addNode node0 : JavaSENode {logLevel="DEBUG"}
+addNode node0 : PJavaSENode {logLevel="DEBUG"}
 
 addComponent webSrv@node0 : KTinyWebServer
 addComponent helloPage@node0 : KevoreeMainSiteDev { urlpattern='/test',folder='{basedir}/src/main/resources/' }

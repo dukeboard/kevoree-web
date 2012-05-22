@@ -295,7 +295,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     var read: Int = 0
     val bytes: Array[Byte] = new Array[Byte](1024)
     while ((({
-      read = inputStream.read(bytes);
+      read = inputStream.read(bytes)
       read
     })) != -1) {
       out.write(bytes, 0, read)
