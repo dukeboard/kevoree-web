@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.kevoree.web</groupId>
         <artifactId>org.kevoree.web.root</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.1-SNAPSHOT</version>
         <relativePath>../org.kevoree.web.root/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -15,7 +15,6 @@
 
     <properties>
         <kevoree.include>*:*</kevoree.include>
-        <kevoree.version>1.7.1</kevoree.version>
         <kevoree.log.level>DEBUG</kevoree.log.level>
     </properties>
 

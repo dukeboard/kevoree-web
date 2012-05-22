@@ -2,8 +2,8 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
-merge "mvn:org.kevoree.web/org.kevoree.slides.framework/{kevoree.version}"
-merge "mvn:org.kevoree.web/org.kevoree.slides.ws/{kevoree.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.framework/{site.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.ws/{site.version}"
 
 addNode node0 : JavaSENode {logLevel = "WARN"}
 addComponent webSrv@node0 : KTinyWebServer

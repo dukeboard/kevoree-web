@@ -5,7 +5,7 @@
     <parent>
         <artifactId>org.kevoree.web.root</artifactId>
         <groupId>org.kevoree.web</groupId>
-        <version>1.1.1</version>
+        <version>1.1.1-SNAPSHOT</version>
         <relativePath>../org.kevoree.web.root/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

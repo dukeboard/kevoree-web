@@ -7,7 +7,7 @@
     <groupId>org.kevoree.web</groupId>
     <artifactId>org.kevoree.web.root</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.1</version>
+    <version>1.1.1-SNAPSHOT</version>
     <name>Kevoree :: Web :: Root</name>
 
     <modules>
