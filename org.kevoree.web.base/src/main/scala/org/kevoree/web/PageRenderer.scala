@@ -101,7 +101,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
       "<head><meta charset=\"utf-8\">" +
       "<title>Kevoree Project</title>" +
       "<meta name=\"description\" content=\"Kevoree : Distributed Model@Runtime project\">" +
-      "<meta name=\"author\" content=\"François Fouquet\">" +
+      "<meta name=\"author\" content=\"Fran&ccedil;ois Fouquet\">" +
       "<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->\n    <!--[if lt IE 9]>\n    <script src=\"//html5shim.googlecode.com/svn/trunk/html5.js\"></script>\n    <![endif]-->" +
     "<script type=\"text/javascript\" src=\"{urlpattern}js/bootstrap-carousel.js\"></script>" +
     "<link href=\"{urlpattern}css/bootstrap.min.css\" rel=\"stylesheet\">" +
