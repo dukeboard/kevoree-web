@@ -17,7 +17,7 @@
         <dependency>
             <groupId>org.kevoree.web</groupId>
             <artifactId>org.kevoree.slides.framework</artifactId>
-            <version>${kevoree.version}</version>
+            <version>${site.version}</version>
         </dependency>
     </dependencies>
 
