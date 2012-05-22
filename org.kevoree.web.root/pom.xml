@@ -21,9 +21,9 @@
     </modules>
 
     <properties>
-        <site.version>1.1.1</site.version>
+        <site.version>1.1.1-SNAPSHOT</site.version>
         <kevoree.include>*:*</kevoree.include>
-        <kevoree.version>1.7.1</kevoree.version>
+        <kevoree.version>1.7.2-SNAPSHOT</kevoree.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
