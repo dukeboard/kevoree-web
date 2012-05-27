@@ -3,9 +3,11 @@
     <information>
         <title>Kevoree Runtime</title>
         <vendor>IRISA / INRIA Centre Rennes Bretagne Atlantique</vendor>
-        <icon href="icon/kev-logo-full.png" width="64" height="64"/>
+        <homepage href="http://kevoree.org"/>
+        <icon href="img/kevoree-logo-full.png" width="64" height="64"/>
         <!-- allow app to run without Internet access -->
         <offline-allowed/>
+
         <shortcut online="false">
             <!-- create desktop shortcut -->
             <desktop/>
@@ -14,11 +16,13 @@
         <association mime-type="application-x/kevmodel" extensions="kev"/>
     </information>
     <resources>
-        <jar href="http://kevoree.org/download/KevoreeRuntimeLastRelease" main="true"/>
+        <j2se version="1.6*" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="download/KevoreeRuntimeLastRelease.jar" main="true"/>
+
     </resources>
     <application-desc main-class="org.kevoree.platform.standalone.gui.App">
-        <update check="background"/>
     </application-desc>
+    <update check="always" policy="prompt-update"/>
     <security>
         <all-permissions/>
     </security>

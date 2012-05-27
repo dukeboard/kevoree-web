@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <jnlp spec="1.0" codebase="http://kevoree.org/">
     <information>
-        <title>Kevoree Model Editor</title>
+        <title>Kevoree Model Editor Snapshot Version</title>
         <vendor>IRISA / INRIA Centre Rennes Bretagne Atlantique</vendor>
-        <icon href="icon/kev-logo-full.png" width="64" height="64"/>
+        <homepage href="http://kevoree.org"/>
+        <icon href="img/kevoree-logo-full.png" width="64" height="64"/>
         <!-- allow app to run without Internet access -->
         <offline-allowed/>
+
         <shortcut online="false">
+            <!-- create desktop shortcut -->
             <desktop/>
             <menu submenu="Kevoree"/>
         </shortcut>
         <association mime-type="application-x/kevmodel" extensions="kev"/>
     </information>
     <resources>
-        <jar href="http://kevoree.org/download/KevoreeEditorLastSnapshot" main="true"/>
+        <j2se version="1.6*" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="download/KevoreeEditorLastSnapshot.jar" main="true"/>
+
     </resources>
-    <application-desc name="KevEditor" main-class="org.kevoree.tools.ui.editor.standalone.App">
-        <update check="background" policy="prompt-update"/>
+    <application-desc main-class="org.kevoree.tools.ui.editor.standalone.App">
     </application-desc>
+    <update check="always" policy="prompt-update"/>
     <security>
         <all-permissions/>
     </security>

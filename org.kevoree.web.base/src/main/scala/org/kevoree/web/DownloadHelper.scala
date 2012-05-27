@@ -9,9 +9,10 @@ import org.kevoree.library.javase.webserver._
 import org.kevoree.api.Bootstraper
 import scala._
 import java.util.jar.{JarEntry, JarFile}
-import java.util.{Random, TimerTask, Timer}
 import java.io.{ByteArrayOutputStream, InputStream, File}
 import util.matching.Regex
+import java.text.{DateFormat, SimpleDateFormat}
+import java.util.{TimeZone, Calendar, TimerTask, Timer, Date, Locale, Random}
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,9 +43,9 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
 
   //   def getPlatformStableJNLP = "http://dist.kevoree.org/KevoreeRuntimeStable.php"
 
-  private def getEditorLastRelease = "download/KevoreeEditorLastRelease"
+  private def getEditorLastRelease = "download/KevoreeEditorLastRelease.jar"
 
-  private def getRuntimeLastRelease = "download/KevoreeRuntimeLastRelease"
+  private def getRuntimeLastRelease = "download/KevoreeRuntimeLastRelease.jar"
 
   /* Snapshot */
   private def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshot.jnlp"
@@ -55,9 +56,9 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
 
   //  def getPlatformSnapshotJNLP = "http://dist.kevoree.org/KevoreeRuntimeSnapshot.php"
 
-  private def getEditorLastSnapshot = "download/KevoreeEditorLastSnapshot"
+  private def getEditorLastSnapshot = "download/KevoreeEditorLastSnapshot.jar"
 
-  private def getRuntimeLastSnapshot = "download/KevoreeRuntimeLastSnapshot"
+  private def getRuntimeLastSnapshot = "download/KevoreeRuntimeLastSnapshot.jar"
 
   var variables = HashMap(
                            "editorStableJNLP" -> getEditorStableJNLP,
@@ -111,10 +112,10 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
           }
           logger.debug("kevoree version values updated")
         } catch {
-          case _@e => logger.debug("Uanble to update maven artifact", e)
+          case _@e => logger.debug("Unable to update maven artifact", e)
         }
       }
-    }, 1, 21600000)
+    }, 1, /*21*/ 300000)
     this
   }
 
@@ -218,72 +219,91 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     val handler = new URLHandlerScala()
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {
-      case Some(requestDownload) => {
-        if (requestDownload == getEditorLastSnapshot) {
-          val bytes = getBytesForEditorLastSnapshot
-          if (bytes.length > 0) {
-            response.getHeaders.put("Content-Type", "application/x-java-archive")
-            response.setRawContent(bytes)
-            true
-          } else {
-            logger.warn("Unable to get the last jar for snapshot editor")
-            false
-          }
-        } else if (requestDownload == getRuntimeLastSnapshot) {
-          val bytes = getBytesForRuntimeLastSnapshot
-          if (bytes.length > 0) {
-            response.getHeaders.put("Content-Type", "application/x-java-archive")
-            response.setRawContent(bytes)
-            true
-          } else {
-            logger.warn("Unable to get the last jar for snapshot runtime")
-            false
-          }
-        } else if (requestDownload == getEditorLastRelease) {
-          val bytes = getBytesForEditorLastRelease
-          if (bytes.length > 0) {
-            response.getHeaders.put("Content-Type", "application/x-java-archive")
-            response.setRawContent(bytes)
-            true
-          } else {
-            logger.warn("Unable to get the last jar for snapshot editor")
-            false
-          }
-        } else if (requestDownload == getRuntimeLastRelease) {
-          val bytes = getBytesForRuntimeLastRelease
-          if (bytes.length > 0) {
-            response.getHeaders.put("Content-Type", "application/x-java-archive")
-            response.setRawContent(bytes)
-            true
-          } else {
-            logger.warn("Unable to get the last jar for snapshot runtime")
-            false
-          }
+      case Some(requestDownload) if (requestDownload == getEditorLastSnapshot || requestDownload == "/" + getEditorLastSnapshot) => {
+        val bytes = getBytesForEditorLastSnapshot
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(editorLastSnapshot).lastModified()))
+
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.setRawContent(bytes)
+          true
         } else {
+          logger.warn("Unable to get the last jar for snapshot editor")
           false
         }
       }
-      case None => false
+      case Some(requestDownload) if (requestDownload == getRuntimeLastSnapshot || requestDownload == "/" + getRuntimeLastSnapshot) => {
+        val bytes = getBytesForRuntimeLastSnapshot
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(runtimeLastSnapshot).lastModified()))
+
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for snapshot runtime")
+          false
+        }
+      }
+      case Some(requestDownload) if (requestDownload == getEditorLastRelease || requestDownload == "/" + getEditorLastRelease) => {
+        val bytes = getBytesForEditorLastRelease
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(editorLastRelease).lastModified()))
+
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for release editor")
+          false
+        }
+      }
+      case Some(requestDownload) if (requestDownload == getRuntimeLastRelease || requestDownload == "/" + getRuntimeLastRelease) => {
+        val bytes = getBytesForRuntimeLastRelease
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(runtimeLastRelease).lastModified()))
+
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for release runtime")
+          false
+        }
+      }
+      case _ => false
     }
   }
 
   private def getBytesForEditorLastRelease: Array[Byte] = {
-    //    val file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
     FileNIOHelper.getBytesFromFile(new File(editorLastRelease))
   }
 
   private def getBytesForRuntimeLastRelease: Array[Byte] = {
-    //    val file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "RELEASE", List[String]("http://maven.kevoree.org/release/"))
     FileNIOHelper.getBytesFromFile(new File(runtimeLastRelease))
   }
 
   private def getBytesForEditorLastSnapshot: Array[Byte] = {
-    //    val file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
     FileNIOHelper.getBytesFromFile(new File(editorLastSnapshot))
   }
 
   private def getBytesForRuntimeLastSnapshot: Array[Byte] = {
-    //    val file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
     FileNIOHelper.getBytesFromFile(new File(runtimeLastSnapshot))
   }
 
