@@ -8,20 +8,22 @@
         <div class="well sidebar-nav">
             <ul class="nav nav-list">
                 <li class="nav-header">Distributions</li>
-                    <li><a href="#intro">Details</a></li>
+                <li><a href="#intro">Details</a></li>
                 <li class="nav-header">Download Files</li>
-                    <li><a href="#downloadeditor">Editor</a></li>
-                    <li><a href="#downloadruntime">Runtime</a></li>
+                <li><a href="#downloadeditor">Editor</a></li>
+                <li><a href="#downloadruntime">Runtime</a></li>
+                <li><a href="#downloadandroidruntime">Android APK</a></li>
                 <li class="nav-header">Embedded in your own app</li>
-                    <li><a href="#embedded">Embedded</a></li>
+                <li><a href="#embedded">Embedded</a></li>
                 <li class="nav-header">Install as a service</li>
-                    <li><a href="#todo">TODO</a></li>
+                <li><a href="#todo">TODO</a></li>
             </ul>
         </div>
     </div>
     <div class="span9" style="background: #efefef; border-radius: 3px; box-shadow: 0px 0px 2px #ccc;">
         <div class="tutorial">
             <h2 id="intro">Which distribution to use ?</h2>
+
             <p>We provide severals way to download a Kevoree tools.</p>
             <ul>
                 <li>JavaSE* are compatible with Windows, OSX, Nix* and *BSD system. Android Runtime is compatible to
@@ -39,31 +41,41 @@
             </ul>
 
             <h2 id="downloadeditor">Download Editor</h2>
+
             <div class="btn-group">
                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Download editor <span
                         class="caret"></span></button>
                 <ul class="dropdown-menu">
                     <li><a href="{editorStableJNLP}">Stable JNLP - {kevoree.version.release}</a></li>
+                    <li><a href="{editorStableJAR}">Stable JAR - {kevoree.version.release}</a></li>
                     <li class="divider"></li>
                     <li><a href="{editorSnapshotJNLP}">Snapshot JNLP - {kevoree.version.snapshot}</a></li>
+                    <li><a href="{editorSnapshotJAR}">Snapshot JAR - {kevoree.version.snapshot}</a></li>
                 </ul>
             </div>
 
-            <p>Kevoree editor is a swing application allowing you to edit you model, push and read from Kevoree nodes. It's graphical syntaxe is the easiest way to begin your first kevoree application.</p>
+            <p>Kevoree editor is a swing application allowing you to edit you model, push and read from Kevoree nodes. It's graphical syntaxe is the easiest way to begin your first kevoree
+                application.</p>
 
             <h2 id="downloadruntime">Download Runtime</h2>
+
             <div class="btn-group">
                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Download runtime <span
                         class="caret"></span></button>
                 <ul class="dropdown-menu">
                     <li><a href="{platformStableJNLP}">Stable JNLP - {kevoree.version.release}</a></li>
+                    <li><a href="{platformStableJAR}">Stable JAR - {kevoree.version.release}</a></li>
                     <li class="divider"></li>
                     <li><a href="{platformSnapshotJNLP}">Snapshot JNLP - {kevoree.version.snapshot}</a></li>
+                    <li><a href="{platformSnapshotJAR}">Snapshot JAR - {kevoree.version.snapshot}</a></li>
                 </ul>
             </div>
 
             <p>Kevoree runtime is a standalone application running in a java virtual machine. Headless or with a graphical swing interface runtime is a container for your application.</p>
-
+            <h2 id="downloadandroidruntime">Download Android Runtime APK</h2>
+            <a href="{androidStableAPK}"><img src="http://chart.apis.google.com/chart?chl=http://localhost:8080/test/{androidStableAPK}&chs=200x200&cht=qr" /></a>
+            <a href="{androidSnapshotAPK}"><img src="http://chart.apis.google.com/chart?chl=http://localhost:8080/test/{androidSnapshotAPK}&chs=200x200&cht=qr" /></a>
+            <p>Kevoree runtime APK TODO.</p>
         </div>
     </div>
 </div>

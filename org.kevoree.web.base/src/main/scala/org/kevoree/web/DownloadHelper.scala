@@ -37,9 +37,13 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
   /* Stable */
   private def getEditorStableJNLP = "download/KevoreeEditor.jnlp"
 
+  private def getEditorStableJAR = "download/KevoreeEditor.jar"
+
   //  def getEditorStableJNLP = "http://dist.kevoree.org/KevoreeEditorStable.php"
 
   private def getPlatformStableJNLP = "download/KevoreeRuntime.jnlp"
+
+  private def getPlatformStableJAR = "download/KevoreeRuntime.jar"
 
   //   def getPlatformStableJNLP = "http://dist.kevoree.org/KevoreeRuntimeStable.php"
 
@@ -50,9 +54,13 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
   /* Snapshot */
   private def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshot.jnlp"
 
+  private def getEditorSnapshotJAR = "download/KevoreeEditorSnapshot.jar"
+
   //  def getEditorSnapshotJNLP = "http://dist.kevoree.org/KevoreeEditorSnapshot.php"
 
   private def getPlatformSnapshotJNLP = "download/KevoreeRuntimeSnapshot.jnlp"
+
+  private def getPlatformSnapshotJAR = "download/KevoreeRuntimeSnapshot.jar"
 
   //  def getPlatformSnapshotJNLP = "http://dist.kevoree.org/KevoreeRuntimeSnapshot.php"
 
@@ -60,11 +68,22 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
 
   private def getRuntimeLastSnapshot = "download/KevoreeRuntimeLastSnapshot.jar"
 
+  private def getAndroidStableAPK = "download/KevoreeRuntimeAndroidRelease.apk"
+
+  private def getAndroidSnapshotAPK = "download/KevoreeRuntimeAndroidSnapshot.jar"
+
+
   var variables = HashMap(
                            "editorStableJNLP" -> getEditorStableJNLP,
                            "platformStableJNLP" -> getPlatformStableJNLP,
                            "editorSnapshotJNLP" -> getEditorSnapshotJNLP,
                            "platformSnapshotJNLP" -> getPlatformSnapshotJNLP,
+                           "editorStableJAR" -> getEditorStableJAR,
+                           "platformStableJAR" -> getPlatformStableJAR,
+                           "editorSnapshotJAR" -> getEditorSnapshotJAR,
+                           "platformSnapshotJAR" -> getPlatformSnapshotJAR,
+                           "androidStableAPK" -> getAndroidStableAPK,
+                           "androidSnapshotAPK" -> getAndroidSnapshotAPK,
                            "kevoree.version.release" -> "toto",
                            "kevoree.version.snapshot" -> "titi"
                          )
@@ -75,6 +94,8 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
   var editorLastSnapshot = ""
   var runtimeLastRelease = ""
   var runtimeLastSnapshot = ""
+  var androidRuntimeLastRelease = ""
+  var androidRuntimeLastSnapshot = ""
 
   //  var running = true
   var timer: Timer = null
@@ -96,6 +117,12 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
           updateEditorLastSnapshot(file.getAbsolutePath)
           file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
           updateRuntimeLastSnapshot(file.getAbsolutePath)
+
+          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/release/"))
+          updateAndroidRuntimeLastRelease(file.getAbsolutePath)
+          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+          updateAndroidRuntimeLastSnapshot(file.getAbsolutePath)
+
           logger.debug("maven artifact updated")
           logger.debug("update kevoree version values")
           file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", List[String]("http://maven.kevoree.org/release/"))
@@ -128,6 +155,10 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
   case class UPDATE_EDITOR_LAST_SNAPSHOT (filePath: String)
 
   case class UPDATE_RUNTIME_LAST_SNAPSHOT (filePath: String)
+
+  case class UPDATE_ANDROID_RUNTIME_RELEASE_VERSION (filePath: String)
+
+  case class UPDATE_ANDROID_RUNTIME_SNAPSHOT_VERSION (filePath: String)
 
   case class UPDATE_RELEASE_VERSION (version: String)
 
@@ -172,6 +203,14 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     this ! UPDATE_SNAPSHOT_VERSION(version)
   }
 
+  def updateAndroidRuntimeLastRelease (filePath: String) {
+    this ! UPDATE_ANDROID_RUNTIME_RELEASE_VERSION(filePath)
+  }
+
+  def updateAndroidRuntimeLastSnapshot (filePath: String) {
+    this ! UPDATE_ANDROID_RUNTIME_SNAPSHOT_VERSION(filePath)
+  }
+
   def stop () {
     this ! STOP()
   }
@@ -186,6 +225,8 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
         case UPDATE_RUNTIME_LAST_RELEASE(filePath) => runtimeLastRelease = filePath
         case UPDATE_EDITOR_LAST_SNAPSHOT(filePath) => editorLastSnapshot = filePath
         case UPDATE_RUNTIME_LAST_SNAPSHOT(filePath) => runtimeLastSnapshot = filePath
+        case UPDATE_ANDROID_RUNTIME_RELEASE_VERSION(filePath) => androidRuntimeLastRelease = filePath
+        case UPDATE_ANDROID_RUNTIME_SNAPSHOT_VERSION(filePath) => androidRuntimeLastSnapshot = filePath
         case UPDATE_RELEASE_VERSION(version) => {
           variables = variables.filterNot(v => v._1 == "kevoree.version.release") + ("kevoree.version.release" -> version)
           var pattern: String = mainSite.getDictionary.get("urlpattern").toString
@@ -287,6 +328,122 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
           false
         }
       }
+      case Some(requestDownload) if (requestDownload == getEditorSnapshotJAR || requestDownload == "/" + getEditorSnapshotJAR) => {
+        // TODO fix filename with Content-Disposition
+        val bytes = getBytesForEditorLastSnapshot
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(editorLastSnapshot).lastModified()))
+
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeEditor-" + getVariables("kevoree.version.snapshot") + ".jar; filename*=utf-8''KevoreeEditor-" +
+            getVariables("kevoree.version.snapshot") + ".jar")
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for snapshot editor")
+          false
+        }
+      }
+      case Some(requestDownload) if (requestDownload == getPlatformSnapshotJAR || requestDownload == "/" + getPlatformSnapshotJAR) => {
+        val bytes = getBytesForRuntimeLastSnapshot
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(runtimeLastSnapshot).lastModified()))
+
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.snapshot") + ".jar; filename*=utf-8''KevoreeRuntime-" +
+            getVariables("kevoree.version.snapshot") + ".jar")
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for snapshot runtime")
+          false
+        }
+      }
+      case Some(requestDownload) if (requestDownload == getEditorStableJAR || requestDownload == "/" + getEditorStableJAR) => {
+        val bytes = getBytesForEditorLastRelease
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(editorLastRelease).lastModified()))
+
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.getHeaders.put("Content-Disposition",
+                                   "attachment; filename=KevoreeEditor-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeEditor-" + getVariables("kevoree.version.release") +
+                                     ".jar")
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for release editor")
+          false
+        }
+      }
+      case Some(requestDownload) if (requestDownload == getPlatformStableJAR || requestDownload == "/" + getPlatformStableJAR) => {
+        val bytes = getBytesForRuntimeLastRelease
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(runtimeLastRelease).lastModified()))
+
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeRuntime-" +
+            getVariables("kevoree.version.release") + ".jar")
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for release runtime")
+          false
+        }
+      }
+      case Some(requestDownload) if (requestDownload == getAndroidStableAPK || requestDownload == "/" + getAndroidStableAPK) => {
+        val bytes = getBytesForAndroidRuntimeLastRelease
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(runtimeLastRelease).lastModified()))
+
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeRuntime-" +
+            getVariables("kevoree.version.release") + ".jar")
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for release runtime")
+          false
+        }
+      }
+      case Some(requestDownload) if (requestDownload == getAndroidSnapshotAPK || requestDownload == "/" + getAndroidSnapshotAPK) => {
+        val bytes = getBytesForAndroidRuntimeLastSnapshot
+        if (bytes.length > 0) {
+          val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+          val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+          format.setCalendar(cal)
+          val lastUpdated = format.format(new Date(new File(runtimeLastRelease).lastModified()))
+
+          response.getHeaders.put("Content-Length", "" + bytes.length)
+          response.getHeaders.put("Last-Modified", lastUpdated)
+          response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeRuntime-" +
+            getVariables("kevoree.version.release") + ".jar")
+          response.setRawContent(bytes)
+          true
+        } else {
+          logger.warn("Unable to get the last jar for release runtime")
+          false
+        }
+      }
       case _ => false
     }
   }
@@ -305,6 +462,14 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
 
   private def getBytesForRuntimeLastSnapshot: Array[Byte] = {
     FileNIOHelper.getBytesFromFile(new File(runtimeLastSnapshot))
+  }
+
+  private def getBytesForAndroidRuntimeLastRelease: Array[Byte] = {
+    FileNIOHelper.getBytesFromFile(new File(androidRuntimeLastSnapshot))
+  }
+
+  private def getBytesForAndroidRuntimeLastSnapshot: Array[Byte] = {
+    FileNIOHelper.getBytesFromFile(new File(androidRuntimeLastSnapshot))
   }
 
   private def convertStreamToString (inputStream: InputStream): String = {
