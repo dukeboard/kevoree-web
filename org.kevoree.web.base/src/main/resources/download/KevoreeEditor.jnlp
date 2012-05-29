@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0" codebase="http://kevoree.org/">
+<jnlp spec="1.0" codebase="{urlsite}{urlpattern}">
     <information>
         <title>Kevoree Model Editor</title>
         <vendor>IRISA / INRIA Centre Rennes Bretagne Atlantique</vendor>
-        <homepage href="http://kevoree.org"/>
+        <homepage href="{urlsite}{urlpattern}"/>
         <icon href="img/kevoree-logo-full.png" width="64" height="64"/>
         <!-- allow app to run without Internet access -->
         <offline-allowed/>
