@@ -35,15 +35,31 @@
          -->
     <style>
         #Cover {
-        background: #3d3d3d;
-        font: 12px 'Lucida Grande', Arial, sans-serif;
+        	background: #474444;        }
+        #CoverFooter{
+        	    box-shadow: inset 0 10px 7px rgba(0,0,0,0.4);
+			    -webkit-box-shadow: inset 0 10px 7px rgba(0,0,0,0.4);
+			    -moz-box-shadow:inset 0 10px 7px rgba(0,0,0,0.4);	
+			    color : #777;
+    			padding: 10px 20px 5px 5px;
+    			position: absolute;
+				bottom: 0em;
+				left: 0em;
+				right: 0em;
+				color: #CCC;
+				font-size: 0.5em;
+				text-align: right;
+				background: #00597B;
+				
         }
+        
         #Cover h2 {
-        font-size: 1.4em;
-        margin: 0.3em 0
+        	font-size: 1.4em;
+        	margin: 0.3em 0
         }
         #Cover p {
         font-weight: normal;
+        color: #FFFFFF;
         }
         #Picture h2 {
         color:#FFF;
@@ -59,12 +75,11 @@
 <section class="slide cover" id="Cover">
     <header>
         <h2>Kevoree Annotation API</h2>
-
-        <p>Fouquet Francois<br>
-            Triskell Team / INRIA / IRISA , 2012</p>
     </header>
-    <object data="figures/kevoree-logo.png" type="image/png" class="low_middle" height="227"
-                       width="400"></object>
+    <object data="figures/kevoree-logo.png" type="image/png" class="low_middle" height="227" width="400"></object>
+                    
+                    
+    <div id="CoverFooter">Fouquet Francois - Kevoree Team - Triskell INRIA/IRISA</div>
     <details>test contenu pour speaker</details>
 </section>
 
