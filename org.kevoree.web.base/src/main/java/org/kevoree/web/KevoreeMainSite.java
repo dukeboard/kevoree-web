@@ -66,7 +66,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		}
 
 		if (FileServiceHelper.checkStaticFile(basePage, this, request, response)) {
-			if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
+			if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css") || request.getUrl().endsWith(".jnlp")) {
 				// FIXME according to KevoreeSlidesShowerTemplate
 				String pattern = getDictionary().get("urlpattern").toString();
 				if (pattern.endsWith("**")) {
@@ -76,6 +76,12 @@ public class KevoreeMainSite extends ParentAbstractPage {
 					pattern = pattern + "/";
 				}
 				response.setContent(response.getContent().replace("{urlpattern}", pattern));
+				if (request.getUrl().endsWith(".jnlp")) {
+					logger.debug("content: \"{}\"", request.getCompleteUrl().replace(request.getUrl(), ""));
+					logger.debug("replace {urlsite} with \"{}\"", request.getCompleteUrl().replace(request.getUrl(), ""));
+				}
+				String urlSite = request.getCompleteUrl().replace(request.getUrl(), "");
+				response.setContent(response.getContent().replace("{urlsite}", urlSite));
 			}
 			if (useCache) {
 				cacheResponse(request, response);
@@ -110,5 +116,4 @@ public class KevoreeMainSite extends ParentAbstractPage {
 			logger.debug("nothing to invalidate for {}", url);
 		}
 	}
-
 }

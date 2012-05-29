@@ -47,7 +47,7 @@ object MenuRenderer {
   }
 
 
-  def getItems: List[Tuple4[String, String, String,HashMap[String, String]]] = {
+  def getItems: List[Tuple4[String, String, String,Map[String, String]]] = {
     List(
          // ("Home", "/", "overview.html"),
         //  ("Research", "/research", "research.html"),

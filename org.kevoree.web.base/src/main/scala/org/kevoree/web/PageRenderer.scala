@@ -27,10 +27,10 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
           MenuRenderer.getItems.find(it => {
             var patternCleaned = urlPattern
             if (patternCleaned.endsWith("**")) {
-              patternCleaned = patternCleaned.replace("**", "");
+              patternCleaned = patternCleaned.replace("**", "")
             }
             if (!patternCleaned.endsWith("/")) {
-              patternCleaned = patternCleaned + "/";
+              patternCleaned = patternCleaned + "/"
             }
 
             val cleanupRequest = it._2.replace("{urlpattern}", "/")
@@ -53,7 +53,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
     }
   }
 
-  def krender(name: String, currentURL: String, vars: HashMap[String, String], pattern: String): String = {
+  def krender(name: String, currentURL: String, vars: Map[String, String], pattern: String): String = {
     val sb = new StringBuffer()
     sb.append(kheader)
     sb.append(MenuRenderer.getMenuHtml(currentURL))
@@ -115,7 +115,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
   }
 
 
-  def replaceVariable(html: String, vars: HashMap[String, String]): String = {
+  def replaceVariable(html: String, vars: Map[String, String]): String = {
     var content = html
     vars.foreach(v => {
       content = content.replace("{" + v._1 + "}", v._2)
