@@ -294,7 +294,7 @@ window.onunload = function () {
 };
 
 function connectWS () {
-    var roomId = window.prompt("Keynote id:");
+    var roomId = window.prompt("Keynote id: ");
     if (roomId) {
         ws = new WebSocket(wsURL);
         ws.onopen = function (e) {
