@@ -87,7 +87,7 @@ s6(slideshow) ::= <<
 
 slide(s) ::= <<
   <section class='slide'>
-    <h1>«s.title»</h1>
+    <h2>«s.title»</h2>
     «if(s.bullets)»
     <ul>
       «s.bullets:{b|<li>«b»</li>
