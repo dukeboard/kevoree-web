@@ -173,18 +173,54 @@ function goToNextSlide (slideNumber) {
         goToSlide(slideNumber);
         return slideNumber
     } else {
-        activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .active');
-        var currentNode = activeNodes[activeNodes.length - 1].nextElementSibling;
-        if (currentNode) {
-            currentNode.className = currentNode.className + ' active';
+        var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .active');
+        var childNodes = activeNodes[activeNodes.length - 1].getElementsByClassName('next');
+        var nextNode = childNodes[0];
+        if (nextNode) {
+            nextNode.className = nextNode.className + ' active';
             return slideNumber;
         } else {
-            // there is no next inactive inner item so we just go to the next slide
-            slideNumber++;
-            goToSlide(slideNumber);
-            return slideNumber;
+            nextNode = activeNodes[activeNodes.length - 1].nextElementSibling;
+            var currentParentNode = getParentActiveNode(activeNodes);
+            if (nextNode) {
+                nextNode.className = nextNode.className + ' active';
+                return slideNumber;
+            } else if (currentParentNode && currentParentNode.nextElementSibling) {
+                currentParentNode.nextElementSibling.className = currentParentNode.nextElementSibling.className + ' active';
+                return slideNumber;
+            } else {
+                // there is no next inactive inner item so we just go to the next slide
+                slideNumber++;
+                goToSlide(slideNumber);
+                return slideNumber;
+            }
         }
     }
+}
+
+function getParentActiveNode (activeNodes) {
+    var currentNode = activeNodes[activeNodes.length - 1];
+    var i = 2;
+    var isChild = false;
+    while (!isChild && activeNodes.length - i >= 0) {
+
+        var potentialParentNode = activeNodes[activeNodes.length - i];
+        var childNodes = potentialParentNode.getElementsByClassName('next');
+        var j = 0;
+        while (j < childNodes.length && !isChild) {
+            if (childNodes[j] == currentNode) {
+                isChild = true;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    if (isChild) {
+        return potentialParentNode;
+    } else {
+        return null;
+    }
+
 }
 
 function goToPreviousSlide (slideNumber) {
@@ -207,11 +243,12 @@ function goToPreviousSlide (slideNumber) {
         goToSlide(slideNumber);
         return slideNumber
     } else {
-        var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + " .active");
+        activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + " .active");
+//        console.log(activeNodes);
         var currentNode = activeNodes[activeNodes.length - 1];
         var previousNode = currentNode.previousElementSibling;
-
-        if (previousNode) {
+        var currentParentNode = getParentActiveNode(activeNodes);
+        if (previousNode || currentParentNode) {
             currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
             return slideNumber;
         } else {
