@@ -24,7 +24,7 @@
 
     <properties>
         <site.version>2.0.1-SNAPSHOT</site.version>
-        <kevoree.version>1.7.4-SNAPSHOT</kevoree.version>
+        <kevoree.version>1.7.5-SNAPSHOT</kevoree.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
