@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.kevoree.web</groupId>
+        <artifactId>org.kevoree.web.root</artifactId>
+        <version>2.0.1-SNAPSHOT</version>
+        <relativePath>../org.kevoree.web.root/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>org.kevoree.slides.ubimob2012</artifactId>
+    <name>Kevoree :: Slideshow :: UbiMob2012</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.kevoree.web</groupId>
+            <artifactId>org.kevoree.slides.framework</artifactId>
+            <version>${site.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
