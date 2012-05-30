@@ -66,7 +66,7 @@ public class KevoreeSlidePageDev extends KevoreeSlidePage {
             if (!pattern.endsWith("/")) {
                 pattern = pattern + "/";
             }
-            logger.info(pattern);
+            logger.debug(pattern);
             if (pattern.equals(request.getUrl() + "/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
                 if (response.getRawContent() != null) {
                     response.setRawContent(new String(response.getRawContent()).replace("{urlpattern}", pattern).getBytes());
