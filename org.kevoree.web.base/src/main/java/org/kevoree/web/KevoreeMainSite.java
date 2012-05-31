@@ -76,10 +76,13 @@ public class KevoreeMainSite extends ParentAbstractPage {
 					pattern = pattern + "/";
 				}
 				response.setContent(response.getContent().replace("{urlpattern}", pattern));
-				if (request.getUrl().endsWith(".jnlp")) {
-					logger.debug("content: \"{}\"", request.getCompleteUrl().replace(request.getUrl(), ""));
+				/*if (request.getUrl().endsWith(".jnlp")) {
+					for(String key : request.getHeaders().keySet()) {
+						logger.debug("{} = {}",key, request.getHeaders().get(key));
+					}
+					logger.debug("url: \"{}\"", request.getUrl());
 					logger.debug("replace {urlsite} with \"{}\"", request.getCompleteUrl().replace(request.getUrl(), ""));
-				}
+				}*/
 				String urlSite = request.getCompleteUrl().replace(request.getUrl(), "");
 				response.setContent(response.getContent().replace("{urlsite}", urlSite));
 			}
