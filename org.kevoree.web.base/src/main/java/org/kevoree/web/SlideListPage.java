@@ -5,6 +5,8 @@ import org.kevoree.api.service.core.handler.ModelListener;
 import org.kevoree.api.service.core.script.KevScriptEngine;
 import org.kevoree.framework.Constants;
 import org.kevoree.framework.KevoreePropertyHelper;
+import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
+import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.Option;
@@ -25,13 +27,15 @@ public class SlideListPage implements ModelListener {
 	private Map<String, String> slidesList;
 
 	private KevoreeMainSite mainSite;
+	private String webSocketUrl;
 
 	private static Map<String, String> variables = new HashMap<String, String>();
 
 	private Logger logger = LoggerFactory.getLogger(SlideListPage.class.getName());
 
-	public SlideListPage (KevoreeMainSite mainSite) {
+	public SlideListPage (KevoreeMainSite mainSite, String wsUrl) {
 		this.mainSite = mainSite;
+		webSocketUrl = wsUrl;
 		variables = new HashMap<String, String>();
 		slidesList = new HashMap<String, String>();
 	}
@@ -52,6 +56,7 @@ public class SlideListPage implements ModelListener {
 		// look for all component that have a super type equals to KevoreeSlidePage
 		KevScriptEngine kengine = mainSite.getKevScriptEngineFactory().createKevScriptEngine();
 		kengine.addVariable("nodeName", mainSite.getNodeName());
+		kengine.addVariable("webSocketUrl", webSocketUrl);
 		for (TypeDefinition typeDefinition : mainSite.getModelService().getLastModel().getTypeDefinitionsForJ()) {
 			boolean isSlideShow = "KevoreeSlidePage".equals(typeDefinition.getName());
 			boolean isSlideShowDev = "KevoreeSlidePageDev".equals(typeDefinition.getName());
@@ -74,7 +79,7 @@ public class SlideListPage implements ModelListener {
 			if (isSlideShow && !isSlideShowDev) {
 				kengine.addVariable("instanceName", typeDefinition.getName());
 				kengine.addVariable("typeDefinitionName", typeDefinition.getName());
-				kengine.append("addComponent {instanceName}@{nodeName} : {typeDefinitionName} {urlpattern='/{instanceName}/'}");
+				kengine.append("addComponent {instanceName}@{nodeName} : {typeDefinitionName} {urlpattern='/{instanceName}/', wsurl='{webSocketUrl}'}");
 				// find webserver
 				String webServer[] = getWebServerName();
 				if (webServer != null) {
@@ -117,6 +122,16 @@ public class SlideListPage implements ModelListener {
 		} catch (Exception ignored) {
 
 		}
+	}
+
+	public boolean checkSlide(KevoreeHttpRequest request, KevoreeHttpResponse response) {
+		for (String componentName : slidesList.keySet()) {
+			if (request.getUrl().startsWith(componentName) || request.getUrl().startsWith("/" + componentName)) {
+				response.setStatus(418);
+							return true;
+			}
+		}
+		return false;
 	}
 
 	private String[] getWebServerName () {

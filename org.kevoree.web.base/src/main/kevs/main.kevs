@@ -13,7 +13,7 @@ merge "mvn:org.kevoree.web/org.kevoree.slides.ubimob2012/{site.version}"
 addNode node0 : PJavaSENode {logLevel="DEBUG"}
 
 addComponent webSrv@node0 : KTinyWebServer
-addComponent webSitePage@node0 : KevoreeMainSiteDev { urlpattern='/test',folder='{basedir}/src/main/resources/' }
+addComponent webSitePage@node0 : KevoreeMainSiteDev { urlpattern='/',folder='{basedir}/src/main/resources/' }
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req

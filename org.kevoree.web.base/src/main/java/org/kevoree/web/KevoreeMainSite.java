@@ -2,6 +2,8 @@ package org.kevoree.web;
 
 
 import org.kevoree.annotation.ComponentType;
+import org.kevoree.annotation.DictionaryAttribute;
+import org.kevoree.annotation.DictionaryType;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
 import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
@@ -18,6 +20,7 @@ import java.util.HashMap;
 
 @ComponentType
 //@Provides({@ProvidedPort(name = "gitnews",type = PortType.MESSAGE)})
+@DictionaryType({@DictionaryAttribute(name="webSocketLocation", defaultValue="localhost:8092")})
 public class KevoreeMainSite extends ParentAbstractPage {
 
 	protected String basePage = "overview.html";
@@ -39,7 +42,8 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		contentRawCache.clear();
 		contentTypeCache.clear();
 
-		slideList = new SlideListPage(this);
+		String wsUrl = getDictionary().get("webSocketLocation").toString();
+		slideList = new SlideListPage(this, wsUrl);
 		getModelService().registerModelListener(slideList);
 
 	}
@@ -57,6 +61,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		contentRawCache.clear();
 		contentTypeCache.clear();
 		downloadHelper.stop();
+		getModelService().unregisterModelListener(slideList);
 	}
 
 	@Override
@@ -105,7 +110,11 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (downloadHelper.checkForDownload(basePage, this, request, response)) {
 			return response;
 		}
+		if (slideList.checkSlide(request, response)) {
+			return response;
+		}
 		response.setContent("Bad request from " + getName() + "@" + getNodeName());
+//		response.setStatus(418);
 		return response;
 	}
 
