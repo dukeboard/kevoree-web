@@ -5,15 +5,20 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChan
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 
+merge "mvn:org.kevoree.web/org.kevoree.slides.adam/{site.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.cbse2012/{site.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.ubimob2012/{site.version}"
+
+
 addNode node0 : PJavaSENode {logLevel="DEBUG"}
 
 addComponent webSrv@node0 : KTinyWebServer
-addComponent helloPage@node0 : KevoreeMainSiteDev { urlpattern='/test',folder='{basedir}/src/main/resources/' }
+addComponent webSitePage@node0 : KevoreeMainSiteDev { urlpattern='/',folder='{basedir}/src/main/resources/' }
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req
-bind helloPage.request@node0 => req
-bind helloPage.content@node0 => res
+bind webSitePage.request@node0 => req
+bind webSitePage.content@node0 => res
 bind webSrv.response@node0 => res
 
 addGroup sync : NanoRestGroup

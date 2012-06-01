@@ -1,10 +1,7 @@
 package org.kevoree.slides.adamSlides;
 
-import org.kevoree.annotation.*;
+import org.kevoree.annotation.ComponentType;
 import org.kevoree.slides.framework.KevoreeSlidePageDev;
-
-
-import java.io.File;
 
 /**
  * User: Erwan Daubert - erwan.daubert@gmail.com
@@ -15,7 +12,7 @@ import java.io.File;
  * @version 1.0
  */
 @ComponentType
-public class AdamSlidesDev extends KevoreeSlidePageDev {
+public class FraSCAtiKevoree2012Dev extends KevoreeSlidePageDev {
 
 
 }

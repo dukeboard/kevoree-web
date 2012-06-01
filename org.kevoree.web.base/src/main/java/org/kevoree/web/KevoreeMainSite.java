@@ -2,6 +2,8 @@ package org.kevoree.web;
 
 
 import org.kevoree.annotation.ComponentType;
+import org.kevoree.annotation.DictionaryAttribute;
+import org.kevoree.annotation.DictionaryType;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
 import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
@@ -18,6 +20,7 @@ import java.util.HashMap;
 
 @ComponentType
 //@Provides({@ProvidedPort(name = "gitnews",type = PortType.MESSAGE)})
+@DictionaryType({@DictionaryAttribute(name="webSocketLocation", defaultValue="localhost:8092")})
 public class KevoreeMainSite extends ParentAbstractPage {
 
 	protected String basePage = "overview.html";
@@ -27,6 +30,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 	protected PageRenderer krenderer = null;
 	protected Boolean useCache = true;
 	private DownloadHelper downloadHelper;
+	private SlideListPage slideList;
 
 	@Override
 	public void startPage () {
@@ -37,6 +41,11 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		super.startPage();
 		contentRawCache.clear();
 		contentTypeCache.clear();
+
+		String wsUrl = getDictionary().get("webSocketLocation").toString();
+		slideList = new SlideListPage(this, wsUrl);
+		getModelService().registerModelListener(slideList);
+
 	}
 
 	@Override
@@ -52,6 +61,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		contentRawCache.clear();
 		contentTypeCache.clear();
 		downloadHelper.stop();
+		getModelService().unregisterModelListener(slideList);
 	}
 
 	@Override
@@ -76,10 +86,6 @@ public class KevoreeMainSite extends ParentAbstractPage {
 					pattern = pattern + "/";
 				}
 				response.setContent(response.getContent().replace("{urlpattern}", pattern));
-				if (request.getUrl().endsWith(".jnlp")) {
-					logger.debug("content: \"{}\"", request.getCompleteUrl().replace(request.getUrl(), ""));
-					logger.debug("replace {urlsite} with \"{}\"", request.getCompleteUrl().replace(request.getUrl(), ""));
-				}
 				String urlSite = request.getCompleteUrl().replace(request.getUrl(), "");
 				response.setContent(response.getContent().replace("{urlsite}", urlSite));
 			}
@@ -97,7 +103,13 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (downloadHelper.checkForDownload(basePage, this, request, response)) {
 			return response;
 		}
+		/*logger.debug("TOTO" + request.getUrl());
+		if (slideList.checkSlide(request, response)) {
+			return response;
+		}
 		response.setContent("Bad request from " + getName() + "@" + getNodeName());
+//		response.setStatus(418);*/
+		forward(request, response);
 		return response;
 	}
 

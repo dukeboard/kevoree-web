@@ -4,6 +4,7 @@ import io.Source
 import java.io._
 import collection.immutable.HashMap
 import org.kevoree.library.javase.webserver.{URLHandlerScala, AbstractPage, KevoreeHttpRequest, KevoreeHttpResponse}
+import scala.collection.JavaConversions._
 
 /**
  * Created with IntelliJ IDEA.
@@ -53,7 +54,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
     }
   }
 
-  def krender(name: String, currentURL: String, vars: Map[String, String], pattern: String): String = {
+  def krender(name: String, currentURL: String, vars: java.util.Map[String, String], pattern: String): String = {
     val sb = new StringBuffer()
     sb.append(kheader)
     sb.append(MenuRenderer.getMenuHtml(currentURL))
@@ -115,7 +116,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
   }
 
 
-  def replaceVariable(html: String, vars: Map[String, String]): String = {
+  def replaceVariable(html: String, vars: java.util.Map[String, String]): String = {
     var content = html
     vars.foreach(v => {
       content = content.replace("{" + v._1 + "}", v._2)

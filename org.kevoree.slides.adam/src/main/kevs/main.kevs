@@ -11,7 +11,7 @@ addNode node0 : JavaSENode {logLevel = "DEBUG"}
 addComponent webSrv@node0 : KTinyWebServer { port="8081" }
 addComponent wsSrv@node0 : WsServer
 
-addComponent adamSlides@node0 : AdamSlidesDev { urlpattern="/",templateFolder="{basedir}/src/main/resources/",wsurl="ws://localhost:8092/keynote"}
+addComponent adamSlides@node0 : FraSCAtiKevoree2012 { urlpattern="/",templateFolder="{basedir}/src/main/resources/",wsurl="ws://localhost:8092/keynote"}
 addChannel req : defMSG
 addChannel res : defMSG
 bind webSrv.handler@node0 => req
