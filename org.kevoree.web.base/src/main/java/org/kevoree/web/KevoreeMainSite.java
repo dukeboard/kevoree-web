@@ -86,13 +86,6 @@ public class KevoreeMainSite extends ParentAbstractPage {
 					pattern = pattern + "/";
 				}
 				response.setContent(response.getContent().replace("{urlpattern}", pattern));
-				/*if (request.getUrl().endsWith(".jnlp")) {
-					for(String key : request.getHeaders().keySet()) {
-						logger.debug("{} = {}",key, request.getHeaders().get(key));
-					}
-					logger.debug("url: \"{}\"", request.getUrl());
-					logger.debug("replace {urlsite} with \"{}\"", request.getCompleteUrl().replace(request.getUrl(), ""));
-				}*/
 				String urlSite = request.getCompleteUrl().replace(request.getUrl(), "");
 				response.setContent(response.getContent().replace("{urlsite}", urlSite));
 			}
@@ -110,11 +103,13 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (downloadHelper.checkForDownload(basePage, this, request, response)) {
 			return response;
 		}
+		/*logger.debug("TOTO" + request.getUrl());
 		if (slideList.checkSlide(request, response)) {
 			return response;
 		}
 		response.setContent("Bad request from " + getName() + "@" + getNodeName());
-//		response.setStatus(418);
+//		response.setStatus(418);*/
+		forward(request, response);
 		return response;
 	}
 

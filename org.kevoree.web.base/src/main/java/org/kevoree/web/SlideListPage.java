@@ -57,6 +57,7 @@ public class SlideListPage implements ModelListener {
 		KevScriptEngine kengine = mainSite.getKevScriptEngineFactory().createKevScriptEngine();
 		kengine.addVariable("nodeName", mainSite.getNodeName());
 		kengine.addVariable("webSocketUrl", webSocketUrl);
+		boolean forwardChannelIsAdded = false;
 		for (TypeDefinition typeDefinition : mainSite.getModelService().getLastModel().getTypeDefinitionsForJ()) {
 			boolean isSlideShow = "KevoreeSlidePage".equals(typeDefinition.getName());
 			boolean isSlideShowDev = "KevoreeSlidePageDev".equals(typeDefinition.getName());
@@ -84,7 +85,19 @@ public class SlideListPage implements ModelListener {
 				String webServer[] = getWebServerName();
 				if (webServer != null) {
 					// find channels
-					String channelRequestName = findChannel(webServer[0], "handler", webServer[1]);
+					String channelRequestName;
+					if (mainSite.isPortBinded("forward")) {
+						channelRequestName = findChannel(mainSite.getName(), "forward", mainSite.getNodeName());
+					} else {
+						channelRequestName= "forwardChannel";
+						if (!forwardChannelIsAdded) {
+							forwardChannelIsAdded = true;
+							kengine.addVariable("mainSiteName", mainSite.getName());
+							kengine.addVariable("mainSiteNodeName", mainSite.getNodeName());
+							kengine.append("addChannel forwardChannel : defMSG");
+							kengine.append("bind {mainSiteName}.forward@{mainSiteNodeName} => forwardChannel");
+						}
+					}
 					String channelResponseName = findChannel(webServer[0], "response", webServer[1]);
 					if (channelRequestName != null && channelResponseName != null) {
 						// add bindings
@@ -125,6 +138,7 @@ public class SlideListPage implements ModelListener {
 	}
 
 	public boolean checkSlide(KevoreeHttpRequest request, KevoreeHttpResponse response) {
+		logger.debug(Thread.currentThread() + "TITI" + request.getUrl());
 		for (String componentName : slidesList.keySet()) {
 			if (request.getUrl().startsWith(componentName) || request.getUrl().startsWith("/" + componentName)) {
 				response.setStatus(418);
