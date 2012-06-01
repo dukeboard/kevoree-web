@@ -4,4 +4,4 @@ include "{basedir}/../org.kevoree.web.model/src/main/kevs/website.kevs"
 network KevoreeWebSiteNode => KevoreeWebSiteNode { "KEVOREE.remote.node.ip"="10.0.1.2"}
 updateDictionary KevoreeWebSiteGroup  { ip="10.0.1.2", port="8000"}@KevoreeWebSiteNode
 updateDictionary KevoreeWebSiteNode {logLevel="DEBUG"}
-updateDictionary KevoreeWebSitePage@KevoreeWebSiteNode {urlpattern="/test"}
+updateDictionary KevoreeWebSitePage@KevoreeWebSiteNode {urlpattern="/test/"}
