@@ -1,6 +1,7 @@
 package org.kevoree.web
 
 import collection.immutable.HashMap
+import scala.collection.JavaConversions._
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,11 +48,12 @@ object MenuRenderer {
   }
 
 
-  def getItems: List[Tuple4[String, String, String,Map[String, String]]] = {
+  def getItems: List[Tuple4[String, String, String,java.util.Map[String, String]]] = {
     List(
          // ("Home", "/", "overview.html"),
         //  ("Research", "/research", "research.html"),
           ("Core Features", "{urlpattern}core", "core_features.html",HashMap[String,String]()),
+          ("Presentations", "{urlpattern}presentations", "slidesList.html", SlideListPage.getVariables),
          // ("Tools", "/tools", ""),
           //("Platforms", "/platform", ""),
           ("Download", "{urlpattern}download", "download.html",DownloadHelper.getVariables),

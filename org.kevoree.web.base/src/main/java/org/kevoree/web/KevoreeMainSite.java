@@ -27,6 +27,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 	protected PageRenderer krenderer = null;
 	protected Boolean useCache = true;
 	private DownloadHelper downloadHelper;
+	private SlideListPage slideList;
 
 	@Override
 	public void startPage () {
@@ -37,6 +38,10 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		super.startPage();
 		contentRawCache.clear();
 		contentTypeCache.clear();
+
+		slideList = new SlideListPage(this);
+		getModelService().registerModelListener(slideList);
+
 	}
 
 	@Override

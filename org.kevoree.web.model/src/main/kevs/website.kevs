@@ -5,6 +5,11 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{k
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
+
+merge "mvn:org.kevoree.web/org.kevoree.slides.adam/{site.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.cbse2012/{site.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.ubimob2012/{site.version}"
+
 addNode KevoreeWebSiteNode : PJavaSENode
 network KevoreeWebSiteNode => KevoreeWebSiteNode { "KEVOREE.remote.node.ip"="10.0.0.4"}
 addGroup KevoreeWebSiteGroup : NanoRestGroup
