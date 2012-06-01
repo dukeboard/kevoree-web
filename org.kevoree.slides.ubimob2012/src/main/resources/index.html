@@ -117,8 +117,8 @@
         <span class="next"></span>
         <li class="next">High availability
             <ul>
-                <li>Cloud infrastructure, web servers, monitoring sensors network, etc ... need the famous 99,99%
-                    uptime
+                <li>Cloud <span class="iconic cloud"></span>, web servers, <span class="iconFont3">4</span> monitoring
+                    sensors network, etc ... need the famous 99,99% uptime
                 </li>
             </ul>
         </li>
@@ -134,22 +134,33 @@
 
 <section class="slide" id="DSys1">
     <header><h2>Heterogeneity and distribution</h2></header>
-    Pushed namely by new mobility usages and Internet of Things influence, several new devices are now part of moderns
+    Pushed namely by new mobility usages and Internet of Things (IoT) influence, several new devices are now part of
+    moderns
     systems
     <ul>
         <li>Smartphones <span class='iconic iphone'></span> and tablets<span class="iconFont3">n</span></li>
-        <li>IoT : very low consumption micro-controllers sensors</li>
+        <li>IoT <span class="iconFont3">l</span> <span class="glyph general">u</span> very low consumption
+            micro-controllers sensors
+        </li>
     </ul>
     <span class="iconic pin"></span> <strong>Runtime heterogeneity</strong><br/>
     <span class="iconic pin"></span> <em>(mobile <span class="glyph general">v</span><span
         class="glyph general">u</span> sporadic)</em> <strong>distribution</strong> implicitly introduced. <br/>
-
     <code>These characteristics <span class="iconic move_horizontal_alt2"></span> ubiquitous systems.</code>
 
 </section>
 
 <section class="slide shout" id="ChallengesCover">
     <h2>Challenges</h2>
+</section>
+
+<section class="slide shout" id="DASINPUT">
+    <h2 style="font-size : 60px">Ubiquitous <span class='iconic iphone'></span> need <br/>
+        <br/>
+        contextual <span class="iconFont3">4</span> knowledge <span class="iconFont3">i</span><br/>
+        <br/>
+        to take decisions <span class='iconic cog'></span>
+    </h2>
 </section>
 
 <section class="slide" id="DistributedProblems">
@@ -162,13 +173,15 @@
             <span class="glyph general">p</span><span class="glyph general">v</span><span class="glyph general">g</span><span
                     class="glyph general">u</span><span class="glyph general">p</span>
         </li>
-        <li><strong>Heterogenous nodes</strong> : direct access is not always provided by restrictive runtime
+        <li><strong>Heterogeneous nodes</strong> : direct access is not always provided by restrictive runtime
             <span class="glyph general">p</span><span class="glyph general">v</span><span class="glyph general">t</span><span
                     class="glyph general">u</span><span class="glyph general">q</span>
         </li>
         <li><strong>Embedded nodes</strong> : direct access can be an issue for the <code>battery life</code>
-            <span class="iconic battery_half"></span><span class="glyph general">v</span><span
-                    class="glyph general">u</span><span class='iconic iphone'></span>
+            <span class="glyph general">p</span> <!-- computer -->
+            <span class="glyph general">v</span><span class="glyph general">u</span>
+            <span class="iconic battery_half"></span>
+            <span class='iconic iphone'></span>
         </li>
     </ul>
     <details>Need inputs ...</details>
@@ -176,44 +189,69 @@
 
 <section class="slide" id="DistributedHeterogenity">
     <header>
-        <h2>Heterogenous dissemination strategy</h2>
+        <h2>Heterogeneous dissemination strategy</h2>
     </header>
     Distributed system usually organized in clusters (<code>group of nodes</code>)
-    Considering a cluster of nodes <span class="glyph general">p</span> (A,B,C) sharing a configuration model :
-    <ul class="inner">
-        <li class="active"><strong>Sporadic context</strong> : A can update B without synchronizing C</li>
-        <li><strong>Cluster context</strong> : A must synchronize B & C in the <em>same logical time</em></li>
-        <li><strong>Opportunistic nodes</strong> : A can synchronize B or C depend of previous configurations
+    Considering a cluster of 3 nodes <span class="glyph general">p</span> sharing a configuration model :
+    <ul>
+        <li class="next"><strong>Sporadic context</strong> : N1 can update N2 without synchronizing N3 <br/>
+            N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span>
+            N2 <span class='iconic iphone'></span> <span class='iconic x_alt'></span>
+            N3 <span class='iconic iphone'></span>
+        </li>
+        <li class="next"><strong>Cluster context</strong> : N1 must synchronize N2 & N3 in the <em>same logical
+            time</em> <br/>
+            N2 <span class='iconic iphone'></span> <span class='iconic arrow_left'></span>
+            N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span>
+            N3 <span class='iconic iphone'></span>
+        </li>
+        <li class="next"><strong>Opportunistic nodes</strong> : A can synchronize B or C depend of previous
+            configurations <br/>
+            N2 <span class='iconic iphone'></span> <span class='iconic arrow_left'> </span><span
+                    class='iconic question_mark'></span>
+            N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'> </span><span
+                    class='iconic question_mark'></span>
+            N3 <span class='iconic iphone'></span>
         </li>
     </ul>
-    Total order, Partial order: common challenges in distributed softwares
+    <!--Total order, Partial order: common challenges in distributed softwares   -->
 </section>
 
 <section class="slide" id="StrategyHeterogenity">
     <header>
-        <h2>Dissemination strategy heterogeneity</h2>
+        <h2>Mix them all !</h2>
     </header>
     Complex architectures, especially on field sporadic usage, lead to composition of dissemination strategies
     <ul>
-        <li>A & B are mobile nodes, injected group will use partial order</li>
-        <li>S1 & S2 are cluster nodes, injected group will use total order</li>
-        <li>A partial order group is injected between B & S1.</li>
+        <li class="next">M1 & M2 are mobile nodes, group will use partial order</li>
+        <li class="next">S1 & S2 are cluster nodes, group will use total order</li>
+        <li class="next">A partial order group is between M2 & S2.</li>
+        <li class="next">
+            M1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span> <span
+                class='iconic question_mark'></span>
+            S1 <span class="iconFont3">3</span> <span class='iconic arrow_left'></span><span
+                class='iconic arrow_right'></span>
+            S2 <span class="iconFont3">3</span> <span class='iconic arrow_left'></span> <span
+                class='iconic question_mark'></span>
+            M2 <span class='iconic iphone'></span>
+        </li>
+        <li class="next"> mess ... <span class="iconFont3">2</span></li>
     </ul>
-    <object data="figures/multiScope.png" type="image/png"
-            style="position:absolute;right:30px;top:370px;"></object>
 </section>
 
 <section class="slide" id="mr_dissemination_distributedScope">
     <header>
-        <h2>M@R Dissemination scope</h2>
+        <h2>Dissemination scope</h2>
     </header>
-    Cluster also ensures a strong synchronization of members. The scope of this synchronization depends is
+    <blockquote>Global synchronization is not an option for ubiquitous architecture</blockquote>
+    <span class='iconic arrow_right'></span>Need different scope of this synchronization
     defined by the group
     Considering two group of nodes: (A,B) & (B,C)
     <ul>
-        <li>A & B share a M@R, B & C share another M@R</li>
-        <li>A & C don't share anything, cluster defines synchronized elements</li>
-        <li>A & C can be desynchronized if cluster 2 ensures a partial order</li>
+        <li class="next">A & B share context, B & C share another context</li>
+        <li class="next">A & C don't share anything, cluster defines synchronized elements</li>
+        <li class="next">A & C can be desynchronized if cluster 2 ensures a partial order</li>
+        <li class="next"> mess ... <span class="iconFont3">2</span></li>
     </ul>
 </section>
 
@@ -225,8 +263,10 @@
     <blockquote>To address all these problems, we need to provide an abstraction to manipulate and compose
         dissemination strategies
     </blockquote>
-</section>
+    <h2></h2><br/>
 
+    <h2>Model as context <span class="iconFont3">g</span><br/></h2>
+</section>
 
 <section class="slide shout" id="ContextMAR">
     <h2>Model@Runtime</h2>
@@ -311,28 +351,30 @@
     <header>
         <h2>Model@Runtime for DDAS</h2>
     </header>
-    <ul style="top: 18px;">
-        <li>MDE@Runtime</li>
-        <ul>
-            <li style="font-size: 18px;">Shared model representation for distributed nodes</li>
-            <li style="font-size: 18px;">Offline & online operation, compute@Model level, apply @Runtime</li>
-        </ul>
-        <li>Component-based</li>
-        <ul>
-            <li style="font-size: 18px;">Actor semantics on each ports to closely separate component behavior
-            </li>
-            <li style="font-size: 18px;">Communication semantics between component in channel</li>
-        </ul>
-        <li>Continuous Design, type definition continuous definition</li>
-        <ul>
-            <li style="font-size: 18px;">Hot (re-)deploy & provisioning</li>
-        </ul>
-        <li>Heterogeneity management with NodeType</li>
-        <ul>
-            <li style="font-size: 18px;"> Java Node, Dalvik Node, Arduino Node, Cloud Node (Jails/*BSD, JCloud,
-                mini-cloud, EC2)
-            </li>
-        </ul>
+    <ul>
+        <li class="next">MDE@Runtime
+            <ul>
+                <li>Shared model representation for distributed nodes</li>
+                <li>Offline & online operation, compute@Model level, apply @Runtime</li>
+            </ul>
+        </li>
+        <li class="next">Component-based
+            <ul>
+             <!--   <li>Actor semantics on each ports to closely separate component behavior</li>   -->
+                <li>Communication semantics between component in channel</li>
+            </ul>
+        </li>
+       <!-- <li>Continuous Design, type definition continuous definition
+            <ul>
+                <li style="font-size: 18px;">Hot (re-)deploy & provisioning</li>
+            </ul>
+        </li>    -->
+        <li class="next">Heterogeneity management with NodeType
+            <ul>
+                <li> Java Node, Dalvik Node, Arduino Node</li>
+                <li>Cloud Node (Jails/*BSD, JCloud, mini-cloud, EC2)</li>
+            </ul>
+        </li>
     </ul>
 </section>
 
@@ -341,51 +383,31 @@
         <h2>Kevoree concepts
         </h2>
     </header>
-    <ul style="top: 18px;">
-        <li> ComponentType</li>
-        <ul>
-            <li style="font-size: 18px;">Encapsulate domain features/li>
-        </ul>
-        <li>ChannelType</li>
-        <ul>
-            <li style="font-size: 18px;">Encapsulate communication semantics</li>
-        </ul>
-        <li>GroupType</li>
-        <ul>
-            <li style="font-size: 18px;">Encapsulate model@runtime dissemination semantics</li>
-        </ul>
-        <li>NodeType</li>
-        <ul>
-            <li style="font-size: 18px;">Encapsulate adaptation semantics</li>
-        </ul>
-    </ul>
-    <object style="position:absolute;top: 250px;right: 10px;" data="figures/fig2.png" type="image/png"
-            height="270"></object>
-
-
-</section>
-
-<!--
-<section class="slide" id="overview4">
-    <header>
-        <h2> NodeType - Adaptive container</h2>
-    </header>
-
-    <ul style="top: 18px;">
-        <li> NodeType host adaptation semantics
+    <ul>
+        <li class="next"> ComponentType
             <ul>
-                <li>AdaptationPrimitives Type</li>
-                <li>Compare algorithm</li>
-                <li>Plan algorithm</li>
-                <li>Adaptation Primitives</li>
+                <li>Encapsulate domain features</li>
             </ul>
         </li>
-        <li>Can host child nodes by delegation</li>
-        <li>Can be deployed dynamically</li>
+        <li class="next">ChannelType
+            <ul>
+                <li>Encapsulate communication semantics</li>
+            </ul>
+        </li>
+        <li class="next">GroupType
+            <ul>
+                <li>Encapsulate model@runtime dissemination semantics</li>
+            </ul>
+        </li>
+        <li class="next">NodeType
+            <ul>
+                <li>Encapsulate adaptation semantics</li>
+            </ul>
+        </li>
     </ul>
-    <object style="position:absolute;top: 250px;right: 10px;" data="figures/KevoreeNodeType.png" type="image/png" height="320"></object>
+    <object style="position:absolute;top: 145px;right: 10px;" data="figures/fig2.png" type="image/png"
+            height="270"></object>
 </section>
- -->
 
 
 <!-- ================== Init Daum Section ================================-->
@@ -399,21 +421,30 @@
     <p>Define a tactical on-field operating system for firefighters</p>
     <ul>
         Complex adaptative ubiquitous system because:
-        <li>Adaptation inhering by domain, firefighters are deployed also dynamically</li>
-        <li>Heterogeneous (sensors, embedded computer, tablet)</li>
-        <li>Complex topology and nodes distributions (sporadic, several communication capacity)</li>
+        <li class="next">Adaptation inhering by domain<br />
+            <span class='iconic arrow_right'></span> firefighters are deployed also dynamically
+        </li>
+        <li class="next">Heterogeneous (sensors <span class='iconic beaker'></span> , embedded computer, tablet <span class='iconic iphone'></span>)</li>
+        <li class="next">Complex topology and nodes distributions
+            <ul>
+                <li>sporadic</li>
+                <li>several communication capacity</li>
+            </ul>
+        </li>
     </ul>
 </section>
 <section class="slide" id="DaumProjectNutshell">
     <header>
         <h2>Daum in a nutshell</h2>
     </header>
-    <p>Deploy embedded sensors on firefighters personal equipment witch monitor temperature, heart rhythm,...
-        Deploy embedded tablet ton collect tactical and sensors data.
-        Deploy embedded computer wich interact for central system in cars.</p>
+    <p>Embedded sensors on firefighters personal equipment<br />
+        <span class='iconic arrow_right'></span> monitor temperature, heart rhythm <span class='iconFont3'>4</span> <br />
+        Deploy embedded tablet ton collect tactical and sensors data.<br />
+        Deploy embedded computer wich interact for central system in cars.
+    </p>
     <ul>
         <li>Sensors are low consumption uC nodes</li>
-        <li>Cars and tablets are middle class consumption computer (ARM9-11 class)</li>
+        <li>Cars and tablets are middle class consumption computer (ARM9-11)</li>
         <li>Central system is a legacy grid deploy system</li>
     </ul>
 </section>
@@ -424,7 +455,7 @@
 <!-- Kevoree Publication -->
 <section class="slide" id="ref">
     <header>
-        <h2>Reference</h2>
+        <h2>References</h2>
     </header>
     <ul style="font-size: 13px;">
         <li>F. Fouquet, O. Barais, N. Plouzeau, J-M. Jézéquel, B. Morin and F. Fleurey. -- A Dynamic Component Model for
