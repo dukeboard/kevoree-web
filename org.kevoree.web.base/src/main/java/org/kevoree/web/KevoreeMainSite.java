@@ -109,8 +109,8 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		}
 		response.setContent("Bad request from " + getName() + "@" + getNodeName());
 //		response.setStatus(418);*/
-		forward(request, response);
-		return response;
+		return forward(request, response);
+//		return response;
 	}
 
 	public void cacheResponse (KevoreeHttpRequest request, KevoreeHttpResponse response) {
