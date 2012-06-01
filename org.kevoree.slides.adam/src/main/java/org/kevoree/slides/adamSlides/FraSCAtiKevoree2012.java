@@ -12,5 +12,5 @@ import org.kevoree.slides.framework.KevoreeSlidePage;
  * @version 1.0
  */
 @ComponentType
-public class AdamSlides extends KevoreeSlidePage {
+public class FraSCAtiKevoree2012 extends KevoreeSlidePage {
 }
