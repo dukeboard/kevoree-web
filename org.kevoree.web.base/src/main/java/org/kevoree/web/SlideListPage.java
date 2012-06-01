@@ -80,7 +80,7 @@ public class SlideListPage implements ModelListener {
 			if (isSlideShow && !isSlideShowDev) {
 				kengine.addVariable("instanceName", typeDefinition.getName());
 				kengine.addVariable("typeDefinitionName", typeDefinition.getName());
-				kengine.append("addComponent {instanceName}@{nodeName} : {typeDefinitionName} {urlpattern='/{instanceName}/', wsurl='{webSocketUrl}'}");
+				kengine.append("addComponent {instanceName}@{nodeName} : {typeDefinitionName} {urlpattern='/talks/{instanceName}/', wsurl='{webSocketUrl}'}");
 				// find webserver
 				String webServer[] = getWebServerName();
 				if (webServer != null) {
@@ -119,7 +119,7 @@ public class SlideListPage implements ModelListener {
 					if (portOption.isDefined()) {
 						port = portOption.get();
 					}
-					slidesList.put(typeDefinition.getName(), "http://" + ip + ":" + port + "/" + typeDefinition.getName() + "/embed");
+					slidesList.put(typeDefinition.getName(), "{urlsite}{urlpattern}talks/" + typeDefinition.getName() + "/embed");
 				} else {
 					logger.warn("Unable to find webserver to connect slide component");
 				}
