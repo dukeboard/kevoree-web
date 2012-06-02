@@ -18,6 +18,9 @@
         .iconFont3 {
             font-family:'HeydingsCommonIconsRegular';
         }
+        .kevOrange {
+            color: #DF9D00;
+        }
         details { display: none; }
     </style>
     <link rel='stylesheet' href='iconic_fill/iconic_fill.css' type='text/css' media='screen'/>
@@ -54,20 +57,20 @@ Model@Runtime
             )
         </span><br/>
         </div>
-        <div style="position : absolute;right: 30px;bottom: 0;">
-           <span style="text-align : justify;color: #CCC;font:normal 15px/15px 'PT Sans Narrow', sans-serif;">
-<span class="iconic arrow_right"> by </span> Francois Fouquet, Erwan Daubert, Olivier Barais, Noel Plouzeau, Jean-Marc Jezequel
+        <div style="position : absolute;right: 12px;bottom: 0;">
+           <span style="text-align : justify;color: #CCC;font:normal 14px/14px 'PT Sans Narrow', sans-serif;">
+<span class="iconic arrow_right"> by </span> Francois Fouquet, Erwan Daubert, Olivier Barais, Noel Plouzeau, Jean-Emile Dartois, Jean-Marc Jezequel
            </span>
         </div>
     </header>
     <details>Hello from Kevoree Team :-) !</details>
 </section>
 <section class="slide shout" id="Introduction">
-    <h2 style="font-size : 70px;">Software engineering <span class="iconFont3">G</span><br/>
+    <h2 style="font-size : 70px;">Software engineering <span class="iconFont3 kevOrange">G</span><br/>
         <br/>
-        model <span class="iconFont3">g</span><br/>
+        model <span class="iconFont3 kevOrange">g</span><br/>
         <br/>
-        for <span class="iconFont3">3</span><br/>
+        for <span class="iconFont3 kevOrange">3</span><br/>
     </h2>
 </section>
 
@@ -90,7 +93,7 @@ Model@Runtime
 
 <!-- ================== Init Context Section ================================-->
 <section class="slide shout" id="ContextCover">
-    <h2>Context</h2>
+    <h2><span class="kevOrange">></span>Context</h2>
 </section>
 
 <!-- Eternal system == DAS -->
@@ -101,7 +104,7 @@ Model@Runtime
             functionalities evolve at runtime.
         </li>
         <li class="next">Typically used for applications where it's hard/impossible to anticipate needs at design time
-            <=> <code>Continuous</code> <span style="font-size: 30px;color: #BBBBBB;" class="iconic spin"></span> <code>design</code>
+            <=> <code>Continuous</code> <span style="font-size: 30px;" class="iconic spin kevOrange"></span> <code>design</code>
         </li>
         <li class="next">Necessity to define a manipulation granularity <br/>=> common approach : component based
             development
@@ -152,15 +155,15 @@ Model@Runtime
 </section>
 
 <section class="slide shout" id="ChallengesCover">
-    <h2>Challenges</h2>
+    <h2><span class="kevOrange">></span>Challenges</h2>
 </section>
 
 <section class="slide shout" id="DASINPUT">
-    <h2 style="font-size : 60px">Ubiquitous <span class='iconic iphone'></span> need <br/>
+    <h2 style="font-size : 60px">Ubiquitous <span class='iconic iphone kevOrange'></span> need <br/>
         <br/>
-        contextual <span class="iconFont3">4</span> knowledge <span class="iconFont3">i</span><br/>
+        contextual <span class="iconFont3 kevOrange">4</span> knowledge <span class="iconFont3 kevOrange">i</span><br/>
         <br/>
-        to take decisions <span class='iconic cog'></span>
+        to take decisions <span class='iconic cog kevOrange'></span>
     </h2>
 </section>
 
@@ -170,15 +173,15 @@ Model@Runtime
     </header>
     but direct access on reflexive layer is problematic in several distributed architectures
     <ul>
-        <li><strong>Sporadic nodes</strong> : direct reflexive access are not always<code>reachable</code>
+        <li><strong class="kevOrange">Sporadic nodes</strong> : direct reflexive access are not always<code>reachable</code>
             <span class="glyph general">p</span><span class="glyph general">v</span><span class="glyph general">g</span><span
                     class="glyph general">u</span><span class="glyph general">p</span>
         </li>
-        <li><strong>Heterogeneous nodes</strong> : direct access are not always provided by restrictive runtime
+        <li><strong class="kevOrange">Heterogeneous nodes</strong> : direct access are not always provided by restrictive runtime
             <span class="glyph general">p</span><span class="glyph general">v</span><span class="glyph general">t</span><span
                     class="glyph general">u</span><span class="glyph general">q</span>
         </li>
-        <li><strong>Embedded nodes</strong> : direct access can be an issue for the <code>battery life</code>
+        <li><strong class="kevOrange">Embedded nodes</strong> : direct access can be an issue for the <code>battery life</code>
             <span class="glyph general">p</span> <!-- computer -->
             <span class="glyph general">v</span><span class="glyph general">u</span>
             <span class="iconic battery_half"></span>
@@ -195,18 +198,18 @@ Model@Runtime
     Distributed system usually organized in clusters (<code>group of nodes</code>)
     Considering a cluster of 3 nodes <span class="glyph general">p</span> sharing a configuration model :
     <ul>
-        <li class="next"><strong>Sporadic context</strong> : N1 can update N2 without synchronizing N3 <br/>
+        <li class="next"><strong class="kevOrange">Sporadic context</strong> : N1 can update N2 without synchronizing N3 <br/>
             N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span>
             N2 <span class='iconic iphone'></span> <span class='iconic x_alt'></span>
             N3 <span class='iconic iphone'></span>
         </li>
-        <li class="next"><strong>Cluster context</strong> : N1 must synchronize N2 & N3 in the <em>same logical
+        <li class="next"><strong class="kevOrange">Cluster context</strong> : N1 must synchronize N2 & N3 in the <em>same logical
             time</em> <br/>
             N2 <span class='iconic iphone'></span> <span class='iconic arrow_left'></span>
             N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span>
             N3 <span class='iconic iphone'></span>
         </li>
-        <li class="next"><strong>Opportunistic nodes</strong> : A can synchronize B or C depend of previous
+        <li class="next"><strong class="kevOrange">Opportunistic nodes</strong> : A can synchronize B or C depend of previous
             configurations <br/>
             N2 <span class='iconic iphone'></span> <span class='iconic arrow_left'> </span><span
                     class='iconic question_mark'></span>
@@ -266,19 +269,19 @@ Model@Runtime
     </blockquote>
     <h2></h2><br/>
 
-    <h2>Model as context <span class="iconFont3">g</span><br/></h2>
+    <h2 style="text-align : center;">Model as context <span class="iconFont3 kevOrange">g</span><br/></h2>
 </section>
 
 <section class="slide shout" id="ContextMAR">
-    <h2>Model@Runtime</h2>
+    <h2><span class="kevOrange">></span>Model@Runtime</h2>
 </section>
 
 <section class="slide shout" id="ContextMARIntro">
     <h2 style="font-size : 60px">
         Node = Runtime
-        <span class='iconic box'></span>
+        <span class='iconic box kevOrange'></span>
         <span class='iconic loop_alt2'></span>
-        <span class='iconic document_alt_fill'></span>
+        <span class='iconic document_alt_fill kevOrange'></span>
         Model
     </h2>
 </section>
@@ -287,27 +290,27 @@ Model@Runtime
     <h2 style="font-size : 60px">
         Evolution = <br/>
         <br/>
-        1 - Fork <span class='iconic fork'></span> current <span class='iconic document_alt_fill'></span> <br/>
+        1 - Fork <span class='iconic fork kevOrange'></span> current <span class='iconic document_alt_fill kevOrange'></span> <br/>
         <br/>
-        2 - Modify <span class='iconic equalizer'></span> to produce <span class='iconic document_fill'></span>
+        2 - Modify <span class='iconic equalizer kevOrange'></span> to produce <span class='iconic document_fill kevOrange'></span>
         <br/>
         <br/>
-        3 - Send <span class='iconic arrow_right'></span> to <span class='iconic box'></span>
+        3 - Send <span class='iconic arrow_right kevOrange'></span> to <span class='iconic box kevOrange'></span>
     </h2>
 </section>
 
 <section class="slide shout" id="ContextMARIntro3">
     <h2 style="font-size : 60px">
-        On update <span class='iconic document_fill'></span> <span class='iconic curved_arrow'></span> node
+        On update <span class='iconic document_fill kevOrange'></span> <span class='iconic curved_arrow kevOrange'></span> node
         <br/>
         <br/>
-        Compare / current <span class='iconic document_alt_fill'></span> produce diff <span
-            class='iconic list_nested'></span> <br/>
+        Compare / current <span class='iconic document_alt_fill kevOrange'></span> produce diff <span
+            class='iconic list_nested kevOrange'></span> <br/>
         <br/>
-        Interpret on <span class='iconic box'></span> if ok set as current <span
-            class='iconic document_fill'></span> <br/>
+        Interpret on <span class='iconic box kevOrange'></span> if ok set as current <span
+            class='iconic document_fill kevOrange'></span> <br/>
         <br/>
-        Or <span class='iconic undo'></span> rollback
+        Or <span class='iconic undo kevOrange'></span> rollback
     </h2>
 </section>
 
@@ -327,25 +330,25 @@ Model@Runtime
     <h2 style="font-size : 60px">
         Model@Runtime for distributed<br/>
         <br/>
-        <span class='iconFont3'>g</span> modelling distributed <span class='iconFont3'>3</span><br/>
+        <span class='iconFont3 kevOrange'>g</span> modelling distributed <span class='iconFont3 kevOrange'>3</span><br/>
         <br/>
-        share <span class='iconic share'></span> distributed model itself
+        share <span class='iconic share kevOrange'></span> distributed model itself
     </h2>
 </section>
 <section class="slide shout" id="DMAR_CONCEPTS2">
     <h2 style="font-size : 60px">
-        On update <span class='iconic document_fill'></span> <span class='iconic curved_arrow'></span> node <br/>
+        On update <span class='iconic document_fill kevOrange'></span> <span class='iconic curved_arrow kevOrange'></span> node <br/>
         <br/>
-        local apply <span class='iconFont3'>C</span><br/>
+        local apply <span class='iconFont3 kevOrange'>C</span><br/>
         <br/>
-        disseminate <span class='iconFont3'>e</span> to peers
+        disseminate <span class='iconFont3 kevOrange'>e</span> to peers
     </h2>
 </section>
 
 
 <!-- ================== Init Kevoree Section ================================-->
 <section class="slide shout" id="KevoreeProjectCover">
-    <h2>Kevoree Project</h2>
+    <h2><span class="kevOrange">></span>Kevoree Project</h2>
 </section>
 
 <section class="slide" id="overview1">
@@ -381,8 +384,7 @@ Model@Runtime
 
 <section class="slide" id="overview3">
     <header>
-        <h2>Kevoree concepts
-        </h2>
+        <h2>Kevoree concepts</h2>
     </header>
     <ul>
         <li class="next"> ComponentType
@@ -413,7 +415,7 @@ Model@Runtime
 
 <!-- ================== Init Daum Section ================================-->
 <section class="slide shout" id="DaumProjectCover">
-    <h2>Daum Project</h2>
+    <h2><span class="kevOrange">></span>Daum Project</h2>
 </section>
 <section class="slide" id="DaumProjectGoals">
     <header>
@@ -423,7 +425,7 @@ Model@Runtime
     <ul>
         Complex adaptative ubiquitous system because:
         <li class="next">Adaptation inherent to domain<br/>
-            <span class='iconic arrow_right'></span> firefighters are deployed also dynamically
+            <span class='iconic arrow_right kevOrange'></span> firefighters are deployed also dynamically
         </li>
         <li class="next">Heterogeneous (sensors <span class='iconic beaker'></span> , embedded computer, tablet <span
                 class='iconic iphone'></span>)
@@ -442,7 +444,7 @@ Model@Runtime
         <h2>Daum in a nutshell</h2>
     </header>
     <p>Embedded sensors on firefighters personal equipment<br/>
-        <span class='iconic arrow_right'></span> monitor temperature, heart rate <span class='iconFont3'>4</span> <br/>
+        <span class='iconic arrow_right kevOrange'></span> monitor temperature, heart rate <span class='iconFont3'>4</span> <br/>
         Deploy embedded tablets to collect tactical and sensors data.<br/>
         Deploy embedded computers that interact with central system in cars.
     </p>
