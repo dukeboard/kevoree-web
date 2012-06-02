@@ -14,7 +14,7 @@ merge "mvn:org.kevoree.web/org.kevoree.slides.ws/{site.version}"
 addNode node0 : PJavaSENode {logLevel="DEBUG"}
 
 addComponent webSrv@node0 : KTinyWebServer
-addComponent webSitePage@node0 : KevoreeMainSiteDev { urlpattern='/',folder='{basedir}/src/main/resources/', webSocketLocation="http://localhost:8092"}
+addComponent webSitePage@node0 : KevoreeMainSiteDev { urlpattern='/test',folder='{basedir}/src/main/resources/', webSocketLocation="http://localhost:8092"}
 addComponent webSocket@node0 : WsServer
 addChannel req : defMSG
 addChannel res : defMSG

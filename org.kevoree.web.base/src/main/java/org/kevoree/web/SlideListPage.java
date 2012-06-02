@@ -200,7 +200,7 @@ public class SlideListPage implements ModelListener {
 
 			menuBuilder.append("<li><a onclick=\"document.querySelector('#presentation').innerHTML = '")
 					.append(componentName).append("';slideURL = '")
-					.append(slidesList.get(componentName)).append("';\">").append(componentName).append("</a></li>\n");
+					.append(slidesList.get(componentName)).append("'; loadIFrame();\">").append(componentName).append("</a></li>\n");
 			if (isFirst) {
 				isFirst = false;
 				slideListBuilder.append("document.querySelector('#presentation').innerHTML = '")

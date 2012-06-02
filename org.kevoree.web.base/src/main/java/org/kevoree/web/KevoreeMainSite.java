@@ -71,7 +71,8 @@ public class KevoreeMainSite extends ParentAbstractPage {
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
 
-		if (getLastParam(request.getUrl()).startsWith("talks/")) {
+		logger.debug(getLastParam(request.getUrl()));
+		if (getLastParam(request.getUrl()).startsWith("talks/") || getLastParam(request.getUrl()).startsWith("/talks/")) {
 			return forward(request, response);
 		}
 
