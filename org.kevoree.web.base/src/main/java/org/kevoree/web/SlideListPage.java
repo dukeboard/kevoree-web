@@ -5,12 +5,14 @@ import org.kevoree.api.service.core.handler.ModelListener;
 import org.kevoree.api.service.core.script.KevScriptEngine;
 import org.kevoree.framework.Constants;
 import org.kevoree.framework.KevoreePropertyHelper;
+import org.kevoree.library.javase.webserver.FileServiceHelper;
 import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.Option;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +35,19 @@ public class SlideListPage implements ModelListener {
 
 	private Logger logger = LoggerFactory.getLogger(SlideListPage.class.getName());
 
-	public SlideListPage (KevoreeMainSite mainSite, String wsUrl) {
+	public SlideListPage (KevoreeMainSite mainSite, String wsUrl) throws Exception {
 		this.mainSite = mainSite;
 		webSocketUrl = wsUrl;
 		variables = new HashMap<String, String>();
 		slidesList = new HashMap<String, String>();
+		initializeEmbedder();
+	}
+
+	private void initializeEmbedder () throws Exception {
+		InputStream in = mainSite.getClass().getClassLoader().getResourceAsStream("embedder.html");
+		if (in != null) {
+			variables.put("embedder", new String(FileServiceHelper.convertStream(in), "UTF-8"));
+		}
 	}
 
 	@Override
@@ -89,7 +99,7 @@ public class SlideListPage implements ModelListener {
 					if (mainSite.isPortBinded("forward")) {
 						channelRequestName = findChannel(mainSite.getName(), "forward", mainSite.getNodeName());
 					} else {
-						channelRequestName= "forwardChannel";
+						channelRequestName = "forwardChannel";
 						if (!forwardChannelIsAdded) {
 							forwardChannelIsAdded = true;
 							kengine.addVariable("mainSiteName", mainSite.getName());
@@ -119,7 +129,7 @@ public class SlideListPage implements ModelListener {
 					if (portOption.isDefined()) {
 						port = portOption.get();
 					}
-					slidesList.put(typeDefinition.getName(), "{urlsite}{urlpattern}talks/" + typeDefinition.getName() + "/embed");
+					slidesList.put(typeDefinition.getName(), "{urlsite}{urlpattern}talks/" + typeDefinition.getName() + "/");
 				} else {
 					logger.warn("Unable to find webserver to connect slide component");
 				}
@@ -132,17 +142,25 @@ public class SlideListPage implements ModelListener {
 			kengine.atomicInterpretDeploy();
 			mainSite.getModelService().registerModelListener(this);
 			buildCache();
+			String pattern = mainSite.getDictionary().get("urlpattern").toString();
+			if (pattern.endsWith("**")) {
+				pattern = pattern.replace("**", "");
+			}
+			if (!pattern.endsWith("/")) {
+				pattern = pattern + "/";
+			}
+			mainSite.invalidateCacheResponse(pattern + "talks");
 		} catch (Exception ignored) {
 
 		}
 	}
 
-	public boolean checkSlide(KevoreeHttpRequest request, KevoreeHttpResponse response) {
+	public boolean checkSlide (KevoreeHttpRequest request, KevoreeHttpResponse response) {
 		logger.debug(Thread.currentThread() + "TITI" + request.getUrl());
 		for (String componentName : slidesList.keySet()) {
 			if (request.getUrl().startsWith(componentName) || request.getUrl().startsWith("/" + componentName)) {
 				response.setStatus(418);
-							return true;
+				return true;
 			}
 		}
 		return false;
@@ -180,16 +198,19 @@ public class SlideListPage implements ModelListener {
 		boolean isFirst = true;
 		for (String componentName : slidesList.keySet()) {
 
-			menuBuilder.append("<li><a onclick=\"document.querySelector('#presentation').innerHTML = '").append(componentName).append("';document.querySelector('#slidesList iframe').src = '")
+			menuBuilder.append("<li><a onclick=\"document.querySelector('#presentation').innerHTML = '")
+					.append(componentName).append("';slideURL = '")
 					.append(slidesList.get(componentName)).append("';\">").append(componentName).append("</a></li>\n");
 			if (isFirst) {
 				isFirst = false;
-				slideListBuilder.append("document.querySelector('#presentation').innerHTML = '").append(componentName).append("';\n").append("document.querySelector('#slidesList iframe').src = '")
-						.append(slidesList.get(componentName)).append("';\n");
+				slideListBuilder.append("document.querySelector('#presentation').innerHTML = '")
+						.append(componentName).append("';\n\t\t").append("var slideURL = '")
+						.append(slidesList.get(componentName)).append("';\n\t\t")
+						.append("window.onload = init;");
 			}
 		}
 		logger.debug("menu = {}", menuBuilder.toString());
-		logger.debug("slidesList = {}", slideListBuilder.toString());
+		logger.debug("slides = {}", slideListBuilder.toString());
 		variables.put("menu", menuBuilder.toString());
 		variables.put("initSlides", slideListBuilder.toString());
 	}

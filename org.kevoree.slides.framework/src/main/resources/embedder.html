@@ -1,131 +1,116 @@
-<!DOCTYPE html>
-
-<meta charset="utf8">
-<title>Kevoree Slide Embed</title>
-
 <div id="slides">
     <iframe allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
-</div>
-<div id="controls">
-    <button title="prev" id="back" onclick="back()">&#9664;</button>
-    <button title="next" id="forward" onclick="forward()">&#9654;</button>
-    <div id="rightcontrols">
-        <input onchange="setCursor(this.value)" size="2" id="slideidx" value="1"/>/<span id="slidecount">...</span>
-        <button title="Go fullscreen or open in a new window" id="fullscreen" onclick="fullscreen()">&#8689;</button>
+
+    <div id="controls">
+        <button title="prev" id="back" onclick="back()">&#9664;</button>
+        <button title="next" id="forward" onclick="forward()">&#9654;</button>
+        <div id="rightcontrols">
+            <input onchange="setCursor(this.value)" size="2" id="slideidx" value="1"/>/<span id="slidecount">...</span>
+            <button title="Go fullscreen or open in a new window" id="fullscreen" onclick="fullscreen()">&#8689;</button>
+        </div>
     </div>
 </div>
-
 <script language="javascript">
     document.querySelector('#back').addEventListener("touchstart", function(e){back();}, false);
     document.querySelector('#forward').addEventListener("touchstart", function(e){forward();}, false);
     document.querySelector('#fullscreen').addEventListener("touchstart", function(e){fullscreen();}, false);
 </script>
-
 <style>
-    html {
-        height: 100%;
-    }
-
-    body {
-        margin: 0;
-        background-color: black;
-        height: 100%;
-        width: 100%;
-    }
-
     #slides, #controls {
-        left: 0;
-        position: absolute;
-        right: 0;
+    //left: 0;
+    position: absolute;
+    background-color: black;
     }
 
     #controls {
-        color: white;
-        font-family: monospace;
-        height: 30px;
-        line-height: 30px;
-        padding: 5px;
+    color: white;
+    font-family: monospace;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    left: 0;
+    right: 0;
     }
 
     #slides {
-        bottom: 40px;
-        top: 0;
+    //bottom: 40px;
+    //top: 0;
     }
 
-    iframe {
-        pointer-events: none;
-        border: none;
-        background-color: white;
-        height: 100%;
-        width: 100%;
+    #slides iframe {
+    pointer-events: none;
+    border: none;
+    background-color: white;
     }
 
     #controls {
-        bottom: 0;
-        float: right;
-        font-size: 13px;
-        text-align: center;
+    //bottom: 0;
+    float: right;
+    font-size: 13px;
+    text-align: center;
     }
 
     #controls button[disabled] {
-        color: #333;
+    color: #333;
     }
 
     button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        color: #bbb;
-        padding: 0;
-        font-size: 20px;
-        line-height: 100%;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -o-user-select: none;
-        user-select: none;
-        position: relative;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #bbb;
+    padding: 0;
+    font-size: 20px;
+    line-height: 100%;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    position: relative;
     }
 
     button:hover {
-        color: white;
+    color: white;
     }
 
     button:active {
-        top: 1px;
-        left: 1px;
+    top: 1px;
+    left: 1px;
     }
 
     #slideidx {
-        border: none;
-        background-color: rgba(255, 255, 255, 0.2);
-        color: white;
-        text-align: center;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-align: center;
+    width: 25px;
     }
 
     #rightcontrols * {
-        vertical-align: middle;
+    vertical-align: middle;
     }
 
     #rightcontrols {
-        bottom: 4px;
-        position: absolute;
-        top: 4px;
-        right: 10px;
+    bottom: 4px;
+    position: absolute;
+    top: 4px;
+    right: 10px;
     }
 
     #fullscreen {
-        -moz-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        -ms-transform: scaleX(-1);
-        transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    transform: scaleX(-1);
     }
 </style>
-<script language="JavaScript">
-    var slideURL = "http://localhost:8080/";
-</script>
 <script src="scripts/kslideEmbedderScript.js"></script>
-<script>
+<!--<script language="JavaScript">
+    var slideURL = "http://localhost:8080/talks/UbiMob2012/";
+    document.querySelector('#slides iframe').width="640px";
+    document.querySelector('#slides iframe').height="400px";
+    document.querySelector('#slides > #controls').width="640px";
     window.onload = init;
-</script>
+</script>-->
