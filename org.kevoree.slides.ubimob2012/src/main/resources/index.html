@@ -13,31 +13,10 @@
     <script type="text/javascript">SyntaxHighlighter.all();</script>
     <style>
         .slide {
-        background:#FFF url(figures/minikev.svg) 865px 0 no-repeat;
-        }
-        #Cover {
-        background: #444;
-        }
-        #Cover h2 {
-        font-family: helvetica; color: #222; text-shadow: 0px 1px 1px #555;
-        font: 45px Tahoma, Helvetica, Arial, Sans-Serif;
-        text-align: center;
-        }
-        #Cover pre {
-        position:absolute;top:70%;left:9%;
-        text-align: center;
-        width: 80%; margin: 0 auto; background: #222; padding: 15px;
-        font-size: 22px; color: #555; text-shadow: 0px 2px 3px #171717;
-        -webkit-box-shadow: 0px 2px 3px #555;
-        -moz-box-shadow: 0px 2px 3px #555;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        }
-        #Picture h2 {
-        color:#FFF;
+            background: #FFF url(figures/kevg125.svg) no-repeat right top;
         }
         .iconFont3 {
-        font-family:'HeydingsCommonIconsRegular';
+            font-family:'HeydingsCommonIconsRegular';
         }
         details { display: none; }
     </style>
@@ -49,20 +28,40 @@
 <header class="caption">
     <h1>UbiMob 2012 / Kevoree</h1>
 
-    <p><a href="http://www.kevoree.org/">Fouquet Francois / Kevoree Team</a></p>
+    <p><a href="http://www.kevoree.org/">Francois Fouquet / Kevoree Team</a></p>
 </header>
 
-<!--Cover page todo -->
-<section class="slide cover" id="Cover">
+<!--Cover page  -->
+
+<section class="slide cover" id="CoverSlide" style="background: #666666 url(figures/KevCoverBack.svg) no-repeat top center;">
     <header>
-        <h2>Model@runtime for ubiquitous systems</h2>
+        <div style="text-align: center;">
+        <span style="text-align : justify;color: #DF9D00;font:bold 70px/70px 'PT Sans Narrow', sans-serif;">
+Model@Runtime
+        </span><br/>
+        <span style="text-align : justify;color: #FFF;font:normal 54px/54px 'PT Sans Narrow', sans-serif;">for ubiquitous systems</span><br/>
+        <span style="text-align : justify;color: #DF9D00;font-size : 40px;">
+            <span class="iconFont3">G</span>
+            +
+            <span class="iconFont3">g</span>
+            <span class="iconic arrow_right_alt1"></span>
+            <span class="iconFont3">3</span>
+            <span class="iconic arrow_right_alt1"></span>
+            (
+            <span class="iconic beaker_alt"></span>
+            <span class="iconic iphone"></span>
+            <span class="iconic cloud"></span>
+            )
+        </span><br/>
+        </div>
+        <div style="position : absolute;right: 30px;bottom: 0;">
+           <span style="text-align : justify;color: #CCC;font:normal 15px/15px 'PT Sans Narrow', sans-serif;">
+<span class="iconic arrow_right"> by </span> Francois Fouquet, Erwan Daubert, Olivier Barais, Noel Plouzeau, Jean-Marc Jezequel
+           </span>
+        </div>
     </header>
-    <object data="figures/kevoree-logo.png" type="image/png" class="low_middle" height="227" width="400"
-            style="position:absolute;top:25%;left:30%;"></object>
-    <pre>Fouquet Francois - Triskell INRIA/IRISA - UbiMob2012</pre>
     <details>Hello from Kevoree Team :-) !</details>
 </section>
-
 <section class="slide shout" id="Introduction">
     <h2 style="font-size : 70px;">Software engineering <span class="iconFont3">G</span><br/>
         <br/>
@@ -81,8 +80,10 @@
     <ul>
         <li class="next">Distributed reflection and reconfiguration challenges</li>
         <li class="next">Model@Runtime / application for distributed adaptive systems</li>
-        <li class="next">Kevoree Project : concepts and features <br/><img src="figures/kevoree-logo.png"
-                                                                           height="100px"/></li>
+        <li class="next">Kevoree Project : concepts and features <br/>
+            <object data="figures/kevoree-gris.svg"
+                    height="125px" width="125px"></object>
+        </li>
         <li class="next">DAUM Project : on-field tactical system for firefighters</li>
     </ul>
 </section>
@@ -96,10 +97,11 @@
 <section class="slide" id="DAS1">
     <header><h2>"Eternal" system</h2></header>
     <ul>
-        <li class="next"><code>Dynamically adaptive systems (DAS)</code> <=> ability to make their behaviors and/or functionalities evolve at runtime.
+        <li class="next"><code>Dynamically adaptive systems (DAS)</code> <=> ability to make their behaviors and/or
+            functionalities evolve at runtime.
         </li>
         <li class="next">Typically used for applications where it's hard/impossible to anticipate needs at design time
-            <=> <code>Continuous</code> <span style="font-size: 30;" class="iconic loop_alt2"></span> design.
+            <=> <code>Continuous</code> <span style="font-size: 30px;color: #BBBBBB;" class="iconic spin"></span> <code>design</code>
         </li>
         <li class="next">Necessity to define a manipulation granularity <br/>=> common approach : component based
             development
@@ -109,7 +111,8 @@
 
 <section class="slide" id="DAS2">
     <header><h2>"Eternal" systems need continuous adaptations</h2></header>
-    <blockquote>Once reserved for critical systems, <code>DAS</code> approaches are now used for more humble systems, for
+    <blockquote>Once reserved for critical systems, <code>DAS</code> approaches are now used for more humble systems,
+        for
         several reasons
     </blockquote>
     <ul>
@@ -358,15 +361,15 @@
         </li>
         <li class="next">Component-based
             <ul>
-             <!--   <li>Actor semantics on each ports to closely separate component behavior</li>   -->
+                <!--   <li>Actor semantics on each ports to closely separate component behavior</li>   -->
                 <li>Communication semantics between component in channel</li>
             </ul>
         </li>
-       <!-- <li>Continuous Design, type definition continuous definition
-            <ul>
-                <li style="font-size: 18px;">Hot (re-)deploy & provisioning</li>
-            </ul>
-        </li>    -->
+        <!-- <li>Continuous Design, type definition continuous definition
+        <ul>
+            <li style="font-size: 18px;">Hot (re-)deploy & provisioning</li>
+        </ul>
+    </li>    -->
         <li class="next">Heterogeneity management with NodeType
             <ul>
                 <li> Java Node, Dalvik Node, Arduino Node</li>
@@ -419,10 +422,12 @@
     <p>Define a tactical on-field operating system for firefighters</p>
     <ul>
         Complex adaptative ubiquitous system because:
-        <li class="next">Adaptation inherent to domain<br />
+        <li class="next">Adaptation inherent to domain<br/>
             <span class='iconic arrow_right'></span> firefighters are deployed also dynamically
         </li>
-        <li class="next">Heterogeneous (sensors <span class='iconic beaker'></span> , embedded computer, tablet <span class='iconic iphone'></span>)</li>
+        <li class="next">Heterogeneous (sensors <span class='iconic beaker'></span> , embedded computer, tablet <span
+                class='iconic iphone'></span>)
+        </li>
         <li class="next">Complex topologies and nodes distributions
             <ul>
                 <li>sporadic</li>
@@ -436,9 +441,9 @@
     <header>
         <h2>Daum in a nutshell</h2>
     </header>
-    <p>Embedded sensors on firefighters personal equipment<br />
-        <span class='iconic arrow_right'></span> monitor temperature, heart rate <span class='iconFont3'>4</span> <br />
-        Deploy embedded tablets to collect tactical and sensors data.<br />
+    <p>Embedded sensors on firefighters personal equipment<br/>
+        <span class='iconic arrow_right'></span> monitor temperature, heart rate <span class='iconFont3'>4</span> <br/>
+        Deploy embedded tablets to collect tactical and sensors data.<br/>
         Deploy embedded computers that interact with central system in cars.
     </p>
     <ul>
