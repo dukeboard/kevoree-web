@@ -43,7 +43,11 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		contentTypeCache.clear();
 
 		String wsUrl = getDictionary().get("webSocketLocation").toString();
-		slideList = new SlideListPage(this, wsUrl);
+		try {
+			slideList = new SlideListPage(this, wsUrl);
+		} catch (Exception e) {
+			logger.warn("Unable to initialize Talks page", e);
+		}
 		getModelService().registerModelListener(slideList);
 
 	}
@@ -67,7 +71,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
 
-		if (getLastParam(request.getUrl()).startsWith("slides")) {
+		if (getLastParam(request.getUrl()).startsWith("talks/")) {
 			return forward(request, response);
 		}
 
