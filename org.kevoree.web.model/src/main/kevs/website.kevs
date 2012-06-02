@@ -9,14 +9,19 @@ merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.adam/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.cbse2012/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.ubimob2012/{site.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.ws/{site.version}"
 
 addNode KevoreeWebSiteNode : PJavaSENode
 network KevoreeWebSiteNode => KevoreeWebSiteNode { "KEVOREE.remote.node.ip"="10.0.0.4"}
+
 addGroup KevoreeWebSiteGroup : NanoRestGroup
 addToGroup KevoreeWebSiteGroup KevoreeWebSiteNode
 updateDictionary KevoreeWebSiteGroup  { ip="10.0.0.4", port="8000"}@KevoreeWebSiteNode
+
 addComponent KevoreeWebSiteServer@KevoreeWebSiteNode : KTinyWebServer {port = "8090", timeout = "5000"}
-addComponent KevoreeWebSitePage@KevoreeWebSiteNode : KevoreeMainSite {urlpattern = "/"}
+addComponent KevoreeWebSitePage@KevoreeWebSiteNode : KevoreeMainSite {urlpattern = "/", webSocketLocation="http://kevoree.org:443"}
+addComponent webSocket@KevoreeWebSiteNode :  WsServer {port="443"}
+
 addChannel requestChannelWebSite : defMSG
 addChannel responseChannelWebSite : defMSG
 bind KevoreeWebSiteServer.handler@KevoreeWebSiteNode => requestChannelWebSite

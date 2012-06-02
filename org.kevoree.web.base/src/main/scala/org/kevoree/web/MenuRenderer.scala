@@ -53,10 +53,10 @@ object MenuRenderer {
          // ("Home", "/", "overview.html"),
         //  ("Research", "/research", "research.html"),
           ("Core Features", "{urlpattern}core", "core_features.html",HashMap[String,String]()),
-          ("Presentations", "{urlpattern}presentations", "slidesList.html", SlideListPage.getVariables),
          // ("Tools", "/tools", ""),
           //("Platforms", "/platform", ""),
           ("Download", "{urlpattern}download", "download.html",DownloadHelper.getVariables),
+          ("Talks", "{urlpattern}talks", "slidesList.html", SlideListPage.getVariables),
           ("Related Projects", "{urlpattern}related", "related_projects.html",HashMap[String,String]()),
           ("Blog", "http://blog.kevoree.org", "",HashMap[String,String]()),
           ("About us", "{urlpattern}about", "about_us.html",HashMap[String,String]())

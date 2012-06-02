@@ -152,7 +152,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
           case _@e => logger.debug("Unable to update maven artifact", e)
         }
       }
-    }, 1, /*21*/ 300000)
+    }, 1, /*21*/ 3600000)
     this
   }
 

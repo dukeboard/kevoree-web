@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 @ComponentType
 //@Provides({@ProvidedPort(name = "gitnews",type = PortType.MESSAGE)})
-@DictionaryType({@DictionaryAttribute(name="webSocketLocation", defaultValue="localhost:8092")})
+@DictionaryType({@DictionaryAttribute(name = "webSocketLocation", defaultValue = "http://localhost:8092")})
 public class KevoreeMainSite extends ParentAbstractPage {
 
 	protected String basePage = "overview.html";
@@ -67,6 +67,10 @@ public class KevoreeMainSite extends ParentAbstractPage {
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
 
+		if (getLastParam(request.getUrl()).startsWith("slides")) {
+			return forward(request, response);
+		}
+
 		if (useCache) {
 			if (contentTypeCache.containsKey(request.getUrl())) {
 				response.setRawContent(contentRawCache.get(request.getUrl()));
@@ -78,16 +82,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (FileServiceHelper.checkStaticFile(basePage, this, request, response)) {
 			if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css") || request.getUrl().endsWith(".jnlp")) {
 				// FIXME according to KevoreeSlidesShowerTemplate
-				String pattern = getDictionary().get("urlpattern").toString();
-				if (pattern.endsWith("**")) {
-					pattern = pattern.replace("**", "");
-				}
-				if (!pattern.endsWith("/")) {
-					pattern = pattern + "/";
-				}
-				response.setContent(response.getContent().replace("{urlpattern}", pattern));
-				String urlSite = request.getCompleteUrl().replace(request.getUrl(), "");
-				response.setContent(response.getContent().replace("{urlsite}", urlSite));
+				replaceGlobalVariables(request, response);
 			}
 			if (useCache) {
 				cacheResponse(request, response);
@@ -95,6 +90,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 			return response;
 		}
 		if (krenderer.checkForTemplateRequest(basePage, this, request, response)) {
+			replaceGlobalVariables(request, response);
 			if (useCache) {
 				cacheResponse(request, response);
 			}
@@ -127,5 +123,19 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (contentRawCache.remove(url) == null && contentTypeCache.remove(url) == null) {
 			logger.debug("nothing to invalidate for {}", url);
 		}
+	}
+
+	private KevoreeHttpResponse replaceGlobalVariables (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+		String pattern = getDictionary().get("urlpattern").toString();
+		if (pattern.endsWith("**")) {
+			pattern = pattern.replace("**", "");
+		}
+		if (!pattern.endsWith("/")) {
+			pattern = pattern + "/";
+		}
+		response.setContent(response.getContent().replace("{urlpattern}", pattern));
+		String urlSite = request.getCompleteUrl().replace(request.getUrl(), "");
+		response.setContent(response.getContent().replace("{urlsite}", urlSite));
+		return response;
 	}
 }

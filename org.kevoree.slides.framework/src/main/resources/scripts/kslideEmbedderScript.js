@@ -163,7 +163,7 @@ window.onmessage = function (aEvent) {
         if (argv[0] === "CURSOR" && argc === 2) {
             idx = argv[1];
             document.querySelector("#slideidx").value = (+idx + 1);
-            document.querySelector("#back").disabled = idx == 1;
+            document.querySelector("#back").disabled = idx == 0;
             document.querySelector("#forward").disabled = idx == count;
         }
         if (argv[0] === "REGISTERED" && argc === 3) {
