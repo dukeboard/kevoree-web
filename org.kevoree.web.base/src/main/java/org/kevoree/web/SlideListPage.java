@@ -3,14 +3,9 @@ package org.kevoree.web;
 import org.kevoree.*;
 import org.kevoree.api.service.core.handler.ModelListener;
 import org.kevoree.api.service.core.script.KevScriptEngine;
-import org.kevoree.framework.Constants;
-import org.kevoree.framework.KevoreePropertyHelper;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
-import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
-import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scala.Option;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -118,17 +113,6 @@ public class SlideListPage implements ModelListener {
 					} else {
 						logger.warn("Unable to find channels to connect slide component");
 					}
-					Option<String> ipOption = KevoreePropertyHelper
-							.getStringNetworkProperty(mainSite.getModelService().getLastModel(), mainSite.getNodeName(), Constants.KEVOREE_PLATFORM_REMOTE_NODE_IP());
-					String ip = "localhost";
-					if (ipOption.isDefined()) {
-						ip = ipOption.get();
-					}
-					Option<Integer> portOption = KevoreePropertyHelper.getIntPropertyForComponent(mainSite.getModelService().getLastModel(), webServer[0], "port");
-					int port = 8000;
-					if (portOption.isDefined()) {
-						port = portOption.get();
-					}
 					slidesList.put(typeDefinition.getName(), "{urlsite}{urlpattern}talks/" + typeDefinition.getName() + "/");
 				} else {
 					logger.warn("Unable to find webserver to connect slide component");
@@ -153,17 +137,6 @@ public class SlideListPage implements ModelListener {
 		} catch (Exception ignored) {
 
 		}
-	}
-
-	public boolean checkSlide (KevoreeHttpRequest request, KevoreeHttpResponse response) {
-		logger.debug(Thread.currentThread() + "TITI" + request.getUrl());
-		for (String componentName : slidesList.keySet()) {
-			if (request.getUrl().startsWith(componentName) || request.getUrl().startsWith("/" + componentName)) {
-				response.setStatus(418);
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private String[] getWebServerName () {
