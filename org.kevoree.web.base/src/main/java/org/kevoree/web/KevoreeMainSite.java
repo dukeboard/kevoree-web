@@ -71,7 +71,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
 		if (getLastParam(request.getUrl()).startsWith("talks/") || getLastParam(request.getUrl()).startsWith("/talks/")) {
-			logger.debug("forward request to slide pages for url: {}", getLastParam(request.getUrl()));
+			logger.debug("forward request to slide pages for url: {} with completeURL = {}", getLastParam(request.getUrl()), request.getCompleteUrl());
 			return forward(request, response);
 		}
 
@@ -103,14 +103,8 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (downloadHelper.checkForDownload(basePage, this, request, response)) {
 			return response;
 		}
-		/*logger.debug("TOTO" + request.getUrl());
-		if (slideList.checkSlide(request, response)) {
-			return response;
-		}
 		response.setContent("Bad request from " + getName() + "@" + getNodeName());
-//		response.setStatus(418);*/
-		return forward(request, response);
-//		return response;
+		return response;
 	}
 
 	public void cacheResponse (KevoreeHttpRequest request, KevoreeHttpResponse response) {

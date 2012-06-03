@@ -99,13 +99,7 @@ function goToSlide (slideNumber) {
         return;
     }
 
-    if (slideList[slideNumber].hasInnerNavigation) {
-        var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .active');
-        if (activeNodes.length == 0) {
-            activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next');
-            activeNodes[0].className = activeNodes[0].className + ' active';
-        }
-    }
+    initializeInnerTransition(slideNumber);
     url.hash = getSlideHash(slideNumber);
 
     if (!isListMode()) {
