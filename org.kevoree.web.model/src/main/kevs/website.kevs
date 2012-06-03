@@ -7,7 +7,7 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.t
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 
 merge "mvn:org.kevoree.web/org.kevoree.slides.adam/{site.version}"
-merge "mvn:org.kevoree.web/org.kevoree.slides.cbse2012/{site.version}"
+//merge "mvn:org.kevoree.web/org.kevoree.slides.cbse2012/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.ubimob2012/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.ws/{site.version}"
 
