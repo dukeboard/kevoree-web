@@ -2,8 +2,10 @@
     <iframe allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
 
     <div id="controls">
-        <button title="prev" id="back" onclick="back()">&#9664;</button>
-        <button title="next" id="forward" onclick="forward()">&#9654;</button>
+        <button title="keynote" id="keynote" onclick="goToKeynote()">Keynote</button>
+        <button title="popup" id="popup" onclick="openPopup()">Pop-up</button>
+        <button title="prev" id="back" onclick="back()" style="text-align: center;">&#9664;</button>
+        <button title="next" id="forward" onclick="forward()" style="text-align: center;">&#9654;</button>
         <div id="rightcontrols">
             <input onchange="setCursor(this.value - 1)" size="2" id="slideidx" value="1"/>/<span id="slidecount">...</span>
             <button title="Go fullscreen or open in a new window" id="fullscreen" onclick="fullscreen()">&#8689;</button>
@@ -15,9 +17,31 @@
     document.querySelector('#forward').addEventListener("touchstart", function(e){forward();}, false);
     document.querySelector('#fullscreen').addEventListener("touchstart", function(e){fullscreen();}, false);
 </script>
-<style>
+<style scoped="scoped">
+    #popup {
+    background: #888;
+    border: none;
+    border-radius: 3px;
+    color: #FFF;
+    cursor: pointer;
+    height: 28px;
+    font-weight: bold;
+    position: absolute;
+    left:70px;
+    }
+    #keynote {
+    background: #888;
+    border: none;
+    border-radius: 3px;
+    color: #FFF;
+    cursor: pointer;
+    height: 28px;
+    font-weight: bold;
+    position: absolute;
+    left: 2px;
+    }
+
     #slides, #controls {
-    //left: 0;
     position: absolute;
     background-color: black;
     }
@@ -32,11 +56,6 @@
     right: 0;
     }
 
-    #slides {
-    //bottom: 40px;
-    //top: 0;
-    }
-
     #slides iframe {
     pointer-events: none;
     border: none;
@@ -44,7 +63,6 @@
     }
 
     #controls {
-    //bottom: 0;
     float: right;
     font-size: 13px;
     text-align: center;
@@ -54,7 +72,7 @@
     color: #333;
     }
 
-    button {
+    #back, #forward {
     background-color: transparent;
     border: none;
     cursor: pointer;

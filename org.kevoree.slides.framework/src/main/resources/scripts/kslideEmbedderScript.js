@@ -2,7 +2,8 @@ var view = null,
     url = null,
     idx = 1,
     count = null,
-    iframe = null;
+    iframe = null,
+    remote = null;
 
 /* Get url from hash or prompt and store it */
 
@@ -63,6 +64,15 @@ function fullscreen () {
     }
 }
 
+function goToKeynote () {
+    window.location.href = slideURL.substring(0, slideURL.lastIndexOf("/")) + "/keynote";
+}
+
+function openPopup () {
+    var url = slideURL.substring(0, slideURL.lastIndexOf("/")) + "/";
+    remote = window.open(url, 'slides', 'width=800,height=600,personalbar=0,toolbar=0,scrollbars=1,resizable=1');
+}
+
 function list () {
     postMsg(view, "LIST");
 }
@@ -83,24 +93,24 @@ var db = document.body;
 db.addEventListener("touchstart", start.bind(this), false);
 db.addEventListener("touchmove", move.bind(this), false);
 
-function start(aEvent) {
-  aEvent.preventDefault();
-  tracking = true;
-  orgX = aEvent.changedTouches[0].pageX;
+function start (aEvent) {
+    aEvent.preventDefault();
+    tracking = true;
+    orgX = aEvent.changedTouches[0].pageX;
 }
 
-function move(aEvent) {
-  if (!tracking) return;
-  newX = aEvent.changedTouches[0].pageX;
-  if (orgX - newX > 100) {
-    tracking = false;
-    forward();
-  } else {
-    if (orgX - newX < -100) {
-      tracking = false;
-      back();
+function move (aEvent) {
+    if (!tracking) return;
+    newX = aEvent.changedTouches[0].pageX;
+    if (orgX - newX > 100) {
+        tracking = false;
+        forward();
+    } else {
+        if (orgX - newX < -100) {
+            tracking = false;
+            back();
+        }
     }
-  }
 }
 
 window.onkeydown = function (e) {
@@ -174,6 +184,11 @@ window.onmessage = function (aEvent) {
     }
 };
 
+window.onunload = function unload () {
+    if (remote != null) {
+        remote.close();
+    }
+}
 
 window.init = function init () {
     loadIFrame();
