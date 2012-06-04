@@ -93,17 +93,11 @@ function getSlideHash (slideNumber) {
     return '#' + slideList[normalizeSlideNumber(slideNumber)].id;
 }
 
-function goToSlide (slideNumber, initialize) {
-
+function goToSlide (slideNumber) {
     if (-1 == slideNumber) {
         return;
     }
-
-    if (initialize) {
-        initializeInnerTransition(slideNumber);
-    }
     url.hash = getSlideHash(slideNumber);
-
     if (!isListMode()) {
         updateProgress(slideNumber);
     }
@@ -190,6 +184,7 @@ function goToNextSlide (slideNumber) {
         } else {
             // there is no next inactive inner item so we just go to the next slide
             slideNumber++;
+            initializeInnerTransition(slideNumber);
             goToSlide(slideNumber);
             return slideNumber;
         }
@@ -221,6 +216,18 @@ function getParentActiveNode (activeNodes) {
 
 }
 
+function rollbackInnerTransition (slideNumber) {
+    // update new current slide according to innerTransition (all the inner must be displayed)
+    if (slideList[slideNumber].hasInnerNavigation) {
+        var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next');
+        for (var i = 0, ii = activeNodes.length; i < ii; i++) {
+            if (activeNodes[i].className.indexOf("active") == -1) {
+                activeNodes[i].className = activeNodes[i].className + " active";
+            }
+        }
+    }
+}
+
 function goToPreviousSlide (slideNumber) {
     // there is no inner navigation or it is not the slideshow view so we just go back to the previous slide
     if (!slideList[slideNumber].hasInnerNavigation || url.toString().indexOf("?full#") == -1) {
@@ -229,21 +236,13 @@ function goToPreviousSlide (slideNumber) {
             return -1;
         }
         slideNumber--;
-        // update new current slide according to innerTransition (all the inner must be displayed
-        if (slideList[slideNumber].hasInnerNavigation) {
-            var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .next');
-            for (var i = 0, ii = activeNodes.length; i < ii; i++) {
-                if (activeNodes[i].className.indexOf("active") == -1) {
-                    activeNodes[i].className = activeNodes[i].className + " active";
-                }
-            }
-        }
-        goToSlide(slideNumber, false);
+        rollbackInnerTransition(slideNumber);
+        goToSlide(slideNumber);
         return slideNumber
     } else {
-        activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + " .active");
+        var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + " .active");
         var currentNode = activeNodes[activeNodes.length - 1];
-        var previousNode  = null;
+        var previousNode = null;
         if (currentNode) {
             previousNode = currentNode.previousElementSibling;
         }
@@ -254,7 +253,8 @@ function goToPreviousSlide (slideNumber) {
         } else {
             // there is no previous active inner item so we just go back to the previous slide
             slideNumber--;
-            goToSlide(slideNumber, false);
+            rollbackInnerTransition(slideNumber);
+            goToSlide(slideNumber);
             return slideNumber
         }
     }
@@ -286,6 +286,7 @@ function forward () {
 }
 
 function goStart () {
+    initializeInnerTransition(0);
     goToSlide(0);
     // used to synchronize with the display manager
     notifyCurrentSlideNumber("START");
@@ -388,7 +389,12 @@ function keyEventListener (e) {
         case 9: // Tab = +1; Shift + Tab = -1
         case 32: // Space = +1; Shift + Space = -1
             e.preventDefault();
-            currentSlideNumber += e.shiftKey ? -1 : 1;
+            if (!e.shiftKey) {
+                currentSlideNumber += 1;
+                initializeInnerTransition(currentSlideNumber);
+            } else {
+                currentSlideNumber += -1;
+            }
             goToSlide(currentSlideNumber);
             notifyCurrentSlideNumber("SET_CURSOR", currentSlideNumber);
             notifyWebSocket("SET_CURSOR", currentSlideNumber);
@@ -480,12 +486,15 @@ window.onmessage = function (aEvent) {
             postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
         }
     } else if (argv[0] === "START" && argc === 1) {
+        initializeInnerTransition(0);
         goToSlide(0);
         postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
     } else if (argv[0] === "END" && argc === 1) {
-        goToSlide(slideList.length - 1);
+        initializeInnerTransition(slideList.length);
+        goToSlide(slideList.length);
         postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
     } else if (argv[0] === "SET_CURSOR" && argc === 2) {
+        initializeInnerTransition(argv[1]);
         goToSlide(argv[1]);
         postMsg(win, "NOTES", getDetails(getCurrentSlideNumber()));
     } else if (argv[0] === "GET_CURSOR" && argc === 1) {
