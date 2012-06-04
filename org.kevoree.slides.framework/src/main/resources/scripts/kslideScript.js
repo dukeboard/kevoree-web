@@ -170,26 +170,28 @@ function goToNextSlide (slideNumber) {
         return slideNumber
     } else {
         var activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + ' .active');
-        var childNodes = activeNodes[activeNodes.length - 1].getElementsByClassName('next');
-        var nextNode = childNodes[0];
-        if (nextNode) {
-            nextNode.className = nextNode.className + ' active';
-            return slideNumber;
-        } else {
-            nextNode = activeNodes[activeNodes.length - 1].nextElementSibling;
-            var currentParentNode = getParentActiveNode(activeNodes);
+        var nextNode = null;
+        if (activeNodes[activeNodes.length - 1]) {
+            var childNodes = activeNodes[activeNodes.length - 1].getElementsByClassName('next');
+            nextNode = childNodes[0];
             if (nextNode) {
                 nextNode.className = nextNode.className + ' active';
                 return slideNumber;
-            } else if (currentParentNode && currentParentNode.nextElementSibling) {
-                currentParentNode.nextElementSibling.className = currentParentNode.nextElementSibling.className + ' active';
-                return slideNumber;
-            } else {
-                // there is no next inactive inner item so we just go to the next slide
-                slideNumber++;
-                goToSlide(slideNumber);
-                return slideNumber;
             }
+            nextNode = activeNodes[activeNodes.length - 1].nextElementSibling;
+        }
+        var currentParentNode = getParentActiveNode(activeNodes);
+        if (nextNode != null) {
+            nextNode.className = nextNode.className + ' active';
+            return slideNumber;
+        } else if (currentParentNode && currentParentNode.nextElementSibling) {
+            currentParentNode.nextElementSibling.className = currentParentNode.nextElementSibling.className + ' active';
+            return slideNumber;
+        } else {
+            // there is no next inactive inner item so we just go to the next slide
+            slideNumber++;
+            goToSlide(slideNumber);
+            return slideNumber;
         }
     }
 }
@@ -240,13 +242,13 @@ function goToPreviousSlide (slideNumber) {
         return slideNumber
     } else {
         activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + " .active");
-//        console.log(activeNodes);
         var currentNode = activeNodes[activeNodes.length - 1];
-        var previousNode = currentNode.previousElementSibling;
+        var previousNode  = null;
+        if (currentNode) {
+            previousNode = currentNode.previousElementSibling;
+        }
         var currentParentNode = getParentActiveNode(activeNodes);
-        console.log(currentNode);
-        console.log(currentParentNode);
-        if (previousNode || currentParentNode) {
+        if (previousNode != null || currentParentNode) {
             currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
             return slideNumber;
         } else {
