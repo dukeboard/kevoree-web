@@ -1,0 +1,19 @@
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.framework/{site.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.ubimob2012/{site.version}"
+
+addNode node0 : JavaSENode {logLevel = "INFO"}
+addComponent webSrv@node0 : KTinyWebServer
+addComponent annotationSlides@node0 : UbiMob2012Dev { urlpattern="/",templateFolder="{basedir}/src/main/resources/"}
+addChannel req : defMSG
+addChannel res : defMSG
+bind webSrv.handler@node0 => req
+bind annotationSlides.request@node0 => req
+bind annotationSlides.content@node0 => res
+bind webSrv.response@node0 => res
+
+//addGroup sync : NanoRestGroup
+//addToGroup sync node0
