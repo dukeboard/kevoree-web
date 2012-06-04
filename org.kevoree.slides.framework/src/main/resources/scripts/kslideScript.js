@@ -93,13 +93,15 @@ function getSlideHash (slideNumber) {
     return '#' + slideList[normalizeSlideNumber(slideNumber)].id;
 }
 
-function goToSlide (slideNumber) {
+function goToSlide (slideNumber, initialize) {
 
     if (-1 == slideNumber) {
         return;
     }
 
-    initializeInnerTransition(slideNumber);
+    if (initialize) {
+        initializeInnerTransition(slideNumber);
+    }
     url.hash = getSlideHash(slideNumber);
 
     if (!isListMode()) {
@@ -234,7 +236,7 @@ function goToPreviousSlide (slideNumber) {
                 }
             }
         }
-        goToSlide(slideNumber);
+        goToSlide(slideNumber, false);
         return slideNumber
     } else {
         activeNodes = document.querySelectorAll(getSlideHash(slideNumber) + " .active");
@@ -242,13 +244,15 @@ function goToPreviousSlide (slideNumber) {
         var currentNode = activeNodes[activeNodes.length - 1];
         var previousNode = currentNode.previousElementSibling;
         var currentParentNode = getParentActiveNode(activeNodes);
+        console.log(currentNode);
+        console.log(currentParentNode);
         if (previousNode || currentParentNode) {
             currentNode.className = currentNode.className.substring(0, currentNode.className.length - " active".length);
             return slideNumber;
         } else {
             // there is no previous active inner item so we just go back to the previous slide
             slideNumber--;
-            goToSlide(slideNumber);
+            goToSlide(slideNumber, false);
             return slideNumber
         }
     }
