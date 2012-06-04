@@ -200,18 +200,18 @@ Model@Runtime
     Distributed system usually organized in clusters (<code>group of nodes</code>)
     Considering a cluster of 3 nodes <span class="glyph general">p</span> sharing a configuration model :
     <ul>
-        <li class="next"><strong class="kevOrange">Sporadic context</strong> : N1 can update N2 without synchronizing N3 <br/>
+        <li><strong class="kevOrange">Sporadic context</strong> : N1 can update N2 without synchronizing N3 <br/>
             N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span>
             N2 <span class='iconic iphone'></span> <span class='iconic x_alt'></span>
             N3 <span class='iconic iphone'></span>
         </li>
-        <li class="next"><strong class="kevOrange">Cluster context</strong> : N1 must synchronize N2 & N3 in the <em>same logical
+        <li><strong class="kevOrange">Cluster context</strong> : N1 must synchronize N2 & N3 in the <em>same logical
             time</em> <br/>
             N2 <span class='iconic iphone'></span> <span class='iconic arrow_left'></span>
             N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span>
             N3 <span class='iconic iphone'></span>
         </li>
-        <li class="next"><strong class="kevOrange">Opportunistic nodes</strong> : A can synchronize B or C depend of previous
+        <li><strong class="kevOrange">Opportunistic nodes</strong> : A can synchronize B or C depend of previous
             configurations <br/>
             N2 <span class='iconic iphone'></span> <span class='iconic arrow_left'> </span><span
                     class='iconic question_mark'></span>
