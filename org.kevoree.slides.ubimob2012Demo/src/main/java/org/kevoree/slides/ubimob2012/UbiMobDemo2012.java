@@ -12,5 +12,5 @@ import org.kevoree.slides.framework.KevoreeSlidePage;
  * @version 1.0
  */
 @ComponentType
-public class UbiMob2012 extends KevoreeSlidePage {
+public class UbiMobDemo2012 extends KevoreeSlidePage {
 }

@@ -8,6 +8,7 @@ merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.adam/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.cbse2012/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.ubimob2012/{site.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.ubimob2012Demo/{site.version}"
 merge "mvn:org.kevoree.web/org.kevoree.slides.ws/{site.version}"
 
 
