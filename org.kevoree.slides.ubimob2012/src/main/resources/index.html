@@ -11,7 +11,6 @@
     <script type="text/javascript" src="scripts/brush/shBrushJScript.js"></script>
     <script type="text/javascript" src="scripts/brush/shBrushXml.js"></script>
     <script type="text/javascript" src="scripts/brush/shBrushJava.js"></script>
-    <script type="text/javascript">SyntaxHighlighter.all();</script>
     <style>
         .slide {
         background: #FFF url(figures/kevg125.svg) no-repeat right top;
@@ -34,6 +33,12 @@
         }
         .syntaxhighlighter .gutter .line {
         border-right: 3px solid #DF9D00 !important;
+        }
+        .syntaxhighlighter {
+        overflow: hidden !important;
+        }
+        .syntaxhighlighter textarea {
+        overflow: hidden !important;
         }
     </style>
     <link rel='stylesheet' href='iconic_fill/iconic_fill.css' type='text/css' media='screen'/>
@@ -456,7 +461,7 @@ Model@Runtime
                 <br/>
                 <span class='iconic cog kevOrange'></span><br/>
                 <span class="iconic arrow_down_alt1 kevOrange"></span><br/>
-<pre class="brush: java toolbar: false;">
+<pre class="brush:java toolbar:false;">
 @ComponentType
 @Provides({
     @ProvidedPort(name = "on"),
@@ -482,7 +487,7 @@ public class DigitalLight
         </div>
         <div style="width: 50%;height:100%; float:right;">
             <div style="text-align:center;">
-<pre class="brush:java toolbar: false highlight: [5, 6];">
+<pre class="brush:java toolbar:false highlight:[5, 6];">
 @ComponentType
 @Provides({
     @ProvidedPort(name = "on"),
@@ -496,7 +501,9 @@ public class DigitalLight
 }
 </pre>
                 <span class='iconic cog kevOrange'></span><br/>
-                <span class="iconic arrow_down_alt1 kevOrange"></span><br/><p></p>
+                <span class="iconic arrow_down_alt1 kevOrange"></span><br/>
+
+                <p></p>
                 <object data="figures/kevDesigner2.png"></object>
             </div>
         </div>
@@ -517,8 +524,9 @@ public class DigitalLight
         <li class="next">Adaptation inherent to domain<br/>
             <span class='iconic arrow_right kevOrange'></span> firefighters are deployed also dynamically
         </li>
-        <li class="next">Heterogeneous (sensors <span class='iconic beaker kevOrange'></span> , embedded computer, tablet <span
-                class='iconic iphone kevOrange'></span>)
+        <li class="next">Heterogeneous (sensors <span class='iconic beaker kevOrange'></span> , embedded computer,
+            tablet <span
+                    class='iconic iphone kevOrange'></span>)
         </li>
         <li class="next">Complex topologies and nodes distributions
             <ul>
@@ -540,7 +548,7 @@ public class DigitalLight
         Deploy embedded computers that interact with central system in cars.
     </p>
     <ul>
-        <li>Sensors are low consumption uC nodes</li>
+        <li>Sensors are low consumption µC nodes</li>
         <li>Cars and tablets are middle class consumption computer (ARM9-11)</li>
         <li>Central system is a legacy grid deploy system</li>
     </ul>
@@ -588,6 +596,7 @@ public class DigitalLight
 <div class="progress">
     <div></div>
 </div>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
 <script src="scripts/kslideScript.js"></script>
 </body>
 </html>
