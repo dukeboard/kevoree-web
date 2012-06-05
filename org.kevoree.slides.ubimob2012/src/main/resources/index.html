@@ -10,21 +10,31 @@
     <script type="text/javascript" src="scripts/brush/shCore.js"></script>
     <script type="text/javascript" src="scripts/brush/shBrushJScript.js"></script>
     <script type="text/javascript" src="scripts/brush/shBrushXml.js"></script>
+    <script type="text/javascript" src="scripts/brush/shBrushJava.js"></script>
     <script type="text/javascript">SyntaxHighlighter.all();</script>
     <style>
         .slide {
-            background: #FFF url(figures/kevg125.svg) no-repeat right top;
+        background: #FFF url(figures/kevg125.svg) no-repeat right top;
         }
         .iconFont3 {
-            font-family:'HeydingsCommonIconsRegular';
+        font-family:'HeydingsCommonIconsRegular';
         }
         .kevOrange {
-            color: #DF9D00;
+        color: #DF9D00;
         }
         .slide code {
-            background-color: rgba(223, 157, 41, 0.4);;
+        background-color: rgba(223, 157, 41, 0.4);
         }
         details { display: none; }
+        .syntaxhighlighter .line.highlighted.alt1, .syntaxhighlighter .line.highlighted.alt2 {
+        background-color: rgba(223, 157, 41, 0.4) !important;
+        }
+        .syntaxhighlighter .gutter {
+        color: #DF9D00 !important;
+        }
+        .syntaxhighlighter .gutter .line {
+        border-right: 3px solid #DF9D00 !important;
+        }
     </style>
     <link rel='stylesheet' href='iconic_fill/iconic_fill.css' type='text/css' media='screen'/>
     <link rel="stylesheet" href="foundation-icons-general/stylesheets/foundation-icons-general.css">
@@ -34,18 +44,20 @@
 <body class="list">
 <header class="caption">
     <h1>UbiMob 2012 / Kevoree</h1>
+
     <p><a href="http://www.kevoree.org/">Francois Fouquet / Kevoree Team</a></p>
 </header>
 
 <!--Cover page  -->
 
-<section class="slide cover" id="CoverSlide" style="background: #666666 url(figures/KevCoverBack.svg) no-repeat top center;">
+<section class="slide cover" id="CoverSlide"
+         style="background: #666666 url(figures/KevCoverBack.svg) no-repeat top center;">
     <header>
         <div style="text-align: center;">
         <span style="text-align : justify;color: #DF9D00;font:bold 70px/70px 'PT Sans Narrow', sans-serif;">
 Model@Runtime
         </span><br/>
-        <span style="text-align : justify;color: #FFF;font:normal 54px/54px 'PT Sans Narrow', sans-serif;">for ubiquitous systems</span><br/>
+            <span style="text-align : justify;color: #FFF;font:normal 54px/54px 'PT Sans Narrow', sans-serif;">for ubiquitous systems</span><br/>
         <span style="text-align : justify;color: #DF9D00;font-size : 40px;">
             <span class="iconFont3">G</span>
             +
@@ -124,7 +136,8 @@ Model@Runtime
         <span class="next"></span>
         <li class="next">High availability
             <ul>
-                <li>Cloud <span class="iconic cloud kevOrange"></span>, web servers, <span class="iconFont3 kevOrange">4</span> monitoring
+                <li>Cloud <span class="iconic cloud kevOrange"></span>, web servers, <span
+                        class="iconFont3 kevOrange">4</span> monitoring
                     sensors network, etc ... need the famous 99,99% uptime
                 </li>
             </ul>
@@ -144,14 +157,16 @@ Model@Runtime
     Influenced namely by new mobility usages and Internet of Things (IoT), several new devices are now part of
     modern systems
     <ul>
-        <li>Smartphones <span class='iconic iphone kevOrange'></span> and tablets<span class="iconFont3 kevOrange">n</span></li>
+        <li>Smartphones <span class='iconic iphone kevOrange'></span> and tablets<span
+                class="iconFont3 kevOrange">n</span></li>
         <li>IoT <span class="iconFont3 kevOrange">l</span> <span class="glyph general">u</span> very low consumption
             micro-controllers sensors
         </li>
     </ul>
     <span class="iconic pin"></span> <strong class="kevOrange">Runtime heterogeneity</strong><br/>
     <span class="iconic pin"></span> <em>(mobile <span class="glyph general">v</span><span
-        class="glyph general">u</span> sporadic)</em> <strong class="kevOrange">distribution</strong> implicitly introduced. <br/>
+        class="glyph general">u</span> sporadic)</em> <strong class="kevOrange">distribution</strong> implicitly
+    introduced. <br/>
     <code>These characteristics <span class="iconic move_horizontal_alt2"></span> ubiquitous systems.</code>
 
 </section>
@@ -175,15 +190,18 @@ Model@Runtime
     </header>
     but direct access on reflexive layer is problematic in several distributed architectures
     <ul>
-        <li class="next"><strong class="kevOrange">Sporadic nodes</strong> : direct reflexive access are not always<code>reachable</code>
+        <li class="next"><strong class="kevOrange">Sporadic nodes</strong> : direct reflexive access are not
+            always<code>reachable</code>
             <span class="glyph general">p</span><span class="glyph general">v</span><span class="glyph general">g</span><span
                     class="glyph general">u</span><span class="glyph general">p</span>
         </li>
-        <li class="next"><strong class="kevOrange">Heterogeneous nodes</strong> : direct access are not always provided by restrictive runtime
+        <li class="next"><strong class="kevOrange">Heterogeneous nodes</strong> : direct access are not always provided
+            by restrictive runtime
             <span class="glyph general">p</span><span class="glyph general">v</span><span class="glyph general">t</span><span
                     class="glyph general">u</span><span class="glyph general">q</span>
         </li>
-        <li class="next"><strong class="kevOrange">Embedded nodes</strong> : direct access can be an issue for the <code>battery life</code>
+        <li class="next"><strong class="kevOrange">Embedded nodes</strong> : direct access can be an issue for the
+            <code>battery life</code>
             <span class="glyph general">p</span> <!-- computer -->
             <span class="glyph general">v</span><span class="glyph general">u</span>
             <span class="iconic battery_half"></span>
@@ -200,18 +218,21 @@ Model@Runtime
     Distributed system usually organized in clusters (<code>group of nodes</code>)
     Considering a cluster of 3 nodes <span class="glyph general">p</span> sharing a configuration model :
     <ul>
-        <li class="next"><strong class="kevOrange">Sporadic context</strong> : N1 can update N2 without synchronizing N3 <br/>
+        <li class="next"><strong class="kevOrange">Sporadic context</strong> : N1 can update N2 without synchronizing N3
+            <br/>
             N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span>
             N2 <span class='iconic iphone'></span> <span class='iconic x_alt'></span>
             N3 <span class='iconic iphone'></span>
         </li>
-        <li class="next"><strong class="kevOrange">Cluster context</strong> : N1 must synchronize N2 & N3 in the <em>same logical
+        <li class="next"><strong class="kevOrange">Cluster context</strong> : N1 must synchronize N2 & N3 in the <em>same
+            logical
             time</em> <br/>
             N2 <span class='iconic iphone'></span> <span class='iconic arrow_left'></span>
             N1 <span class='iconic iphone'></span> <span class='iconic arrow_right'></span>
             N3 <span class='iconic iphone'></span>
         </li>
-        <li class="next"><strong class="kevOrange">Opportunistic nodes</strong> : A can synchronize B or C depend of previous
+        <li class="next"><strong class="kevOrange">Opportunistic nodes</strong> : A can synchronize B or C depend of
+            previous
             configurations <br/>
             N2 <span class='iconic iphone'></span> <span class='iconic arrow_left'> </span><span
                     class='iconic question_mark'></span>
@@ -292,9 +313,11 @@ Model@Runtime
     <h2 style="font-size : 60px">
         Evolution = <br/>
         <br/>
-        1 - Fork <span class='iconic fork kevOrange'></span> current <span class='iconic document_alt_fill kevOrange'></span> <br/>
+        1 - Fork <span class='iconic fork kevOrange'></span> current <span
+            class='iconic document_alt_fill kevOrange'></span> <br/>
         <br/>
-        2 - Modify <span class='iconic equalizer kevOrange'></span> to produce <span class='iconic document_fill kevOrange'></span>
+        2 - Modify <span class='iconic equalizer kevOrange'></span> to produce <span
+            class='iconic document_fill kevOrange'></span>
         <br/>
         <br/>
         3 - Send <span class='iconic arrow_right kevOrange'></span> to <span class='iconic box kevOrange'></span>
@@ -303,7 +326,8 @@ Model@Runtime
 
 <section class="slide shout" id="ContextMARIntro3">
     <h2 style="font-size : 60px">
-        On update <span class='iconic document_fill kevOrange'></span> <span class='iconic curved_arrow kevOrange'></span> node
+        On update <span class='iconic document_fill kevOrange'></span> <span
+            class='iconic curved_arrow kevOrange'></span> node
         <br/>
         <br/>
         Compare / current <span class='iconic document_alt_fill kevOrange'></span> produce diff <span
@@ -339,7 +363,8 @@ Model@Runtime
 </section>
 <section class="slide shout" id="DMAR_CONCEPTS2">
     <h2 style="font-size : 60px">
-        On update <span class='iconic document_fill kevOrange'></span> <span class='iconic curved_arrow kevOrange'></span> node <br/>
+        On update <span class='iconic document_fill kevOrange'></span> <span
+            class='iconic curved_arrow kevOrange'></span> node <br/>
         <br/>
         local apply <span class='iconFont3 kevOrange'>C</span><br/>
         <br/>
@@ -410,9 +435,73 @@ Model@Runtime
             </ul>
         </li>
     </ul>
-    <object style="position:absolute;top: 150px;right: 10px;" data="figures/kevConcepts.png" type="image/png" height="360"></object>
+    <object style="position:absolute;top: 150px;right: 10px;" data="figures/kevConcepts.png" type="image/png"
+            height="360"></object>
 </section>
 
+<section class="slide shout" id="KevoreeDesignCode">
+    <div style="position:absolute;top:0px;left:0px;bottom: 0px;right:0px">
+        <div style="width: 50%;height:100%; color: white; background: #000; float:left;">
+            <div style="position:absolute;top:50%;width:50%;">
+                <div style="color:#666;font:bold 50px/50px 'PT Sans Narrow', sans-serif;text-align: center;">
+                    <span class="kevOrange">Design</span> your code
+                </div>
+            </div>
+        </div>
+        <div style="width: 50%;height:100%; float:right;">
+            <div style="text-align:center;">
+                <br/>
+
+                <object data="figures/kevDesigner1.png"></object>
+                <br/>
+                <span class='iconic cog kevOrange'></span><br/>
+                <span class="iconic arrow_down_alt1 kevOrange"></span><br/>
+<pre class="brush: java toolbar: false;">
+@ComponentType
+@Provides({
+    @ProvidedPort(name = "on"),
+    @ProvidedPort(name = "off"),
+})
+public class DigitalLight
+    extends AbstractArduinoComponent {
+        //hard code goes here ...
+}
+</pre>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="slide shout" id="KevoreeCodeDesign">
+    <div style="position:absolute;top:0px;left:0px;bottom: 0px;right:0px">
+        <div style="width: 50%;height:100%; color: white; background: #000; float:left;">
+            <div style="position:absolute;top:50%;width:50%;">
+                <div style="color:#666;font:bold 50px/50px 'PT Sans Narrow', sans-serif;text-align: center;">
+                    <span class="kevOrange">Code</span> your design
+                </div>
+            </div>
+        </div>
+        <div style="width: 50%;height:100%; float:right;">
+            <div style="text-align:center;">
+<pre class="brush:java toolbar: false highlight: [5, 6];">
+@ComponentType
+@Provides({
+    @ProvidedPort(name = "on"),
+    @ProvidedPort(name = "off"),
+    @ProvidedPort(name = "toggle"),
+    @ProvidedPort(name = "flash")
+})
+public class DigitalLight
+    extends AbstractArduinoComponent {
+        //hard code goes here ...
+}
+</pre>
+                <span class='iconic cog kevOrange'></span><br/>
+                <span class="iconic arrow_down_alt1 kevOrange"></span><br/><p></p>
+                <object data="figures/kevDesigner2.png"></object>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- ================== Init Daum Section ================================-->
 <section class="slide shout" id="DaumProjectCover">
@@ -428,8 +517,8 @@ Model@Runtime
         <li class="next">Adaptation inherent to domain<br/>
             <span class='iconic arrow_right kevOrange'></span> firefighters are deployed also dynamically
         </li>
-        <li class="next">Heterogeneous (sensors <span class='iconic beaker'></span> , embedded computer, tablet <span
-                class='iconic iphone'></span>)
+        <li class="next">Heterogeneous (sensors <span class='iconic beaker kevOrange'></span> , embedded computer, tablet <span
+                class='iconic iphone kevOrange'></span>)
         </li>
         <li class="next">Complex topologies and nodes distributions
             <ul>
@@ -445,7 +534,8 @@ Model@Runtime
         <h2>Daum in a nutshell</h2>
     </header>
     <p>Embedded sensors on firefighters personal equipment<br/>
-        <span class='iconic arrow_right kevOrange'></span> monitor temperature, heart rate <span class='iconFont3'>4</span> <br/>
+        <span class='iconic arrow_right kevOrange'></span> monitor temperature, heart rate <span
+                class='iconFont3 kevOrange'>4</span> <br/>
         Deploy embedded tablets to collect tactical and sensors data.<br/>
         Deploy embedded computers that interact with central system in cars.
     </p>
