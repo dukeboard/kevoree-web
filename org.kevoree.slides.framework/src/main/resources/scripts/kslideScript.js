@@ -18,8 +18,8 @@ for (i = 0; i < l; i++) {
 
 function getTransform () {
     var denominator = Math.max(
-        body.clientWidth / window.innerWidth,
-        body.clientHeight / window.innerHeight
+        (body.clientWidth / window.innerWidth),
+        (body.clientHeight / window.innerHeight)
     );
 
     return 'scale(' + (1 / denominator) + ')';
