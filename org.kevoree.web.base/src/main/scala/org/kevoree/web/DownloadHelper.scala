@@ -125,9 +125,9 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
           file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
           updateFile(file.getAbsolutePath, runtimeSnapshotFileId)
 
-          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/release/"))
+          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", List[String]("http://maven.kevoree.org/release/"))
           updateFile(file.getAbsolutePath, androidReleaseFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", List[String]("http://maven.kevoree.org/snapshots/"))
           updateFile(file.getAbsolutePath, androidSnapshotFileId)
 
           file = bootService.resolveArtifact("org.kevoree.library.sample.javase.root", "org.kevoree.corelibrary.sample", "LATEST", "zip", List[String]("http://maven.kevoree.org/release/"))
