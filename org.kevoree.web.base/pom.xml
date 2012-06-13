@@ -31,9 +31,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.kevoree.web</groupId>
-            <artifactId>org.kevoree.slides.framework</artifactId>
-            <version>${site.version}</version>
+            <groupId>org.kevoree.talks</groupId>
+            <artifactId>org.kevoree.talks.framework</artifactId>
+            <version>${talks.version}</version>
         </dependency>
     </dependencies>
 
