@@ -70,7 +70,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
 
   private def getAndroidStableAPK = "download/KevoreeRuntimeAndroidRelease.apk"
 
-  private def getAndroidSnapshotAPK = "download/KevoreeRuntimeAndroidSnapshot.jar"
+  private def getAndroidSnapshotAPK = "download/KevoreeRuntimeAndroidSnapshot.apk"
 
   private def getSampleRelease = "download/sample.zip"
 
