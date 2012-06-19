@@ -14,6 +14,8 @@
                 <li><a href="#downloadruntime">Runtime</a></li>
                 <li><a href="#downloadandroidruntime">Android APK</a></li>
                 <li><a href="#downloadsample">Project Sample</a></li>
+                <li class="nav-header">Test on Virtual Machine</li>
+                <li><a href="#vmdetails">Details</a></li>
                 <li class="nav-header">Embedded in your own app</li>
                 <li><a href="#embedded">Embedded</a></li>
                 <li class="nav-header">Install as a service</li>
@@ -73,15 +75,35 @@
             </div>
 
             <p>Kevoree runtime is a standalone application running in a java virtual machine. Headless or with a graphical swing interface runtime is a container for your application.</p>
+
             <h2 id="downloadandroidruntime">Download Android Runtime APK</h2>
-            <a href="{androidStableAPK}"><img src="http://chart.apis.google.com/chart?chl=http://localhost:8080/test/{androidStableAPK}&chs=200x200&cht=qr" /></a>
-            <a href="{androidSnapshotAPK}"><img src="http://chart.apis.google.com/chart?chl=http://localhost:8080/test/{androidSnapshotAPK}&chs=200x200&cht=qr" /></a>
-            <p>Kevoree runtime APK TODO.</p>
+            <a href="{androidStableAPK}"><img src="http://chart.apis.google.com/chart?chl={urlsite}{urlpattern}{androidStableAPK}&chs=200x200&cht=qr"/></a>
+            <a href="{androidSnapshotAPK}"><img src="http://chart.apis.google.com/chart?chl={urlsite}{urlpattern}{androidSnapshotAPK}&chs=200x200&cht=qr"/></a>
+
+            <p>Kevoree runtime APK is a standalone application running in android smartphone.</p>
 
             <h2 id="downloadsample">Download Project Sample</h2>
-            <a class="btn btn-primary" href="{sampleRelease}" >Stable Project sample - {kevoree.version.release}</a>
+            <a class="btn btn-primary" href="{sampleRelease}">Stable Project sample - {kevoree.version.release}</a>
 
             <p>Project sample contains various sample of kevoree usage (component definition, kevscript, ...)</p>
+
+            <h2 id="vmdetails">What is our Virtual Machine</h2>
+
+            <!--<div class="btn-group">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Download Virtual Machine<span
+                        class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{bsd.vm}">BSD Virtual Machine</a></li>
+                    <li><a href="{ubuntu.vm}">Ubuntu Virtual Machine</a></li>
+                </ul>
+            </div>-->
+            <p>Comming soon ...</p>
+
+            <p>We provide a set of virtual machines helping you to test and develop types (Component, Channel, Group, Node)for Kevoree for different usecases:</p>
+            <ul>
+                <li>The BSD VM allows you to test our own cloud implementation called Kloud</li>
+                <li>The Ubuntu VM allows you to test standard usecase with Java virtual machine but also helps you to develop all possible type such as arduino component</li>
+            </ul>
         </div>
     </div>
 </div>

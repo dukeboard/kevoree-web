@@ -74,6 +74,9 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
 
   private def getSampleRelease = "download/sample.zip"
 
+  private def getUbuntuVM = "download/vms/ubuntu.zip"
+  private def getBSDVM = "download/vms/bsd.zip"
+
 
   var variables = Map[String, String](
                                        "editorStableJNLP" -> getEditorStableJNLP,
@@ -88,7 +91,9 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
                                        "androidSnapshotAPK" -> getAndroidSnapshotAPK,
                                        "kevoree.version.release" -> "toto",
                                        "kevoree.version.snapshot" -> "titi",
-                                       "sampleRelease" -> getSampleRelease
+                                       "sampleRelease" -> getSampleRelease,
+                                       "ubuntu.vm" -> getUbuntuVM,
+                                       "bsd.vm" -> getBSDVM
                                      )
 
   def getVariables = variables
