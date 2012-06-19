@@ -46,4 +46,28 @@ public class KevoreeMainSiteDev extends KevoreeMainSite {
         }
     }
 
+    @Override
+    public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+        if (getLastParam(request.getUrl()).startsWith("talks/") || getLastParam(request.getUrl()).startsWith("/talks/")) {
+            logger.debug("forward request to slide pages for url: {} with completeURL = {}", getLastParam(request.getUrl()), request.getCompleteUrl());
+            return forward(request, response);
+        }
+        if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response,f.getAbsolutePath())) {
+            if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css") || request.getUrl().endsWith(".jnlp")) {
+                // FIXME according to KevoreeSlidesShowerTemplate
+                replaceGlobalVariables(request, response);
+            }
+            if (useCache) {
+                cacheResponse(request, response);
+            }
+            return response;
+        }
+        return super.process(request,response);
+    }
+
+
+
+
+
+
 }

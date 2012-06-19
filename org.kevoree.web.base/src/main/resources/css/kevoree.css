@@ -1,43 +1,62 @@
 html, body {
-            height: 100%;
-        }
+    height: 100%;
+}
+body {
+    padding-top: 60px;
+}
+
+#main {
+    overflow: auto;
+    padding-bottom: 100px; /* this needs to be bigger than footer height*/
+}
 
 .wrapper {
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            margin: 0 auto -55px;
-        }
-body {
-            padding-top: 60px;
-            //padding-bottom: 10px;
-            //background: #FAFAFA url("/img/pattern/classy_fabric.png") repeat 0 0;
-            //color: #DDD;
-        }
+    min-height: 100%;
+}
 .push {
-            height: 80px;
-        }
-.tutorial {
-        padding: 20px 40px;
-        line-height: 150%;
-      }
-.footer {
-    background: #FAFAFA url("{urlpattern}img/pattern/classy_fabric.png") repeat-x bottom left;
-    color : #777;
-    padding: 20px 20px 10px 20px;
-    box-shadow: inset 0 15px 10px rgba(0,0,0,0.6);
-    -webkit-box-shadow: inset 0 15px 10px rgba(0,0,0,0.6);
-    -moz-box-shadow:inset 0 15px 10px rgba(0,0,0,0.6);
+    height: 80px;
 }
-.footer h5 {color:#DDD;font-weight:normal;}
-.footer li {line-height:24px;}
-.footer a {color:#808080;}
-.footer img {width:18px; height:18px;vertical-align: middle;margin: 0 2px;}
 
-/* Footer bottom */
-.footer.footer-btm {
-    background:#151515;
-    border-top: 1px solid #222;
-    padding: 10px 0 5px 0;
+.tutorial {
+    padding: 20px 40px;
+    line-height: 150%;
 }
-.footer.footer-btm {color:#555;}
+
+.footer {
+    /*
+    background: #FAFAFA url("{urlpattern}img/pattern/classy_fabric.png") repeat-x bottom left;
+    color: #777;
+    padding: 20px 20px 10px 20px;
+    box-shadow: inset 0 15px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: inset 0 15px 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 15px 10px rgba(0, 0, 0, 0.6);  */
+
+    position: relative;
+    margin-top: -100px; /* negative value of footer height */
+    height: 100px;
+    background: #222;
+    color: #EEE;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    clear: both;
+
+}
+
+#site-footer h3 {
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: 0.4em;
+    line-height: 1.2em;
+    color: #EEE;
+}
+
+
+.footer img {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    margin: 0 2px;
+}
+

@@ -61,13 +61,13 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
 
     // sb.append("<div class=\"hero-unit\">\n    <div class=\"row\">\n        <div class=\"span5\">\n            <p><img src=\"img/kevoree-logo.png\"/></p>\n        </div>\n        <div class=\"span5\">\n            <p>Kevoree project aims at enabling distributed reconfigurable software development. Build around a component model, Kevoree leverage model@runtime approach to offer tools to build, adapt and synchronize distributed systems.\n                Extensible, this project already offer runtime for Standard Java Virtual Machine, Android, Arduino but also for virtualization management such as VirtualBox.\n                In short Kevoree helping you to develop your adaptable software from Cloud stack to embedded devices !\n            </p>\n        </div>\n    </div>\n</div>")
     sb.append("<div class=\"wrapper\">")
-    sb.append("<div class=\"container\">")
+    sb.append("<div id=\"main\" class=\"container clear-top\">")
     sb.append(replaceVariable(renderHtml(name), vars))
     sb.append("</div>")
     sb.append("<div class=\"push\"><!--//--></div>")
     sb.append("</div>")
     sb.append(footerScript)
-    sb.append("<div class=\"footer\" /><footer>\n<p>&copy; Kevoree.org 2012</p>\n</footer>\n\n</div>")
+    sb.append("<div class=\"footer\" /><footer>\n<h3>&copy; Kevoree.org 2012</h3>\n</footer>\n\n</div>")
     sb.append("</body></html>")
 
     var patternCleaned = pattern

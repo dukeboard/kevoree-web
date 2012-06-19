@@ -25,11 +25,11 @@ public class KevoreeMainSite extends ParentAbstractPage {
 
 	protected String basePage = "overview.html";
 
-	private HashMap<String, byte[]> contentRawCache = new HashMap<String, byte[]>();
-	private HashMap<String, String> contentTypeCache = new HashMap<String, String>();
+    protected HashMap<String, byte[]> contentRawCache = new HashMap<String, byte[]>();
+	protected HashMap<String, String> contentTypeCache = new HashMap<String, String>();
 	protected PageRenderer krenderer = null;
 	protected Boolean useCache = true;
-	private DownloadHelper downloadHelper;
+	protected DownloadHelper downloadHelper;
 	private SlideListPage slideList;
 
 	@Override
@@ -123,7 +123,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		}
 	}
 
-	private KevoreeHttpResponse replaceGlobalVariables (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+	protected KevoreeHttpResponse replaceGlobalVariables (KevoreeHttpRequest request, KevoreeHttpResponse response) {
 		String pattern = getDictionary().get("urlpattern").toString();
 		if (pattern.endsWith("**")) {
 			pattern = pattern.replace("**", "");
