@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class SlideListPage implements ModelListener {
 
-	private Map<String, String> slidesList;
+	private Map<String, String[]> slidesList;
 
 	private KevoreeMainSite mainSite;
 	private String webSocketUrl;
@@ -34,7 +34,7 @@ public class SlideListPage implements ModelListener {
 		this.mainSite = mainSite;
 		webSocketUrl = wsUrl;
 		variables = new HashMap<String, String>();
-		slidesList = new HashMap<String, String>();
+		slidesList = new HashMap<String, String[]>();
 		initializeEmbedder();
 	}
 
@@ -113,7 +113,7 @@ public class SlideListPage implements ModelListener {
 					} else {
 						logger.warn("Unable to find channels to connect slide component");
 					}
-					slidesList.put(typeDefinition.getName(), "{urlsite}{urlpattern}talks/" + typeDefinition.getName() + "/");
+					slidesList.put(typeDefinition.getName(), new String[]{"{urlsite}{urlpattern}talks/" + typeDefinition.getName() + "/", getPaperURL(typeDefinition)});
 				} else {
 					logger.warn("Unable to find webserver to connect slide component");
 				}
@@ -139,12 +139,23 @@ public class SlideListPage implements ModelListener {
 		}
 	}
 
+	private String getPaperURL (TypeDefinition typeDefinition) {
+		if (typeDefinition.getDictionaryType().isDefined()) {
+			for (DictionaryValue dictionaryValue : typeDefinition.getDictionaryType().get().getDefaultValuesForJ()) {
+				if (dictionaryValue.getAttribute().getName().equals("paperURL")) {
+					return dictionaryValue.getValue();
+				}
+			}
+		}
+		return "";
+	}
+
 	private String[] getWebServerName () {
 		for (ContainerNode node : mainSite.getModelService().getLastModel().getNodesForJ()) {
 			for (ComponentInstance component : node.getComponentsForJ()) {
 //				for (TypeDefinition typeDefinition : component.getTypeDefinition().getSuperTypesForJ()) {
 				logger.debug(component.getTypeDefinition().getName());
-				if ("KTinyWebServer".equals(component.getTypeDefinition().getName())) {
+				if ("KTinyWebServer".equals(component.getTypeDefinition().getName())) {// must be change if the webserver implementation is changed
 					return new String[]{component.getName(), node.getName()};
 				}
 //				}
@@ -172,13 +183,17 @@ public class SlideListPage implements ModelListener {
 		for (String componentName : slidesList.keySet()) {
 
 			menuBuilder.append("<li><a onclick=\"document.querySelector('#presentation').innerHTML = '")
-					.append(componentName).append("';slideURL = '")
-					.append(slidesList.get(componentName)).append("'; loadIFrame();\">").append(componentName).append("</a></li>\n");
+					.append(componentName);
+					if (!"".equals(slidesList.get(componentName)[1])) {
+						menuBuilder.append(" - <a href=\\'").append(slidesList.get(componentName)[1]).append("\\'>Read the paper</a>");
+					}
+					menuBuilder.append("';slideURL = '")
+					.append(slidesList.get(componentName)[0]).append("'; loadIFrame();\">").append(componentName).append("</a></li>\n");
 			if (isFirst) {
 				isFirst = false;
 				slideListBuilder.append("document.querySelector('#presentation').innerHTML = '")
 						.append(componentName).append("';\n\t\t").append("var slideURL = '")
-						.append(slidesList.get(componentName)).append("';\n\t\t")
+						.append(slidesList.get(componentName)[0]).append("';\n\t\t")
 						.append("window.onload = init;");
 			}
 		}
