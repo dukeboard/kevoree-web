@@ -11,7 +11,9 @@ merge "mvn:org.kevoree.talks/org.kevoree.talks.adam/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012Demo/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.dais2012/{talks.version}"
-//merge "mvn:org.kevoree.talks/org.kevoree.talks.ws/{talks.version}"
+merge "mvn:org.kevoree.talks/org.kevoree.talks.cbse2012/{talks.version}"
+
+merge "mvn:org.kevoree.talks/org.kevoree.talks.ws/{talks.version}"
 
 addNode KevoreeWebSiteNode : PJavaSENode {logLevel = "DEBUG"}
 network KevoreeWebSiteNode => KevoreeWebSiteNode { "KEVOREE.remote.node.ip"="10.0.0.4"}
@@ -22,7 +24,7 @@ updateDictionary KevoreeWebSiteGroup  { ip="10.0.0.4", port="8000"}@KevoreeWebSi
 
 addComponent KevoreeWebSiteServer@KevoreeWebSiteNode : KTinyWebServer {port = "8090", timeout = "5000"}
 addComponent KevoreeWebSitePage@KevoreeWebSiteNode : KevoreeMainSite {urlpattern = "/", webSocketLocation="http://kevoree.org:443"}
-//addComponent webSocket@KevoreeWebSiteNode :  WsServer {port="443"}
+addComponent webSocket@KevoreeWebSiteNode :  WsServer {port="443"}
 
 addChannel requestChannelWebSite : defMSG
 addChannel responseChannelWebSite : defMSG
