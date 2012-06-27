@@ -7,7 +7,6 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.t
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 
 merge "mvn:org.kevoree.talks/org.kevoree.talks.adam/{talks.version}"
-//merge "mvn:org.kevoree.talks/org.kevoree.talks.cbse2012/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012Demo/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.dais2012/{talks.version}"
@@ -15,7 +14,7 @@ merge "mvn:org.kevoree.talks/org.kevoree.talks.cbse2012/{talks.version}"
 
 merge "mvn:org.kevoree.talks/org.kevoree.talks.ws/{talks.version}"
 
-addNode KevoreeWebSiteNode : PJavaSENode {logLevel = "DEBUG"}
+addNode KevoreeWebSiteNode : PJavaSENode
 network KevoreeWebSiteNode => KevoreeWebSiteNode { "KEVOREE.remote.node.ip"="10.0.0.4"}
 
 addGroup KevoreeWebSiteGroup : NanoRestGroup
