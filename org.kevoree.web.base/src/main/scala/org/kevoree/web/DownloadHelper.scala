@@ -1,6 +1,5 @@
 package org.kevoree.web
 
-import scala.collection.immutable.HashMap
 import org.kevoree.framework.FileNIOHelper
 import org.slf4j.{LoggerFactory, Logger}
 import scala.actors.Actor
@@ -11,8 +10,8 @@ import scala._
 import java.util.jar.{JarEntry, JarFile}
 import java.io.{ByteArrayOutputStream, InputStream, File}
 import util.matching.Regex
-import java.text.{DateFormat, SimpleDateFormat}
-import java.util.{TimeZone, Calendar, TimerTask, Timer, Date, Locale, Random}
+import java.text.SimpleDateFormat
+import java.util
 
 /**
  * Created by IntelliJ IDEA.
@@ -110,13 +109,13 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
                                                   androidSnapshotFileId -> "", sampleFileId -> "")
 
   //  var running = true
-  var timer: Timer = null
+  var timer: util.Timer = null
 
 
   override def start () = {
     super.start()
-    timer = new Timer()
-    timer.schedule(new TimerTask {
+    timer = new util.Timer()
+    timer.schedule(new util.TimerTask {
       def run () {
         try {
           logger.debug("updating maven artifact")
@@ -226,10 +225,10 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
   }
 
   private def setLastModifiedHeader (response: KevoreeHttpResponse, fileId: Int) {
-    val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH)
-    val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+    val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", util.Locale.ENGLISH)
+    val cal = util.Calendar.getInstance(util.TimeZone.getTimeZone("GMT"))
     format.setCalendar(cal)
-    val lastUpdated = format.format(new Date(new File(files(fileId)).lastModified()))
+    val lastUpdated = format.format(new util.Date(new File(files(fileId)).lastModified()))
 
     response.getHeaders.put("Last-Modified", lastUpdated)
   }
@@ -336,7 +335,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
   }
 
   private def convertStreamToString (inputStream: InputStream): String = {
-    val rand: Random = new Random
+    val rand: util.Random = new util.Random
     val temp: File = File.createTempFile("kevoreeloaderLib" + rand.nextInt, ".xmi")
     temp.deleteOnExit()
     val out = new ByteArrayOutputStream()
