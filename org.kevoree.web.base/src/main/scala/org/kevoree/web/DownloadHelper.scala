@@ -77,6 +77,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
 
   private def getSampleRelease = "download/sample.zip"
 
+  // according to our nginx configuration
   private def getUbuntuVM = "download/vms/ubuntu.zip"
 
   private def getBSDVM = "download/vms/bsd.zip"
@@ -326,7 +327,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
         }
       }
       case Some(requestDownload) if (requestDownload == getPlatformStableGUIJAR || requestDownload == "/" + getPlatformStableGUIJAR) => {
-        if (buildResponse(response, runtimeReleaseFileId)) {
+        if (buildResponse(response, runtimeReleaseGUIFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-GUI-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeRuntime-GUI-" +
             getVariables("kevoree.version.release") + ".jar")
           true
