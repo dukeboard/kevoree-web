@@ -272,13 +272,13 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
         buildResponse(response, editorSnapshotFileId)
       }
       case Some(requestDownload) if (requestDownload == getRuntimeLastSnapshot || requestDownload == "/" + getRuntimeLastSnapshot) => {
-        buildResponse(response, runtimeSnapshotFileId)
+        buildResponse(response, runtimeSnapshotGUIFileId)
       }
       case Some(requestDownload) if (requestDownload == getEditorLastRelease || requestDownload == "/" + getEditorLastRelease) => {
         buildResponse(response, editorReleaseFileId)
       }
       case Some(requestDownload) if (requestDownload == getRuntimeLastRelease || requestDownload == "/" + getRuntimeLastRelease) => {
-        buildResponse(response, runtimeReleaseFileId)
+        buildResponse(response, runtimeReleaseGUIFileId)
       }
       case Some(requestDownload) if (requestDownload == getEditorSnapshotJAR || requestDownload == "/" + getEditorSnapshotJAR) => {
         if (buildResponse(response, editorSnapshotFileId)) {
