@@ -105,7 +105,8 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
       "<meta name=\"author\" content=\"Francois Fouquet\">" +
       "<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->\n    <!--[if lt IE 9]>\n    <script src=\"//html5shim.googlecode.com/svn/trunk/html5.js\"></script>\n    <![endif]-->" +
     "<script type=\"text/javascript\" src=\"{urlpattern}js/bootstrap-carousel.js\"></script>" +
-    "<link href=\"{urlpattern}css/bootstrap.min.css\" rel=\"stylesheet\">" +
+    "<br /><script type=\"text/javascript\">\n\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-23280515-1']);\n  _gaq.push(['_setDomainName', 'kevoree.org']);\n  _gaq.push(['_trackPageview']);\n\n  (function() {\n    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\n  })();\n\n</script>" +
+      "<link href=\"{urlpattern}css/bootstrap.min.css\" rel=\"stylesheet\">" +
     "<link href=\"{urlpattern}css/bootstrap-responsive.min.css\" rel=\"stylesheet\">" +
     "<link href=\"{urlpattern}css/kevoree.css\" rel=\"stylesheet\">" +
       "<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js\"></script>\n" +

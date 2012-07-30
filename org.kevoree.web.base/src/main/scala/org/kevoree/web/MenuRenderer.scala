@@ -12,7 +12,7 @@ import scala.collection.JavaConversions._
 
 object MenuRenderer {
 
-  def getMenuHtml (currentURL: String): String = {
+  def getMenuHtml(currentURL: String): String = {
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -48,18 +48,19 @@ object MenuRenderer {
   }
 
 
-  def getItems: List[Tuple4[String, String, String,java.util.Map[String, String]]] = {
+  def getItems: List[Tuple4[String, String, String, java.util.Map[String, String]]] = {
     List(
-         // ("Home", "/", "overview.html"),
-        //  ("Research", "/research", "research.html"),
-          ("Core Features", "{urlpattern}core", "core_features.html",HashMap[String,String]()),
-         // ("Tools", "/tools", ""),
-          //("Platforms", "/platform", ""),
-          ("Download", "{urlpattern}download", "download.html",DownloadHelper.getVariables),
-          ("Talks", "{urlpattern}talks", "slidesList.html", SlideListPage.getVariables),
-          ("Related Projects", "{urlpattern}related", "related_projects.html",HashMap[String,String]()),
-          ("Blog", "http://blog.kevoree.org", "",HashMap[String,String]()),
-          ("About us", "{urlpattern}about", "about_us.html",HashMap[String,String]())
+      // ("Home", "/", "overview.html"),
+      //  ("Research", "/research", "research.html"),
+      ("Core Features", "{urlpattern}core", "core_features.html", HashMap[String, String]()),
+      // ("Tools", "/tools", ""),
+      //("Platforms", "/platform", ""),
+      ("Download", "{urlpattern}download", "download.html", DownloadHelper.getVariables),
+      ("Tutorials", "{urlpattern}tutorials", "tutorial.html", DownloadHelper.getVariables),
+      ("Talks", "{urlpattern}talks", "slidesList.html", SlideListPage.getVariables),
+      ("Related Projects", "{urlpattern}related", "related_projects.html", HashMap[String, String]()),
+      ("Blog", "http://blog.kevoree.org", "", HashMap[String, String]()),
+      ("About us", "{urlpattern}about", "about_us.html", HashMap[String, String]())
 
     )
   }
