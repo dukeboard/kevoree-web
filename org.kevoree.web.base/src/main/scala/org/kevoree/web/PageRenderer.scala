@@ -109,7 +109,6 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
       "<link href=\"{urlpattern}css/bootstrap.min.css\" rel=\"stylesheet\">" +
     "<link href=\"{urlpattern}css/bootstrap-responsive.min.css\" rel=\"stylesheet\">" +
     "<link href=\"{urlpattern}css/kevoree.css\" rel=\"stylesheet\">" +
-      "<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js\"></script>\n" +
       "<link href=\"{urlpattern}js/google-code-prettify/prettify.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
       "<script type=\"text/javascript\" src=\"{urlpattern}js/google-code-prettify/prettify.js\"></script>" +
       "</head>" +
@@ -127,7 +126,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
 
 
   def footerScript: String = {
-    <script src={"{urlpattern}js/jquery.js"}></script>
+    <script src={"{urlpattern}js/jquery-1.8.0.min.js"}></script>
       <script src={"{urlpattern}js/bootstrap-transition.js"}></script>
       <script src={"{urlpattern}js/bootstrap-alert.js"}></script>
       <script src={"{urlpattern}js/bootstrap-modal.js"}></script>
@@ -140,7 +139,6 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
       <script src={"{urlpattern}js/bootstrap-collapse.js"}></script>
       <script src={"{urlpattern}js/bootstrap-carousel.js"}></script>
       <script src={"{urlpattern}js/bootstrap-typeahead.js"}></script>.mkString
-
   }
 
 }
