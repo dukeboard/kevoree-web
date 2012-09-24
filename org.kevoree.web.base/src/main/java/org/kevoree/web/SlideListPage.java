@@ -39,7 +39,7 @@ public class SlideListPage implements ModelListener {
 	}
 
 	private void initializeEmbedder () throws Exception {
-		InputStream in = mainSite.getClass().getClassLoader().getResourceAsStream("embedder.html");
+		InputStream in = mainSite.getClass().getClassLoader().getResourceAsStream("showcaseEmbedder.html");
 		if (in != null) {
 			variables.put("embedder", new String(FileServiceHelper.convertStream(in), "UTF-8"));
 		}
@@ -193,8 +193,8 @@ public class SlideListPage implements ModelListener {
 				isFirst = false;
 				slideListBuilder.append("document.querySelector('#presentation').innerHTML = '")
 						.append(componentName).append("';\n\t\t").append("var slideURL = '")
-						.append(slidesList.get(componentName)[0]).append("';\n\t\t")
-						.append("window.onload = init;");
+						.append(slidesList.get(componentName)[0]).append("';");
+//						.append("\n\t\twindow.onload = init;");
 			}
 		}
 		logger.debug("menu = {}", menuBuilder.toString());
