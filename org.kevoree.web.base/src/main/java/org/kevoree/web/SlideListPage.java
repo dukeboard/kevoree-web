@@ -184,17 +184,18 @@ public class SlideListPage implements ModelListener {
 
 			menuBuilder.append("<li><a onclick=\"document.querySelector('#presentation').innerHTML = '")
 					.append(componentName);
-					if (!"".equals(slidesList.get(componentName)[1])) {
-						menuBuilder.append(" - <a href=\\'").append(slidesList.get(componentName)[1]).append("\\'>Read the paper</a>");
-					}
-					menuBuilder.append("';slideURL = '")
-					.append(slidesList.get(componentName)[0]).append("'; loadIFrame();\">").append(componentName).append("</a></li>\n");
+			if (!"".equals(slidesList.get(componentName)[1])) {
+				menuBuilder.append(" - <a href=\\'").append(slidesList.get(componentName)[1]).append("\\'>Read the paper</a>");
+			}
+			menuBuilder.append("'; ks.sendEvent(null, {'type':'RELOAD', 'url':'").append(slidesList.get(componentName)[0]).append("'});\">").append(componentName).append("</a></li>\n");
 			if (isFirst) {
 				isFirst = false;
-				slideListBuilder.append("document.querySelector('#presentation').innerHTML = '")
-						.append(componentName).append("';\n\t\t").append("var slideURL = '")
-						.append(slidesList.get(componentName)[0]).append("';");
-//						.append("\n\t\twindow.onload = init;");
+				slideListBuilder.append("jQuery(document).ready(function ($) {\n").append("document.querySelector('#presentation').innerHTML = '")
+						.append(componentName).append("';\n\t\t")/*.append("\t\tks.sendEvent(null, {'type':'RELOAD', 'url':'")
+						.append(slidesList.get(componentName)[0]).append("'});")*/.append("\n});");
+				if (variables.get("embedder") != null) {
+					variables.put("embedder",variables.get("embedder").replace("{slideurl}", slidesList.get(componentName)[0]));
+				}
 			}
 		}
 		logger.debug("menu = {}", menuBuilder.toString());
