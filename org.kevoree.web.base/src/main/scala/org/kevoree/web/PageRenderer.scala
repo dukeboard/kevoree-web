@@ -13,7 +13,7 @@ import scala.collection.JavaConversions._
  * Time: 17:15
  */
 
-class PageRenderer(devmod:Boolean,folder:java.io.File) {
+class PageRenderer(devmod: Boolean, folder: java.io.File) {
 
   val handler = new URLHandlerScala()
 
@@ -83,9 +83,9 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
   def renderHtml(name: String): String = {
     //Source.fromFile(new File(getClass.getClassLoader.getResource("templates/../").getPath+"../../src/main/resources/templates/html/" + name)).getLines().mkString("\n")
 
-    var st :InputStream = null
+    var st: InputStream = null
     if (devmod)
-      st = new FileInputStream(new File(folder.getAbsolutePath + java.io.File.separator+"templates"+ java.io.File.separator + "html"+ java.io.File.separator + name))
+      st = new FileInputStream(new File(folder.getAbsolutePath + java.io.File.separator + "templates" + java.io.File.separator + "html" + java.io.File.separator + name))
     else
       st = getClass.getClassLoader.getResourceAsStream("templates/html/" + name)
     if (st != null) {
@@ -104,13 +104,15 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
       "<meta name=\"description\" content=\"Kevoree : Distributed Model@Runtime project\">" +
       "<meta name=\"author\" content=\"Francois Fouquet\">" +
       "<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->\n    <!--[if lt IE 9]>\n    <script src=\"//html5shim.googlecode.com/svn/trunk/html5.js\"></script>\n    <![endif]-->" +
-    "<script type=\"text/javascript\" src=\"{urlpattern}js/bootstrap-carousel.js\"></script>" +
-    "<br /><script type=\"text/javascript\">\n\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-23280515-1']);\n  _gaq.push(['_setDomainName', 'kevoree.org']);\n  _gaq.push(['_trackPageview']);\n\n  (function() {\n    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\n  })();\n\n</script>" +
+      "<br /><script type=\"text/javascript\">\n\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-23280515-1']);\n  _gaq.push(['_setDomainName', 'kevoree.org']);\n  _gaq.push(['_trackPageview']);\n\n  (function() {\n    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\n  })();\n\n</script>" +
       "<link href=\"{urlpattern}css/bootstrap.min.css\" rel=\"stylesheet\">" +
-    "<link href=\"{urlpattern}css/bootstrap-responsive.min.css\" rel=\"stylesheet\">" +
-    "<link href=\"{urlpattern}css/kevoree.css\" rel=\"stylesheet\">" +
+      "<link href=\"{urlpattern}css/bootstrap-responsive.min.css\" rel=\"stylesheet\">" +
+      "<link href=\"{urlpattern}css/kevoree.css\" rel=\"stylesheet\">" +
       "<link href=\"{urlpattern}js/google-code-prettify/prettify.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
-      "<script type=\"text/javascript\" src=\"{urlpattern}js/google-code-prettify/prettify.js\"></script>" +
+      "<link href=\"{urlpattern}css/refineslide.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
+      "<script type=\"text/javascript\" src=\"{urlpattern}js/google-code-prettify/prettify.js\"></script>\n" +
+      "<script type=\"text/javascript\" src=\"{urlpattern}js/jquery.min.js\"></script>\n" +
+      "<script type=\"text/javascript\" src=\"{urlpattern}js/jquery.refineslide.min.js\"></script>" +
       "</head>" +
       "<body onload=\"prettyPrint()\">\n"
   }
@@ -126,9 +128,8 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
 
 
   def footerScript: String = {
-    <script src={"{urlpattern}js/jquery-1.8.0.min.js"}></script>
       <script src={"{urlpattern}js/bootstrap-transition.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-alert.js"}></script>
+      /*<script src={"{urlpattern}js/bootstrap-alert.js"}></script>
       <script src={"{urlpattern}js/bootstrap-modal.js"}></script>
       <script src={"{urlpattern}js/bootstrap-dropdown.js"}></script>
       <script src={"{urlpattern}js/bootstrap-scrollspy.js"}></script>
@@ -138,7 +139,7 @@ class PageRenderer(devmod:Boolean,folder:java.io.File) {
       <script src={"{urlpattern}js/bootstrap-button.js"}></script>
       <script src={"{urlpattern}js/bootstrap-collapse.js"}></script>
       <script src={"{urlpattern}js/bootstrap-carousel.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-typeahead.js"}></script>.mkString
+      <script src={"{urlpattern}js/bootstrap-typeahead.js"}></script>*/ .mkString
   }
 
 }
