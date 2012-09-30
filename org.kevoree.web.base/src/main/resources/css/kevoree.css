@@ -60,3 +60,18 @@ body {
     margin: 0 2px;
 }
 
+
+.hero-unit h1 {
+    margin-bottom: 0;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: inherit;
+}
+
+.hero-unit p {
+    font-size: 16px;
+    font-weight: 200;
+    line-height: 28px;
+    color: inherit;
+}

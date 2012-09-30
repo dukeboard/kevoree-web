@@ -112,6 +112,7 @@ class PageRenderer(devmod: Boolean, folder: java.io.File) {
       "<link href=\"{urlpattern}css/refineslide.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
       "<script type=\"text/javascript\" src=\"{urlpattern}js/google-code-prettify/prettify.js\"></script>\n" +
       "<script type=\"text/javascript\" src=\"{urlpattern}js/jquery.min.js\"></script>\n" +
+      "<script type=\"text/javascript\" src=\"{urlpattern}js/bootstrap.min.js\"></script>\n" +
       "<script type=\"text/javascript\" src=\"{urlpattern}js/jquery.refineslide.min.js\"></script>" +
       "</head>" +
       "<body onload=\"prettyPrint()\">\n"
@@ -128,18 +129,7 @@ class PageRenderer(devmod: Boolean, folder: java.io.File) {
 
 
   def footerScript: String = {
-      <script src={"{urlpattern}js/bootstrap-transition.js"}></script>
-      /*<script src={"{urlpattern}js/bootstrap-alert.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-modal.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-dropdown.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-scrollspy.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-tab.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-tooltip.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-popover.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-button.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-collapse.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-carousel.js"}></script>
-      <script src={"{urlpattern}js/bootstrap-typeahead.js"}></script>*/ .mkString
+      ""
   }
 
 }
