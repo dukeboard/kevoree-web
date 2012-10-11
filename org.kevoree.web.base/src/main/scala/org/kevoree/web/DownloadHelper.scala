@@ -134,36 +134,40 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
       def run () {
         try {
           logger.debug("updating maven artifact")
+          val listRelease = new util.ArrayList[String](1)
+          val listSnapshot = new util.ArrayList[String](1)
+          listRelease.add("http://maven.kevoree.org/release/")
+          listSnapshot.add("http://maven.kevoree.org/snapshots/")
           // using latest version on release repository to get the a.b.c instead of a.b.c-z like we get with RELEASE version
-          var file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/release/"))
+          var file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", listRelease)
           updateFile(file.getAbsolutePath, editorReleaseFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/release/"))
+          file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", listRelease)
           updateFile(file.getAbsolutePath, runtimeReleaseGUIFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.standalone", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/release/"))
+          file = bootService.resolveArtifact("org.kevoree.platform.standalone", "org.kevoree.platform", "LATEST", listRelease)
           updateFile(file.getAbsolutePath, runtimeReleaseFileId)
-          file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+          file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", listSnapshot)
           updateFile(file.getAbsolutePath, editorSnapshotFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+          file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", listSnapshot)
           updateFile(file.getAbsolutePath, runtimeSnapshotGUIFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.standalone", "org.kevoree.platform", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+          file = bootService.resolveArtifact("org.kevoree.platform.standalone", "org.kevoree.platform", "LATEST", listSnapshot)
           updateFile(file.getAbsolutePath, runtimeSnapshotFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", List[String]("http://maven.kevoree.org/release/"))
+          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", listRelease)
           updateFile(file.getAbsolutePath, androidReleaseFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", List[String]("http://maven.kevoree.org/snapshots/"))
+          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", listSnapshot)
           updateFile(file.getAbsolutePath, androidSnapshotFileId)
 
-          file = bootService.resolveArtifact("org.kevoree.library.sample.javase.root", "org.kevoree.corelibrary.sample", "LATEST", "zip", List[String]("http://maven.kevoree.org/release/"))
+          file = bootService.resolveArtifact("org.kevoree.library.sample.javase.root", "org.kevoree.corelibrary.sample", "LATEST", "zip", listRelease)
           updateFile(file.getAbsolutePath, sampleFileId)
 
           logger.debug("maven artifact updated")
           logger.debug("update kevoree version values")
-          file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", List[String]("http://maven.kevoree.org/release/"))
+          file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listRelease)
           var jar: JarFile = new JarFile(file)
           var entry: JarEntry = jar.getJarEntry("KEV-INF/lib.kev")
           if (entry != null) {
             updateReleaseVersion(findVersionFromModel(convertStreamToString(jar.getInputStream(entry))))
           }
-          file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", List[String]("http://maven.kevoree.org/snapshots/"))
+          file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listSnapshot)
           jar = new JarFile(file)
           entry = jar.getJarEntry("KEV-INF/lib.kev")
           if (entry != null) {
@@ -174,7 +178,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
           case _@e => logger.debug("Unable to update maven artifact", e)
         }
       }
-    }, 1, /*21*/ 3600000)
+    }, 1, /*21*/ 1800000)
     this
   }
 

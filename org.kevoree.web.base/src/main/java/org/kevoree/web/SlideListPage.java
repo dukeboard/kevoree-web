@@ -56,6 +56,11 @@ public class SlideListPage implements ModelListener {
 	}
 
 	@Override
+	public boolean afterLocalUpdate (ContainerRoot containerRoot, ContainerRoot containerRoot1) {
+		return true;
+	}
+
+	@Override
 	public void modelUpdated () {
 		slidesList.clear();
 		// look for all component that have a super type equals to KevoreeSlidePage
@@ -137,6 +142,14 @@ public class SlideListPage implements ModelListener {
 		} catch (Exception ignored) {
 
 		}
+	}
+
+	@Override
+	public void preRollback (ContainerRoot containerRoot, ContainerRoot containerRoot1) {
+	}
+
+	@Override
+	public void postRollback (ContainerRoot containerRoot, ContainerRoot containerRoot1) {
 	}
 
 	private String getPaperURL (TypeDefinition typeDefinition) {
