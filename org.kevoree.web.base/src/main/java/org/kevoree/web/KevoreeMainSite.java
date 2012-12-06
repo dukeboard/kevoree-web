@@ -95,7 +95,8 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		}
 		if (krenderer.checkForTemplateRequest(basePage, this, request, response)) {
 			replaceGlobalVariables(request, response);
-			if (useCache) {
+			if (useCache && !request.getUrl().equals("/download")) {
+                logger.debug("BLA\t\t" + request.getUrl());
 				cacheResponse(request, response);
 			}
 			return response;

@@ -7,10 +7,8 @@ import org.kevoree.annotation.DictionaryType;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
 import org.kevoree.library.javase.webserver.KevoreeHttpRequest;
 import org.kevoree.library.javase.webserver.KevoreeHttpResponse;
-import org.kevoree.library.javase.webserver.ParentAbstractPage;
 
 import java.io.File;
-import java.util.HashMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,7 +25,7 @@ public class KevoreeMainSiteDev extends KevoreeMainSite {
 
     @Override
     public void startPage() {
-        useCache = false;
+        useCache = true;
         super.startPage();
         File f1 = new File((String) super.getDictionary().get("folder"));
         if (f1.isDirectory()) {

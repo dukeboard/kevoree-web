@@ -34,8 +34,6 @@
             <artifactId>org.kevoree.talks.framework</artifactId>
             <version>${talks.framework.version}</version>
         </dependency>
-
-
     </dependencies>
 
     <build>

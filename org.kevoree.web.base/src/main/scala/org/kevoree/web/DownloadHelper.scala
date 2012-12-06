@@ -26,7 +26,7 @@ object DownloadHelper {
   def getVariables = downloadHelper.getVariables
 }
 
-class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) extends Actor {
+class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extends Actor {
 
   DownloadHelper.downloadHelper = this
 
@@ -78,33 +78,33 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
   private def getSampleRelease = "download/sample.zip"
 
   // according to our nginx configuration
-  private def getUbuntuVM = "download/vms/ubuntu.zip"
+  private def getUbuntuVM = "download/vms/Ubuntu1204.ova"
 
-  private def getBSDVM = "download/vms/bsd.zip"
+  private def getBSDVM = "download/vms/virtualbsd.tar.gz"
 
-  private def getAndroidVM = "download/vms/android.ova"
+  private def getAndroidVM = "download/vms/android4kevoree.ova"
 
 
   var variables = Map[String, String](
-                                       "editorStableJNLP" -> getEditorStableJNLP,
-                                       "platformStableJNLP" -> getPlatformStableJNLP,
-                                       "editorSnapshotJNLP" -> getEditorSnapshotJNLP,
-                                       "platformSnapshotJNLP" -> getPlatformSnapshotJNLP,
-                                       "editorStableJAR" -> getEditorStableJAR,
-                                       "platformStableJAR" -> getPlatformStableJAR,
-                                       "platformStableGUIJAR" -> getPlatformStableGUIJAR,
-                                       "editorSnapshotJAR" -> getEditorSnapshotJAR,
-                                       "platformSnapshotJAR" -> getPlatformSnapshotJAR,
-                                       "platformSnapshotGUIJAR" -> getPlatformSnapshotGUIJAR,
-                                       "androidStableAPK" -> getAndroidStableAPK,
-                                       "androidSnapshotAPK" -> getAndroidSnapshotAPK,
-                                       "kevoree.version.release" -> "toto",
-                                       "kevoree.version.snapshot" -> "titi",
-                                       "sampleRelease" -> getSampleRelease,
-                                       "ubuntu.vm" -> getUbuntuVM,
-                                       "bsd.vm" -> getBSDVM,
-                                       "android.vm" -> getAndroidVM
-                                     )
+    "editorStableJNLP" -> getEditorStableJNLP,
+    "platformStableJNLP" -> getPlatformStableJNLP,
+    "editorSnapshotJNLP" -> getEditorSnapshotJNLP,
+    "platformSnapshotJNLP" -> getPlatformSnapshotJNLP,
+    "editorStableJAR" -> getEditorStableJAR,
+    "platformStableJAR" -> getPlatformStableJAR,
+    "platformStableGUIJAR" -> getPlatformStableGUIJAR,
+    "editorSnapshotJAR" -> getEditorSnapshotJAR,
+    "platformSnapshotJAR" -> getPlatformSnapshotJAR,
+    "platformSnapshotGUIJAR" -> getPlatformSnapshotGUIJAR,
+    "androidStableAPK" -> getAndroidStableAPK,
+    "androidSnapshotAPK" -> getAndroidSnapshotAPK,
+    "kevoree.version.release" -> "RELEASE",
+    "kevoree.version.snapshot" -> "LATEST",
+    "sampleRelease" -> getSampleRelease,
+    "ubuntu.vm" -> getUbuntuVM,
+    "bsd.vm" -> getBSDVM,
+    "android.vm" -> getAndroidVM
+  )
 
   def getVariables = variables
 
@@ -119,60 +119,98 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
   val androidSnapshotFileId = 7
   val sampleFileId = 8
 
+  val listRelease = new util.ArrayList[String](1)
+  val listSnapshot = new util.ArrayList[String](1)
+  listRelease.add("http://maven.kevoree.org/release/")
+  listSnapshot.add("http://maven.kevoree.org/snapshots/")
+
 
   var files: Map[Int, String] = Map[Int, String](editorReleaseFileId -> "", editorSnapshotFileId -> "", runtimeReleaseFileId -> "", runtimeSnapshotFileId -> "", androidReleaseFileId -> "",
-                                                  androidSnapshotFileId -> "", sampleFileId -> "", runtimeReleaseGUIFileId -> "", runtimeSnapshotGUIFileId -> "")
+    androidSnapshotFileId -> "", sampleFileId -> "", runtimeReleaseGUIFileId -> "", runtimeSnapshotGUIFileId -> "")
 
   //  var running = true
   var timer: util.Timer = null
 
+  private def update(id: Int) {
+    var file: File = null
+    id match {
+      case i if (id == editorReleaseFileId) => {
+        logger.debug("Try to update Editor Release")
+        // using latest version on release repository to get the a.b.c instead of a.b.c-z like we get with RELEASE version
+        file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", listRelease)
+      }
+      case i if (id == editorSnapshotFileId) => {
+        logger.debug("Try to update Editor Snapshot")
+        file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", listSnapshot)
+      }
+      case i if (id == runtimeReleaseGUIFileId) => {
+        logger.debug("Try to update runtime Gui Release")
+        file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", listRelease)
+      }
+      case i if (id == runtimeSnapshotGUIFileId) => {
+        logger.debug("Try to update runtime GUI Snapshot")
+        file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", listSnapshot)
+      }
+      case i if (id == runtimeReleaseFileId) => {
+        logger.debug("Try to update runtime Release")
+        file = bootService.resolveArtifact("org.kevoree.platform.standalone", "org.kevoree.platform", "LATEST", listRelease)
+      }
+      case i if (id == runtimeSnapshotFileId) => {
+        logger.debug("Try to update runtime Snapshot")
+        file = bootService.resolveArtifact("org.kevoree.platform.standalone", "org.kevoree.platform", "LATEST", listSnapshot)
+      }
+      case i if (id == androidReleaseFileId) => {
+        logger.debug("Try to update Android Release")
+        file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", listRelease)
+      }
+      case i if (id == androidSnapshotFileId) => {
+        logger.debug("Try to update Android Snapshot")
+        file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", listSnapshot)
+      }
+      case i if (id == sampleFileId) => {
+        logger.debug("Try to update sample Release")
+        file = bootService.resolveArtifact("org.kevoree.library.sample.javase.root", "org.kevoree.corelibrary.sample", "LATEST", "zip", listRelease)
+      }
+      case _ =>
+    }
+    if (file != null) {
+    files = files.filterKeys(i => i != id) ++ Map[Int, String](id -> file.getAbsolutePath)
+    }
+  }
 
-  override def start () = {
+
+  override def start() = {
     super.start()
     timer = new util.Timer()
     timer.schedule(new util.TimerTask {
-      def run () {
+      def run() {
         try {
           logger.debug("updating maven artifact")
-          val listRelease = new util.ArrayList[String](1)
-          val listSnapshot = new util.ArrayList[String](1)
-          listRelease.add("http://maven.kevoree.org/release/")
-          listSnapshot.add("http://maven.kevoree.org/snapshots/")
-          // using latest version on release repository to get the a.b.c instead of a.b.c-z like we get with RELEASE version
-          var file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", listRelease)
-          updateFile(file.getAbsolutePath, editorReleaseFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", listRelease)
-          updateFile(file.getAbsolutePath, runtimeReleaseGUIFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.standalone", "org.kevoree.platform", "LATEST", listRelease)
-          updateFile(file.getAbsolutePath, runtimeReleaseFileId)
-          file = bootService.resolveArtifact("org.kevoree.tools.ui.editor.standalone", "org.kevoree.tools", "LATEST", listSnapshot)
-          updateFile(file.getAbsolutePath, editorSnapshotFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.standalone.gui", "org.kevoree.platform", "LATEST", listSnapshot)
-          updateFile(file.getAbsolutePath, runtimeSnapshotGUIFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.standalone", "org.kevoree.platform", "LATEST", listSnapshot)
-          updateFile(file.getAbsolutePath, runtimeSnapshotFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", listRelease)
-          updateFile(file.getAbsolutePath, androidReleaseFileId)
-          file = bootService.resolveArtifact("org.kevoree.platform.android.apk", "org.kevoree.platform", "LATEST", "apk", listSnapshot)
-          updateFile(file.getAbsolutePath, androidSnapshotFileId)
 
-          file = bootService.resolveArtifact("org.kevoree.library.sample.javase.root", "org.kevoree.corelibrary.sample", "LATEST", "zip", listRelease)
-          updateFile(file.getAbsolutePath, sampleFileId)
+          updateFile(editorReleaseFileId)
+          updateFile(runtimeReleaseGUIFileId)
+          updateFile(runtimeReleaseFileId)
+          updateFile(androidReleaseFileId)
+          updateFile(editorSnapshotFileId)
+          updateFile(runtimeSnapshotGUIFileId)
+          updateFile(runtimeSnapshotFileId)
+          updateFile(androidSnapshotFileId)
+          updateFile(sampleFileId)
 
           logger.debug("maven artifact updated")
           logger.debug("update kevoree version values")
-          file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listRelease)
-          var jar: JarFile = new JarFile(file)
-          var entry: JarEntry = jar.getJarEntry("KEV-INF/lib.kev")
+          val file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listRelease)
+          val jar: JarFile = new JarFile(file)
+          val entry: JarEntry = jar.getJarEntry("KEV-INF/lib.kev")
           if (entry != null) {
             updateReleaseVersion(findVersionFromModel(convertStreamToString(jar.getInputStream(entry))))
           }
-          file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listSnapshot)
+          /*file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listSnapshot)
           jar = new JarFile(file)
           entry = jar.getJarEntry("KEV-INF/lib.kev")
           if (entry != null) {
             updateSnapshotVersion(findVersionFromModel(convertStreamToString(jar.getInputStream(entry))))
-          }
+          }*/
           logger.debug("kevoree version values updated")
         } catch {
           case _@e => logger.debug("Unable to update maven artifact", e)
@@ -182,41 +220,42 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     this
   }
 
-  case class DOWNLOAD (index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse)
+  case class DOWNLOAD(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse)
 
-  case class UPDATE_FILE (filePath: String, fileId: Int)
+  case class UPDATE/*_FILE*/(/*filePath: String, */fileId: Int)
 
-  case class UPDATE_RELEASE_VERSION (version: String)
+  case class UPDATE_RELEASE_VERSION(version: String)
 
-  case class UPDATE_SNAPSHOT_VERSION (version: String)
+  case class UPDATE_SNAPSHOT_VERSION(version: String)
 
-  case class STOP ()
+  case class STOP()
 
-  def checkForDownload (index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
+  def checkForDownload(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
     (this !? DOWNLOAD(index, origin, request, response)).asInstanceOf[Boolean]
   }
 
-  def updateFile (filePath: String, id: Int) {
-    this ! UPDATE_FILE(filePath, id)
+  def updateFile(/*filePath: String, */id: Int) {
+    this !? UPDATE/*_FILE*/(/*filePath, */id)
   }
 
-  def updateReleaseVersion (version: String) {
+  def updateReleaseVersion(version: String) {
     this ! UPDATE_RELEASE_VERSION(version)
   }
 
-  def updateSnapshotVersion (version: String) {
+  def updateSnapshotVersion(version: String) {
     this ! UPDATE_SNAPSHOT_VERSION(version)
   }
 
-  def stop () {
+  def stop() {
     this ! STOP()
   }
 
-  def act () {
+  def act() {
     loop {
       react {
         case DOWNLOAD(index, origin, request, response) => reply(checkForDownloadInternals(index, origin, request, response))
-        case UPDATE_FILE(filePath, id) => files = files.filterKeys(i => i != id) ++ Map[Int, String](id -> filePath)
+//        case UPDATE_FILE(filePath, id) => files = files.filterKeys(i => i != id) ++ Map[Int, String](id -> filePath)
+        case UPDATE(id) => update(id); reply(true)
         case UPDATE_RELEASE_VERSION(version) => {
           variables = variables.filterKeys(i => i != "kevoree.version.release") + ("kevoree.version.release" -> version)
           var pattern: String = mainSite.getDictionary.get("urlpattern").toString
@@ -246,7 +285,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     }
   }
 
-  private def setLastModifiedHeader (response: KevoreeHttpResponse, fileId: Int) {
+  private def setLastModifiedHeader(response: KevoreeHttpResponse, fileId: Int) {
     val format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", util.Locale.ENGLISH)
     val cal = util.Calendar.getInstance(util.TimeZone.getTimeZone("GMT"))
     format.setCalendar(cal)
@@ -255,7 +294,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     response.getHeaders.put("Last-Modified", lastUpdated)
   }
 
-  private def buildResponse (response: KevoreeHttpResponse, fileId: Int): Boolean = {
+  private def buildResponse(response: KevoreeHttpResponse, fileId: Int): Boolean = {
     val bytes = getBytesForFile(fileId)
     if (bytes.length > 0) {
       setLastModifiedHeader(response, fileId)
@@ -268,14 +307,16 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     }
   }
 
-  private def checkForDownloadInternals (index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
+  private def checkForDownloadInternals(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
     val handler = new URLHandlerScala()
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {
       case Some(requestDownload) if (requestDownload == getEditorLastSnapshot || requestDownload == "/" + getEditorLastSnapshot) => {
+        update(editorSnapshotFileId)
         buildResponse(response, editorSnapshotFileId)
       }
       case Some(requestDownload) if (requestDownload == getRuntimeLastSnapshot || requestDownload == "/" + getRuntimeLastSnapshot) => {
+        update(runtimeSnapshotGUIFileId)
         buildResponse(response, runtimeSnapshotGUIFileId)
       }
       case Some(requestDownload) if (requestDownload == getEditorLastRelease || requestDownload == "/" + getEditorLastRelease) => {
@@ -285,6 +326,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
         buildResponse(response, runtimeReleaseGUIFileId)
       }
       case Some(requestDownload) if (requestDownload == getEditorSnapshotJAR || requestDownload == "/" + getEditorSnapshotJAR) => {
+        update(editorSnapshotFileId)
         if (buildResponse(response, editorSnapshotFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeEditor-" + getVariables("kevoree.version.snapshot") + ".jar; filename*=utf-8''KevoreeEditor-" +
             getVariables("kevoree.version.snapshot") + ".jar")
@@ -294,6 +336,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
         }
       }
       case Some(requestDownload) if (requestDownload == getPlatformSnapshotGUIJAR || requestDownload == "/" + getPlatformSnapshotGUIJAR) => {
+        update(runtimeSnapshotGUIFileId)
         if (buildResponse(response, runtimeSnapshotGUIFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-GUI-" + getVariables("kevoree.version.snapshot") + ".jar; filename*=utf-8''KevoreeRuntime-GUI-" +
             getVariables("kevoree.version.snapshot") + ".jar")
@@ -303,6 +346,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
         }
       }
       case Some(requestDownload) if (requestDownload == getPlatformSnapshotJAR || requestDownload == "/" + getPlatformSnapshotJAR) => {
+        update(runtimeSnapshotFileId)
         if (buildResponse(response, runtimeSnapshotFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.snapshot") + ".jar; filename*=utf-8''KevoreeRuntime-" +
             getVariables("kevoree.version.snapshot") + ".jar")
@@ -314,8 +358,8 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
       case Some(requestDownload) if (requestDownload == getEditorStableJAR || requestDownload == "/" + getEditorStableJAR) => {
         if (buildResponse(response, editorReleaseFileId)) {
           response.getHeaders.put("Content-Disposition",
-                                   "attachment; filename=KevoreeEditor-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeEditor-" + getVariables("kevoree.version.release") +
-                                     ".jar")
+            "attachment; filename=KevoreeEditor-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeEditor-" + getVariables("kevoree.version.release") +
+              ".jar")
           true
         } else {
           false
@@ -349,6 +393,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
         }
       }
       case Some(requestDownload) if (requestDownload == getAndroidSnapshotAPK || requestDownload == "/" + getAndroidSnapshotAPK) => {
+        update(androidSnapshotFileId)
         if (buildResponse(response, androidSnapshotFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.snapshot") + ".apk; filename*=utf-8''KevoreeRuntime-" +
             getVariables("kevoree.version.release") + ".apk")
@@ -370,11 +415,11 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     }
   }
 
-  private def getBytesForFile (id: Int): Array[Byte] = {
+  private def getBytesForFile(id: Int): Array[Byte] = {
     FileNIOHelper.getBytesFromFile(new File(files(id)))
   }
 
-  private def convertStreamToString (inputStream: InputStream): String = {
+  private def convertStreamToString(inputStream: InputStream): String = {
     val rand: util.Random = new util.Random
     val temp: File = File.createTempFile("kevoreeloaderLib" + rand.nextInt, ".xmi")
     temp.deleteOnExit()
@@ -391,7 +436,7 @@ class DownloadHelper (bootService: Bootstraper, mainSite: KevoreeMainSite) exten
     new String(out.toByteArray, "UTF-8")
   }
 
-  private def findVersionFromModel (path: String): String = {
+  private def findVersionFromModel(path: String): String = {
     //<deployUnits type="jar" unitName="org.kevoree.framework" xsi:type="kevoree:DeployUnit" groupName="org.kevoree" version="1.7.1-SNAPSHOT" targetNodeType="//@typeDefinitions.17"></deployUnits>
     val frameworkRegex = new
       //Regex("<deployUnits targetNodeType=\"//@typeDefinitions.[0-9][0-9]*\" type=\".*\" version=\"(.*)\" unitName=\"org.kevoree.framework\" groupName=\"org.kevoree\" xsi:type=\"kevoree:DeployUnit\"></deployUnits>")
