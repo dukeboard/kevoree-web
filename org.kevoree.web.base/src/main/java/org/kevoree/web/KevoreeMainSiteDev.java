@@ -25,7 +25,7 @@ public class KevoreeMainSiteDev extends KevoreeMainSite {
 
     @Override
     public void startPage() {
-        useCache = true;
+        useCache = false;
         super.startPage();
         File f1 = new File((String) super.getDictionary().get("folder"));
         if (f1.isDirectory()) {
