@@ -3,7 +3,7 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/
 merge "mvn:org.kevoree.corelibrary.sky/org.kevoree.library.sky.api/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.jexxus/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
-merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.spray/{kevoree.version}"
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 
 //merge "mvn:org.kevoree.talks/org.kevoree.talks.adam/{talks.version}"
@@ -23,7 +23,7 @@ addGroup KevoreeWebSiteGroup : BasicGroup
 addToGroup KevoreeWebSiteGroup KevoreeWebSiteNode
 updateDictionary KevoreeWebSiteGroup  { ip="10.0.0.4", port="8000"}@KevoreeWebSiteNode
 
-addComponent KevoreeWebSiteServer@KevoreeWebSiteNode : KTinyWebServer {port = "8090", timeout = "5000"}
+addComponent KevoreeWebSiteServer@KevoreeWebSiteNode : SprayWebServer {port = "8090", timeout = "5000"}
 addComponent KevoreeWebSitePage@KevoreeWebSiteNode : KevoreeMainSite {urlpattern = "/", webSocketLocation="http://kevoree.org:443"}
 addComponent webSocket@KevoreeWebSiteNode :  WsServer {port="443"}
 
