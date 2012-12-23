@@ -1,7 +1,7 @@
 // Kevoree website Jail node configuration
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.sky/org.kevoree.library.sky.api/{kevoree.version}"
-merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.jexxus/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
@@ -19,7 +19,7 @@ merge "mvn:org.kevoree.talks/org.kevoree.talks.ws/{talks.version}"
 addNode KevoreeWebSiteNode : PJavaSENode
 network KevoreeWebSiteNode => KevoreeWebSiteNode { "KEVOREE.remote.node.ip"="10.0.0.4"}
 
-addGroup KevoreeWebSiteGroup : NanoRestGroup
+addGroup KevoreeWebSiteGroup : BasicGroup
 addToGroup KevoreeWebSiteGroup KevoreeWebSiteNode
 updateDictionary KevoreeWebSiteGroup  { ip="10.0.0.4", port="8000"}@KevoreeWebSiteNode
 
