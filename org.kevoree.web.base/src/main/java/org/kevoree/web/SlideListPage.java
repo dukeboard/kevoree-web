@@ -168,7 +168,7 @@ public class SlideListPage implements ModelListener {
 			for (ComponentInstance component : node.getComponentsForJ()) {
 //				for (TypeDefinition typeDefinition : component.getTypeDefinition().getSuperTypesForJ()) {
 				logger.debug(component.getTypeDefinition().getName());
-				if ("KTinyWebServer".equals(component.getTypeDefinition().getName())) {// must be change if the webserver implementation is changed
+				if ("SprayWebServer".equals(component.getTypeDefinition().getName())) {// must be change if the webserver implementation is changed
 					return new String[]{component.getName(), node.getName()};
 				}
 //				}
@@ -194,7 +194,6 @@ public class SlideListPage implements ModelListener {
 		StringBuilder menuBuilder = new StringBuilder();
 		boolean isFirst = true;
 		for (String componentName : slidesList.keySet()) {
-
 			menuBuilder.append("<li><a onclick=\"document.querySelector('#presentation').innerHTML = '")
 					.append(componentName);
 			if (!"".equals(slidesList.get(componentName)[1])) {
