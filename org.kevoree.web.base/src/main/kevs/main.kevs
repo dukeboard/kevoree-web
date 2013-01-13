@@ -2,22 +2,19 @@ merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/
 merge "mvn:org.kevoree.corelibrary.sky/org.kevoree.library.sky.api/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
-merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.spray/{kevoree.version}"
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 
-//merge "mvn:org.kevoree.talks/org.kevoree.talks.adam/{talks.version}"
-merge "mvn:org.kevoree.talks/org.kevoree.talks.cbse2012/{talks.version}"
-merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012/{talks.version}"
-merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012Demo/{talks.version}"
-merge "mvn:org.kevoree.talks/org.kevoree.talks.dais2012/{talks.version}"
-merge "mvn:org.kevoree.talks/org.kevoree.talks.snt2012/{talks.version}"
-merge "mvn:org.kevoree.talks/org.kevoree.talks.models2012/{talks.version}"
+//merge "mvn:org.kevoree.talks/org.kevoree.talks.cbse2012/{talks.version}"
+//merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012/{talks.version}"
+//merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012Demo/{talks.version}"
+//merge "mvn:org.kevoree.talks/org.kevoree.talks.dais2012/{talks.version}"
+//merge "mvn:org.kevoree.talks/org.kevoree.talks.snt2012/{talks.version}"
+//merge "mvn:org.kevoree.talks/org.kevoree.talks.models2012/{talks.version}"
 //merge "mvn:org.kevoree.talks/org.kevoree.talks.ws/{talks.version}"
 
-
 addNode node0 : PJavaSENode {logLevel="DEBUG"}
-
-addComponent webSrv@node0 : KTinyWebServer
+addComponent webSrv@node0 : SprayWebServer
 addComponent webSitePage@node0 : KevoreeMainSiteDev { urlpattern='/',folder='{basedir}/src/main/resources/', webSocketLocation="http://localhost:8092"}
 //addComponent webSocket@node0 : WsServer
 addChannel req : defMSG
