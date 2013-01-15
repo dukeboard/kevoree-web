@@ -298,7 +298,8 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
     val bytes = getBytesForFile(fileId)
     if (bytes.length > 0) {
       setLastModifiedHeader(response, fileId)
-      response.getHeaders.put("Content-Length", "" + bytes.length)
+      // must be define if we use tiny webserver
+//      response.getHeaders.put("Content-Length", "" + bytes.length)
       response.setRawContent(bytes)
       true
     } else {
@@ -312,20 +313,25 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {
       case Some(requestDownload) if (requestDownload == getEditorLastSnapshot || requestDownload == "/" + getEditorLastSnapshot) => {
+        logger.debug("request to downaload {}", getEditorLastSnapshot)
         update(editorSnapshotFileId)
         buildResponse(response, editorSnapshotFileId)
       }
       case Some(requestDownload) if (requestDownload == getRuntimeLastSnapshot || requestDownload == "/" + getRuntimeLastSnapshot) => {
+        logger.debug("request to downaload {}", getRuntimeLastSnapshot)
         update(runtimeSnapshotGUIFileId)
         buildResponse(response, runtimeSnapshotGUIFileId)
       }
       case Some(requestDownload) if (requestDownload == getEditorLastRelease || requestDownload == "/" + getEditorLastRelease) => {
+        logger.debug("request to downaload {}", getEditorLastRelease)
         buildResponse(response, editorReleaseFileId)
       }
       case Some(requestDownload) if (requestDownload == getRuntimeLastRelease || requestDownload == "/" + getRuntimeLastRelease) => {
+        logger.debug("request to downaload {}", getRuntimeLastRelease)
         buildResponse(response, runtimeReleaseGUIFileId)
       }
       case Some(requestDownload) if (requestDownload == getEditorSnapshotJAR || requestDownload == "/" + getEditorSnapshotJAR) => {
+        logger.debug("request to downaload {}", getEditorSnapshotJAR)
         update(editorSnapshotFileId)
         if (buildResponse(response, editorSnapshotFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeEditor-" + getVariables("kevoree.version.snapshot") + ".jar; filename*=utf-8''KevoreeEditor-" +
@@ -336,6 +342,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
         }
       }
       case Some(requestDownload) if (requestDownload == getPlatformSnapshotGUIJAR || requestDownload == "/" + getPlatformSnapshotGUIJAR) => {
+        logger.debug("request to downaload {}", getPlatformSnapshotGUIJAR)
         update(runtimeSnapshotGUIFileId)
         if (buildResponse(response, runtimeSnapshotGUIFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-GUI-" + getVariables("kevoree.version.snapshot") + ".jar; filename*=utf-8''KevoreeRuntime-GUI-" +
@@ -346,6 +353,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
         }
       }
       case Some(requestDownload) if (requestDownload == getPlatformSnapshotJAR || requestDownload == "/" + getPlatformSnapshotJAR) => {
+        logger.debug("request to downaload {}", getPlatformSnapshotJAR)
         update(runtimeSnapshotFileId)
         if (buildResponse(response, runtimeSnapshotFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.snapshot") + ".jar; filename*=utf-8''KevoreeRuntime-" +
@@ -356,6 +364,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
         }
       }
       case Some(requestDownload) if (requestDownload == getEditorStableJAR || requestDownload == "/" + getEditorStableJAR) => {
+        logger.debug("request to downaload {}", getEditorStableJAR)
         if (buildResponse(response, editorReleaseFileId)) {
           response.getHeaders.put("Content-Disposition",
             "attachment; filename=KevoreeEditor-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeEditor-" + getVariables("kevoree.version.release") +
@@ -366,6 +375,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
         }
       }
       case Some(requestDownload) if (requestDownload == getPlatformStableJAR || requestDownload == "/" + getPlatformStableJAR) => {
+        logger.debug("request to downaload {}", getPlatformStableJAR)
         if (buildResponse(response, runtimeReleaseFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeRuntime-" +
             getVariables("kevoree.version.release") + ".jar")
@@ -375,6 +385,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
         }
       }
       case Some(requestDownload) if (requestDownload == getPlatformStableGUIJAR || requestDownload == "/" + getPlatformStableGUIJAR) => {
+        logger.debug("request to downaload {}", getPlatformStableGUIJAR)
         if (buildResponse(response, runtimeReleaseGUIFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-GUI-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeRuntime-GUI-" +
             getVariables("kevoree.version.release") + ".jar")
@@ -384,6 +395,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
         }
       }
       case Some(requestDownload) if (requestDownload == getAndroidStableAPK || requestDownload == "/" + getAndroidStableAPK) => {
+        logger.debug("request to downaload {}", getAndroidStableAPK)
         if (buildResponse(response, androidReleaseFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.release") + ".apk; filename*=utf-8''KevoreeRuntime-" +
             getVariables("kevoree.version.release") + ".apk")
@@ -393,6 +405,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
         }
       }
       case Some(requestDownload) if (requestDownload == getAndroidSnapshotAPK || requestDownload == "/" + getAndroidSnapshotAPK) => {
+        logger.debug("request to downaload {}", getAndroidSnapshotAPK)
         update(androidSnapshotFileId)
         if (buildResponse(response, androidSnapshotFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.snapshot") + ".apk; filename*=utf-8''KevoreeRuntime-" +
@@ -403,6 +416,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
         }
       }
       case Some(requestDownload) if (requestDownload == getSampleRelease || requestDownload == "/" + getSampleRelease) => {
+        logger.debug("request to downaload {}", getSampleRelease)
         if (buildResponse(response, sampleFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=kevoreeSample-" + getVariables("kevoree.version.snapshot") + ".zip; filename*=utf-8''kevoreeSample-" +
             getVariables("kevoree.version.release") + ".zip")
