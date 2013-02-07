@@ -1,113 +1,74 @@
-<em>
-<script language="javascript"> <!-- 
-var state = 'none';
-function showhide(layer_ref) {
+<div class="hero-unit">
+    <h1>Related Projects</h1>
 
-	if (state == 'block') {
-		state = 'none';
-	} else {
-		state = 'block';
-	}
-	if (document.all) { //IS IE 4 or 5 (or 6 beta) 
-		eval( "document.all." + layer_ref + ".style.display = state");
-	} 
-	if (document.layers) { //IS NETSCAPE 4 or below 
-		document.layers[layer_ref].display = state;
- 	} 
- 	if (document.getElementById &&!document.all) {
-		 hza = document.getElementById(layer_ref);
-		 hza.style.display = state; 
-	 }
-} //-->
-</script>
-
-<div class="hero-unit"> <h1>Research and Projects</h1>
-
- <p class="pull-right">Kevoree in research and projects over the world !</p> </div>
- <div class="row">
-	 <div class="span3">
-		<div class="well">
-			<h5>Related Projects</h5>
-			<ul> 
-				<li><a href="#" onclick="showhide('projects');">Projects</a></li>
-				<li><a href="#" onclick="showhide('papers');">Papers</a></li>
-			</ul>
-		</div>
-	</div>
-	<div class="span9" id="projects" style="background: #efefef; border-radius: 3px; box-shadow: 0px 0px 2px #ccc;">
-		<div class="tutorial" id="daum">
-			<h2>DAUM</h2>
-			<p>This project has been created in the case of collaboration with a department of firefighters of Brittany.</p>
-			<p>The goal is to build a real-life, multi-user, real time decision system for crisis management that are able to be adapt according to environmental information.</p>
-			
-			<h3> Required Features</h3> 
-			<ul> 
-				<li>computation nodes are Android-based tablets with limited computing resources, used by field personnel;</li>
-				<li>passive nodes are sensors embedded in personal protective equipment, with very low computing capabilities (e.g. temperature sensors);</li>
-				<li>wireless networks connect these nodes; the technologies that we use are ad-hoc Wifi mesh networks, Xbee R mesh networks, and GSM cellular networks;</li>
-				<li>the applications running on the interconnected computation nodes are real-time, multi-user cooperative data editors working peer-to-peer;</li>
-				<li>the business domain of the application includes life critical procedures that must be performed in real time.</li>
-			</ul>
-			<p>At the application level, each personal tablet maintains a full business model of the situation (position and type of hazard sources and targets, position and tactical missions of emergency personnel and vehicles, position and status of resources such as water lines, etc.). With a personal tablet each officer can update tactical information, make decisions and share them with other officers’ tablets, with the main command post and even with tablets of en-route officers. The main components of the application are a navigation system (maps and GPS), several resource management systems (engine position, assignment, reinforcement, etc), a tactical situation editor (SITAC) and a data bridge connected to the main command center computer system. Android tablets and computers of the command center can host components powerful enough to actively participate in the distributed computation of Kevoree’s models at runtime. Sensors in personal protective equipments are passive nodes that can share a Kevoree model view of their current dynamic configuration.</p>
-
-			<h3>Resource driven versus activity driven adaptation</h3>
-
-			<p>This system must adapt itself to changes in the available resource set, for instance when a better network link can be established between the tablets, using a field wireless hotspot. This kind of adaptation will also occur when more and more resources are added because of reinforcements arriving on site. Another important adaptation situation comes from changing user needs. For instance, an escalation of response implies tactical decisions that include a significant reconfiguration of the team (e.g. scaling up or scaling down the organization, reassigning responsibilities, etc). To save resources (e.g. memory, processor and network bandwidth), nodes are regrouped automatically to match the allocation of personnel on the different sectors on the field. For instance, at some point a decision is taken to setup a field hospital 1 km away. Our system must then anticipate this possible evolution both on the functional side (assist command in reallocating personnel and vehicle, setting up missions for group leaders using predefined patterns, etc) and on the system side (reallocating node functions, changing link configurations, setting up bridges with “foreign” systems). To anticipate this kind of reconfiguration, our system must maintain a current configuration (at business level and at platform level) and it must also prepare future configurations, using “what if” scenarios. In some way, the whole system aims at managing the resources (computation and communication) optimally, and to this aim it makes use of predictive models to anticipate changes, evaluate new architectures, prepare them and activate them.</p>
-
-	 		<h3>Challenges</h3>
-
- 		   <p>The DAUM system must manage several problem dimensions. 
-			   <ul>
-		 		   <li> <b>Embedded sensor networks</b> 
-					   <p> Many sensors (e.g. body temperature sensors embedded in clothes) cannot fully participate in the distributed models at runtime algorithms, mainly because of hardware limitations. In this use case the uncoupled reflection model allows for interacting and reconfiguring small devices asynchronously. For example, a limited computational node can easily host a model representation of its firmware (only a few Kbytes) but does not have the capability to dynamically reconfigure itself. In this case, the intelligent reflection layer allows larger nodes (i.e. tablet or coordinator computer) to seamlessly reason about these sensors using their internal representation, without requiring a call to the reflection layer on these limited devices.</p>
-					</li>
-					<li> <b>Pervasive environment</b> 
-						<p>In a pervasive context, the management of communication issues and its associated compensation
-policies are critical tasks. These tasks are even more critical in a sporadic context where peers can appear and disappear without a warning. Typically, tablets and even more sensors are disseminated
-on a field of action without a proper stable network infrastructure, with propagation problems caused by buildings or landscape. As we rely on dynamic adaptation of the system architecture using
-models at runtime, we must design distributed algorithms that preserve consistency of the distributed data and provide adequate consensus to enforce consistent architecture reconfigurations on the
-fly.</p> 
-				</li> 
-			</ul> 
-		</div>
-		<div class="tutorial" id="scube">
-			<h2>S-Cube</h2>
-			<a href="http://www.s-cube-network.eu/">Scube European project</a>
-		</div> 
-	</div> 
-	<div class="span9" id="papers" style="background: #efefef; display: none; border-radius: 3px; box-shadow: 0px 0px 2px #ccc;">
-
-			<div class="row-fluid">
-			        <div class="span12">
-			            <h2>2012</h2>
-			            <ol reversed="reversed" start="8">
-			                <li>F. Fouquet, O. Barais, N. Plouzeau, J-M. Jézéquel, B. Morin and F. Fleurey. -- A Dynamic Component Model for Cyber Physical Systems. -- In CBSE'12: 15th International ACM SIGSOFT Symposium on Component Based Software Engineering. Bertinoro, Italy, June 2012.
-			                </li>
-			                <li>Fouquet F., Daubert E., Plouzeau N., Barais O., Bourcier J., Jézéquel J.-M. -- Dissemination of reconfiguration policies on mesh networks -- In DAIS'12 : 7th International Federated Conference on Distributed Computing Techniques, 2012, Stockholm
-			                </li>
-			                <li>F. Fouquet, G. Nain, B. Morin, E. Daubert, O. Barais, N. Plouzeau and J-M. Jézéquel. -- An Eclipse Modelling Framework Alternative to Meet the Models@Runtime Requirements. -- In MODELS'12 (Application Track): ACM/IEEE 15th International Conference on Model Driven Engineering Languages and Systems, Innsbruck, Austria, October 2012.
-			                </li>
-			                <li>Viet-Hoa Nguyen, Noël Plouzeau, François Fouquet and Olivier Barais. -- A Process  for Continuous Validation of Self-Adapting Component Based Systems. -- In MODELS'12 (MRT workshop): ACM/IEEE 15th International Conference on Model Driven Engineering Languages and Systems, Innsbruck, Austria, October 2012.
-			                </li>
-			                <li>E. Daubert, F. Fouquet, O. Barais, G. Nain, G. Sunyé, J-M. Jézéquel, J-L. Pazat and B. Morin. -- A models@runtime framework for designing and managing Service-Based Applications. -- In ICSE Workshop on European Sofware Services and Systems Research - Research and Challenges (S-Cube). Zurich,Switzerland, May 2012.
-			                </li>
-			                <li>François Fouquet, Erwan Daubert, Noël Plouzeau, Johann Bourcier, Jean-Émile Dartois, Olivier Barais, Arnaud Blouin -- Kevoree : une approche model@runtime pour les systèmes ubiquitaires -- UbiMob'12, Anglet, France, 2012.
-			                </li>
-			            </ol>
-			        </div>
-			    </div>
-				<div class="row-fluid">
-				        <div class="span12">
-				            <h2>2010</h2>
-				            <ol reversed="reversed" start="2">
-				                <li>G. Nain, F. Fouquet, B. Morin, O. Barais and J-M. Jézéquel. -- Integrating IoT and IoS with a Component-Based approach. -- In SEAA’10: 36th Euromicro Conference on Software Engineering and Advanced Applications, Lille, France, September 2010.
-				                </li>
-				                <li>F. Fouquet, O. Barais, J-M. Jézéquel -- Building a Kermeta Compiler using Scala: an Experience Report. -- In Workshop Scala Days 2010. Lauzanne, Switzerland 2010
-				                </li>
-				            </ol>
-				        </div>
-				    </div>
-	</div> 
-	
+    <p class="pull-right">What are done with Kevoree !</p>
 </div>
-</em>
+<div class="row">
+    <div class="span3">
+        <div class="well">
+            <h5>Related Projects</h5>
+            <ul>
+                <li><a href="#intro">DAUM</a></li>
+                <li><a href="http://www.s-cube-network.eu/">Scube European project</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="span9" style="background: #efefef; border-radius: 3px; box-shadow: 0px 0px 2px #ccc;">
+        <div class="tutorial">
+            <h2 id="intro">DAUM</h2>
+            <p>This project has been created in the case of collaboration with a department of firefighters of Brittany.</p>
+
+            <p>The goal is to build a real-life, multi-user, real time decision system for crisis management that are able to be adapt according to environmental information.</p>
+
+            <h3> Required Features</h3>
+            <ul>
+                <li>computation nodes are Android-based tablets with limited computing resources, used by field personnel;</li>
+                <li>passive nodes are sensors embedded in personal protective equipment, with very low computing capabilities (e.g. temperature sensors);</li>
+                <li>wireless networks connect these nodes; the technologies that we use are ad-hoc Wifi mesh networks, Xbee R mesh networks, and GSM cellular networks;</li>
+                <li>the applications running on the interconnected computation nodes are real-time, multi-user cooperative data editors working peer-to-peer;</li>
+                <li>the business domain of the application includes life critical procedures that must be performed in real time.</li>
+            </ul>
+
+            <p>At the application level, each personal tablet maintains a full business model of the situation (position and type of hazard sources and targets, position and tactical missions of
+                emergency personnel and vehicles, position and status of resources such as water lines, etc.). With a personal tablet each officer can update tactical information, make decisions and
+                share them with other officers’ tablets, with the main command post and even with tablets of en-route officers. The main components of the application are a navigation system (maps and
+                GPS), several resource management systems (engine position, assignment, reinforcement, etc), a tactical situation editor (SITAC) and a data bridge connected to the main command center
+                computer system. Android tablets and computers of the command center can host components powerful enough to actively participate in the distributed computation of Kevoree’s models at
+                runtime. Sensors in personal protective equipments are passive nodes that can share a Kevoree model view of their current dynamic configuration.</p>
+
+            <h3>Resource driven versus activity driven adaptation</h3>
+
+            <p>This system must adapt itself to changes in the available resource set, for instance when a better network link can be established between the tablets, using a field wireless hotspot.
+                This kind of adaptation will also occur when more and more resources are added because of reinforcements arriving on site.
+                Another important adaptation situation comes from changing user needs. For instance, an escalation of response implies tactical decisions that include a significant reconfiguration of
+                the team (e.g. scaling up or scaling down the organization, reassigning responsibilities, etc). To save resources (e.g. memory, processor and network bandwidth), nodes are regrouped
+                automatically to match the allocation of personnel on the different sectors on the field. For instance, at some point a decision is taken to setup a field hospital 1 km away. Our
+                system must then anticipate this possible evolution both on the functional side (assist command in reallocating personnel and vehicle, setting up missions for group leaders using
+                predefined patterns, etc) and on the system side (reallocating node functions, changing link configurations, setting up bridges with “foreign” systems). To anticipate this kind of
+                reconfiguration, our system must maintain a current configuration (at business level and at platform level) and it must also prepare future configurations, using “what if” scenarios.
+                In some way, the whole system aims at managing the resources (computation and communication) optimally, and to this aim it makes use of predictive models to anticipate changes,
+                evaluate new architectures, prepare them and activate them.</p>
+
+            <h3>Challenges</h3>
+
+            <p>The DAUM system must manage several problem dimensions.
+            <ul>
+                <li>
+                    <b>Embedded sensor networks</b>
+                    <p> Many sensors (e.g. body temperature sensors embedded in clothes) cannot fully participate in the distributed models at runtime algorithms, mainly because of hardware
+                        limitations. In this use case the uncoupled reflection model allows for interacting and reconfiguring small devices asynchronously. For example, a limited computational node
+                        can easily host a model representation of its firmware (only a few Kbytes) but does not have the capability to dynamically reconfigure itself. In this case, the intelligent
+                        reflection layer allows larger nodes (i.e. tablet or coordinator computer) to seamlessly reason about these sensors using their internal representation, without requiring a
+                        call to the reflection layer on these limited devices.</p>
+                </li>
+                <li>
+                    <b>Pervasive environment</b>
+                    <p>In a pervasive context, the management of communication issues and its associated compensation policies are critical tasks. These tasks are even more critical in a sporadic
+                        context where peers can appear and disappear without a warning. Typically, tablets and even more sensors are disseminated on a field of action without a proper stable network
+                        infrastructure, with propagation problems caused by buildings or landscape. As we rely on dynamic adaptation of the system architecture using models at runtime, we must design
+                        distributed algorithms that preserve consistency of the distributed data and provide adequate consensus to enforce consistent architecture reconfigurations on the fly.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
