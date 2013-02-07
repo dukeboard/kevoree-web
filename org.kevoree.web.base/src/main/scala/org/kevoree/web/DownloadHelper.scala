@@ -1,6 +1,6 @@
 package org.kevoree.web
 
-import org.kevoree.framework.FileNIOHelper
+import org.kevoree.framework.{KevoreeXmiHelper, FileNIOHelper}
 import org.slf4j.{LoggerFactory, Logger}
 import scala.actors.Actor
 import scala.Predef._
@@ -186,7 +186,6 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
       def run() {
         try {
           logger.debug("updating maven artifact")
-
           updateFile(editorReleaseFileId)
           updateFile(runtimeReleaseGUIFileId)
           updateFile(runtimeReleaseFileId)
@@ -196,21 +195,21 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           updateFile(runtimeSnapshotFileId)
           updateFile(androidSnapshotFileId)
           updateFile(sampleFileId)
-
           logger.debug("maven artifact updated")
+
           logger.debug("update kevoree version values")
-          val file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listRelease)
-          val jar: JarFile = new JarFile(file)
-          val entry: JarEntry = jar.getJarEntry("KEV-INF/lib.kev")
+          var file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listRelease)
+          var jar: JarFile = new JarFile(file)
+          var entry: JarEntry = jar.getJarEntry("KEV-INF/lib.kev")
           if (entry != null) {
-            updateReleaseVersion(findVersionFromModel(convertStreamToString(jar.getInputStream(entry))))
+            updateReleaseVersion(findVersionFromModel(/*convertStreamToString(*/jar.getInputStream(entry)/*)*/))
           }
-          /*file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listSnapshot)
+          file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listSnapshot)
           jar = new JarFile(file)
           entry = jar.getJarEntry("KEV-INF/lib.kev")
           if (entry != null) {
-            updateSnapshotVersion(findVersionFromModel(convertStreamToString(jar.getInputStream(entry))))
-          }*/
+            updateSnapshotVersion(findVersionFromModel(/*convertStreamToString(*/jar.getInputStream(entry)/*)*/))
+          }
           logger.debug("kevoree version values updated")
         } catch {
           case _@e => logger.debug("Unable to update maven artifact", e)
@@ -433,39 +432,12 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
     FileNIOHelper.getBytesFromFile(new File(files(id)))
   }
 
-  private def convertStreamToString(inputStream: InputStream): String = {
-    val rand: util.Random = new util.Random
-    val temp: File = File.createTempFile("kevoreeloaderLib" + rand.nextInt, ".xmi")
-    temp.deleteOnExit()
-    val out = new ByteArrayOutputStream()
-    var read: Int = 0
-    val bytes: Array[Byte] = new Array[Byte](1024)
-    while ((({
-      read = inputStream.read(bytes)
-      read
-    })) != -1) {
-      out.write(bytes, 0, read)
+  private def findVersionFromModel(stream: InputStream): String = {
+    val model = KevoreeXmiHelper.loadStream(stream)
+    model.getDeployUnits.find(dp => dp.getGroupName == "org.kevoree" && dp.getUnitName == "org.kevoree.framework") match {
+      case None => "LATEST"
+      case Some(deployUnit) => deployUnit.getVersion
     }
-    inputStream.close()
-    new String(out.toByteArray, "UTF-8")
-  }
-
-  private def findVersionFromModel(path: String): String = {
-    //<deployUnits type="jar" unitName="org.kevoree.framework" xsi:type="kevoree:DeployUnit" groupName="org.kevoree" version="1.7.1-SNAPSHOT" targetNodeType="//@typeDefinitions.17"></deployUnits>
-    val frameworkRegex = new
-      //Regex("<deployUnits targetNodeType=\"//@typeDefinitions.[0-9][0-9]*\" type=\".*\" version=\"(.*)\" unitName=\"org.kevoree.framework\" groupName=\"org.kevoree\" xsi:type=\"kevoree:DeployUnit\"></deployUnits>")
-        Regex("<deployUnits\\s(?:(?:(?:version=\"([^\\s]*)\")|(?:targetNodeType=\"//@typeDefinitions.[0-9][0-9]*\")|(?:type=\"[^\\s]*\")|(?:unitName=\"org.kevoree.framework\")|(?:groupName=\"org.kevoree\")|(?:xsi:type=\"kevoree:DeployUnit\"))(\\s)*){6}></deployUnits>")
-    var frameworkVersion = "LATEST"
-    path.lines.forall(l => {
-      val m = frameworkRegex.pattern.matcher(l)
-      if (m.find()) {
-        frameworkVersion = m.group(1)
-        false
-      } else {
-        true
-      }
-    })
-    frameworkVersion
   }
 
 }
