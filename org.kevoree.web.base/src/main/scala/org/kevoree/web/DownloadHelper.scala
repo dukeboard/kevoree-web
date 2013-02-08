@@ -433,7 +433,9 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
   }
 
   private def findVersionFromModel(stream: InputStream): String = {
-    val model = KevoreeXmiHelper.loadStream(stream)
+    val model = KevoreeXmiHelper.$instance.loadStream(stream)
+
+    import scala.collection.JavaConversions._
     model.getDeployUnits.find(dp => dp.getGroupName == "org.kevoree" && dp.getUnitName == "org.kevoree.framework") match {
       case None => "LATEST"
       case Some(deployUnit) => deployUnit.getVersion

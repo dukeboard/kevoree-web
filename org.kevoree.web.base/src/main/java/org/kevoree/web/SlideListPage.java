@@ -68,7 +68,7 @@ public class SlideListPage implements ModelListener {
 		kengine.addVariable("nodeName", mainSite.getNodeName());
 		kengine.addVariable("webSocketUrl", webSocketUrl);
 		boolean forwardChannelIsAdded = false;
-		for (TypeDefinition typeDefinition : mainSite.getModelService().getLastModel().getTypeDefinitionsForJ()) {
+		for (TypeDefinition typeDefinition : mainSite.getModelService().getLastModel().getTypeDefinitions()) {
 			boolean isSlideShow = "KevoreeSlidePage".equals(typeDefinition.getName());
 			boolean isSlideShowDev = "KevoreeSlidePageDev".equals(typeDefinition.getName());
 			logger.debug("{} is slideShow: {}", typeDefinition.getName(), isSlideShow);
@@ -76,7 +76,7 @@ public class SlideListPage implements ModelListener {
 			if (!isSlideShow && !isSlideShowDev) {
 				isSlideShow = false;
 				isSlideShowDev = false;
-				for (TypeDefinition superTypeDefinition : typeDefinition.getSuperTypesForJ()) {
+				for (TypeDefinition superTypeDefinition : typeDefinition.getSuperTypes()) {
 					if ("KevoreeSlidePage".equals(superTypeDefinition.getName())) {
 						isSlideShow = true;
 					} else if ("KevoreeSlidePageDev".equals(superTypeDefinition.getName())) {
@@ -140,7 +140,7 @@ public class SlideListPage implements ModelListener {
 			}
 			mainSite.invalidateCacheResponse(pattern + "talks");
 		} catch (Exception ignored) {
-
+            ignored.printStackTrace();
 		}
 	}
 
@@ -153,8 +153,8 @@ public class SlideListPage implements ModelListener {
 	}
 
 	private String getPaperURL (TypeDefinition typeDefinition) {
-		if (typeDefinition.getDictionaryType().isDefined()) {
-			for (DictionaryValue dictionaryValue : typeDefinition.getDictionaryType().get().getDefaultValuesForJ()) {
+		if (typeDefinition.getDictionaryType() != null) {
+			for (DictionaryValue dictionaryValue : typeDefinition.getDictionaryType().getDefaultValues()) {
 				if (dictionaryValue.getAttribute().getName().equals("paperURL")) {
 					return dictionaryValue.getValue();
 				}
@@ -164,8 +164,8 @@ public class SlideListPage implements ModelListener {
 	}
 
 	private String[] getWebServerName () {
-		for (ContainerNode node : mainSite.getModelService().getLastModel().getNodesForJ()) {
-			for (ComponentInstance component : node.getComponentsForJ()) {
+		for (ContainerNode node : mainSite.getModelService().getLastModel().getNodes()) {
+			for (ComponentInstance component : node.getComponents()) {
 //				for (TypeDefinition typeDefinition : component.getTypeDefinition().getSuperTypesForJ()) {
 				logger.debug(component.getTypeDefinition().getName());
 				if ("SprayWebServer".equals(component.getTypeDefinition().getName())) {// must be change if the webserver implementation is changed
@@ -178,7 +178,7 @@ public class SlideListPage implements ModelListener {
 	}
 
 	private String findChannel (String componentName, String portName, String nodeName) {
-		for (MBinding mbinding : mainSite.getModelService().getLastModel().getMBindingsForJ()) {
+		for (MBinding mbinding : mainSite.getModelService().getLastModel().getMBindings()) {
 			if (mbinding.getPort().getPortTypeRef().getName().equals(portName)
 					&& ((ComponentInstance) mbinding.getPort().eContainer()).getName().equals(componentName)
 					&& ((ContainerNode) mbinding.getPort().eContainer().eContainer()).getName().equals(nodeName)) {
