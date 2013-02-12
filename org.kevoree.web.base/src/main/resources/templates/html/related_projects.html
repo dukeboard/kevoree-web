@@ -8,10 +8,15 @@ function showPapers() {
 	$('#papers').show();
 }
 
-
-
-
-
+function toggleButtonIcon(button) {
+	if(jQuery(button).children('i').hasClass('icon-plus')){
+		jQuery(button).children('i').removeClass('icon-plus');
+		jQuery(button).children('i').addClass('icon-minus');
+	}else{
+		jQuery(button).children('i').removeClass('icon-minus');
+		jQuery(button).children('i').addClass('icon-plus');
+	}
+}
 
 </script>
 
@@ -26,26 +31,30 @@ function showPapers() {
 		<div class="well sidebar-nav">
 		<ul class="nav nav-list">
 		  <li class="nav-header">Projects</li>
-		  <li class="active"><a href="#" onClick="showProjects();">DAUM</a></li>
-		  <li><a href="#"  onClick="showProjects();">S-Cube</a></li>
+		  	<li><a type="button" class="btn-link" onClick="showProjects();">DAUM</a></li>
+		  	<li><a type="button" class="btn-link" onClick="showProjects();">S-Cube</a></li>
+		  	<li><a type="button" class="btn-link" onClick="showProjects();">ThingML</a></li>
+			<li><a type="button" class="btn-link" onClick="showProjects();">IoT Lab</a></li>
+			<li><a type="button" class="btn-link" onClick="showProjects();">EnTiMid</a></li>
 		  <li class="nav-header">Papers</li>
-		  	  <li><a href="#" onClick="showPapers();">2013</a></li>
-		  	  <li><a href="#" onClick="showPapers();">2012</a></li>
-		  	  <li><a href="#" onClick="showPapers();">2011</a></li>
+		  	  <li><a type="button" class="btn-link" onClick="showPapers();">2013</a></li>
+		  	  <li><a type="button" class="btn-link" onClick="showPapers();">2012</a></li>
+		  	  <li><a type="button" class="btn-link" onClick="showPapers();">2011</a></li>
+			  <li><a type="button" class="btn-link" onClick="showPapers();">2010</a></li>
 		</ul>
 	</div>
-    </div>
-    <div class="span9" style="background: #efefef; border-radius: 3px; box-shadow: 0px 0px 2px #ccc;">
- <div class="tutorial">	
+</div>
+<div class="span9" style="background: #efefef; border-radius: 3px; box-shadow: 0px 0px 2px #ccc;">
+	<div class="tutorial">	
 		<div class="accordion" id="projects">
 			<div class="accordion-group">
 			    <div class="accordion-heading">
-			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_daum"> 
-					  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_daum" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-up"></i></button>
-			        Dynamic Adaptation Using Model (DAUM) - INRIA/IRISA, France
-			      </a>
+			      <!--a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_daum" onClick="toggleButtonIcon(this);" --> 
+					  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_daum" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+			        Dynamic Adaptation Using Model (DAUM) - INRIA/IRISA, France</button>
+			      <!--/a-->
 			    </div>
-			    <div id="collapse_daum" class="accordion-body collapse in">
+			    <div id="collapse_daum" class="accordion-body collapse span8">
 			      <div class="accordion-inner">
 		  			<p>This project has been created in the case of collaboration with a department of firefighters of Brittany.</p>
 
@@ -104,103 +113,107 @@ function showPapers() {
 			      </div>
 			    </div>
 			    <div class="accordion-heading">
-			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_scube"> 
-					  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_scube" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-down"></i></button>
+					  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_scube" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 			        S-Cube - INRIA/IRISA, European NoE
-			      </a>
+			      </button>
 			    </div>
-				<div id="collapse_scube" class="accordion-body collapse">
-					<h2>S-Cube content</h2>
+				<div id="collapse_scube" class="accordion-body collapse span8">
+					<br/>
+					S-Cube, the European Network of Excellence in Software Services and Systems, has established an integrated, multidisciplinary, vibrant research community, enabling Europe to lead the software-services revolution and helping shape the software-service based Internet which is the backbone of our future interactive society.
+					<br/>
+					<br/>
+					More information on <a href="http://www.s-cube-network.eu/">http://www.s-cube-network.eu/</a>
+					<br/>
 				</div>
 			    <div class="accordion-heading">
-			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_thingml"> 
-					  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_thingml" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-down"></i></button>
+					  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_thingml" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 			        ThingML - SINTEF, Oslo, Norway
-			      </a>
+			     </button>
 			    </div>
-				<div id="collapse_thingml" class="accordion-body collapse">
-					<h2>ThingML content</h2>
+				<div id="collapse_thingml" class="accordion-body collapse span8">
+					<br/>
+					ThingML is a modeling language for embedded and distributed systems. It is developped by the Networked Systems and Services department of SINTEF in Oslo, Norway.
+					<br/>
+					<br/>
+					More information on <a href="http://www.thingml.org/">http://www.thingml.org/</a>
+					<br/>
 				</div>
 			    <div class="accordion-heading">
-			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_thingml"> 
-					  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_thingml" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-down"></i></button>
+			     	  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_iotlab" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 			        Internet of Things Lab - SnT, Luxembourg
-			      </a>
+			    </button>
 			    </div>
-				<div id="collapse_thingml" class="accordion-body collapse">
+				<div id="collapse_iotlab" class="accordion-body collapse span8">
 					<h2>Internet of Things</h2>
 				</div>
 			    <div class="accordion-heading">
-			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_thingml"> 
-					  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_thingml" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-down"></i></button>
+			     	  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_entimid" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 			        EnTiMid - INRIA, Rennes, Fr
-			      </a>
+			      </button>
 			    </div>
-				<div id="collapse_thingml" class="accordion-body collapse">
+				<div id="collapse_entimid" class="accordion-body collapse span8">
 					<h2>EnTiMid</h2>
 				</div>
-			  </div>
 			</div>
-			<div class="accordion" id="papers" style="display: none;">
-				<div class="accordion-group">
+		</div>
+		<div class="accordion" id="papers" style="display: none;">
+			<div class="accordion-group">
 				    <div class="accordion-heading">
-				      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_papers_2013"> 
-						  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_papers_2013" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-down"></i></button>
+				      	  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_papers_2013" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 				        2013 - Publications
-				      </a>
+				      </button>
 				    </div>
-					<div id="collapse_papers_2013" class="accordion-body collapse">
+					<div id="collapse_papers_2013" class="accordion-body collapse span8">
 						-
 					</div>
 				    <div class="accordion-heading">
-				      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_papers_2012"> 
-						  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_papers_2012" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-down"></i></button>
+						  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_papers_2012" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 				        2012 - Publications
-				      </a>
+				      </button>
 				    </div>
-					<div id="collapse_papers_2012" class="accordion-body collapse">
-						<ol reversed="reversed" start="8">
-						                <li><u>A Dynamic Component Model for Cyber Physical Systems.</u> -- F. Fouquet, O. Barais, N. Plouzeau, J-M. Jézéquel, B. Morin and F. Fleurey. -- In <b>CBSE'12</b>: 15th International ACM SIGSOFT Symposium on Component Based Software Engineering. Bertinoro, Italy, June 2012.
+					<div id="collapse_papers_2012" class="accordion-body collapse span8">
+						<ol reversed="reversed" start="11">
+						                <li><u>A Dynamic Component Model for Cyber Physical Systems.</u> -- F. Fouquet, O. Barais, N. Plouzeau, J-M. J&eacute;z&eacute;quel, B. Morin and F. Fleurey. -- In <b>CBSE'12</b>: 15th International ACM SIGSOFT Symposium on Component Based Software Engineering. Bertinoro, Italy, June 2012.
 						                </li>
-						                <li>Fouquet F., Daubert E., Plouzeau N., Barais O., Bourcier J., Jézéquel J.-M. -- Dissemination of reconfiguration policies on mesh networks -- In DAIS'12 : 7th International Federated Conference on Distributed Computing Techniques, 2012, Stockholm
+						                <li><u>Dissemination of reconfiguration policies on mesh networks</u> -- Fouquet F., Daubert E., Plouzeau N., Barais O., Bourcier J., J&eacute;z&eacute;quel J.-M. -- In <b>DAIS'12</b>: 7th International Federated Conference on Distributed Computing Techniques, 2012, Stockholm
 						                </li>
-						                <li>F. Fouquet, G. Nain, B. Morin, E. Daubert, O. Barais, N. Plouzeau and J-M. Jézéquel. -- An Eclipse Modelling Framework Alternative to Meet the Models@Runtime Requirements. -- In MODELS'12 (Application Track): ACM/IEEE 15th International Conference on Model Driven Engineering Languages and Systems, Innsbruck, Austria, October 2012.
+						                <li><u>An Eclipse Modelling Framework Alternative to Meet the Models@Runtime Requirements.</u> -- F. Fouquet, G. Nain, B. Morin, E. Daubert, O. Barais, N. Plouzeau and J-M. J&eacute;z&eacute;quel. -- In <b>MODELS'12</b> (Application Track): ACM/IEEE 15th International Conference on Model Driven Engineering Languages and Systems, Innsbruck, Austria, October 2012.
 						                </li>
-						                <li>Viet-Hoa Nguyen, Noël Plouzeau, François Fouquet and Olivier Barais. -- A Process  for Continuous Validation of Self-Adapting Component Based Systems. -- In MODELS'12 (MRT workshop): ACM/IEEE 15th International Conference on Model Driven Engineering Languages and Systems, Innsbruck, Austria, October 2012.
+						                <li><u>A Process  for Continuous Validation of Self-Adapting Component Based Systems.</u> -- Viet-Hoa Nguyen, No&euml;l Plouzeau, Fran&ccedil;ois Fouquet and Olivier Barais. -- In <b>MODELS'12 (MRT workshop)</b>: ACM/IEEE 15th International Conference on Model Driven Engineering Languages and Systems, Innsbruck, Austria, October 2012.
 						                </li>
-						                <li>E. Daubert, F. Fouquet, O. Barais, G. Nain, G. Sunyé, J-M. Jézéquel, J-L. Pazat and B. Morin. -- A models@runtime framework for designing and managing Service-Based Applications. -- In ICSE Workshop on European Sofware Services and Systems Research - Research and Challenges (S-Cube). Zurich,Switzerland, May 2012.
+						                <li><u>A models@runtime framework for designing and managing Service-Based Applications.</u> -- E. Daubert, F. Fouquet, O. Barais, G. Nain, G. Suny&eacute;, J-M. J&eacute;z&eacute;quel, J-L. Pazat and B. Morin. -- In <b>ICSE Workshop</b> on European Sofware Services and Systems Research - Research and Challenges (S-Cube). Zurich,Switzerland, May 2012.
 						                </li>
-						                <li>François Fouquet, Erwan Daubert, Noël Plouzeau, Johann Bourcier, Jean-Émile Dartois, Olivier Barais, Arnaud Blouin -- Kevoree : une approche model@runtime pour les systèmes ubiquitaires -- UbiMob'12, Anglet, France, 2012.
+						                <li><u>Kevoree : une approche model@runtime pour les syst&eagrave;mes ubiquitaires</u> -- Fran&ccedil;ois Fouquet, Erwan Daubert, No&euml;l Plouzeau, Johann Bourcier, Jean-&eacute;mile Dartois, Olivier Barais, Arnaud Blouin -- <b>UbiMob'12</b>, Anglet, France, 2012.
 						                </li>
-										<li>Olivier-Nathanaël Ben David, Benoit Baudry -- Toward a Model-driven Access-control Enforcement Mechanism for Pervasive Systems -- MDSEC'12, Innsbruck, Autriche</li>
-										<li>Hanen Haouas, Johann Bourcier -- Dependability-Driven Runtime Management of Service Oriented Architectures -- PESOS'12, Zurich, Switzerland</li>
+										<li><u>Toward a Model-driven Access-control Enforcement Mechanism for Pervasive Systems</u> -- Olivier-Nathana&euml;l Ben David, Benoit Baudry -- <b>MDSEC'12</b>, Innsbruck, Autriche</li>
+										<li><u>Dependability-Driven Runtime Management of Service Oriented Architectures</u> -- Hanen Haouas, Johann Bourcier -- <b>PESOS'12</b>, Zurich, Switzerland</li>
 						            </ol>
 					</div>
 				    <div class="accordion-heading">
-				      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_papers_2011"> 
-						  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_papers_2011" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-down"></i></button>
+						  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_papers_2011" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 				        2011 - Publications
-				      </a>
+				      </button>
 				    </div>
-					<div id="collapse_papers_2011" class="accordion-body collapse">
-						-
+					<div id="collapse_papers_2011" class="accordion-body collapse span8">
+						<ol reversed="reversed" start="3">
+							<li><u>EnTiMid: A flexible component model to integrate smart devices in service-based applications for Ambient Assisted Living</u> -- G. Nain -- <b>PhD Thesis</b> 2011, Rennes, France</li>
+						</ol>						
 					</div>
 				    <div class="accordion-heading">
-				      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_papers_2010"> 
-						  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_papers_2010" onClick="if(jQuery(this).children('i').hasClass('icon-chevron-down')){jQuery(this).children('i').removeClass('icon-chevron-down');jQuery(this).children('i').addClass('icon-chevron-up');}else{jQuery(this).children('i').removeClass('icon-chevron-up');jQuery(this).children('i').addClass('icon-chevron-down');}"><i class="icon-chevron-down"></i></button>
+						  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_papers_2010" onClick="toggleButtonIcon(this);"><i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 				        2010 - Publications
-				      </a>
+				      </button>
 				    </div>
-					<div id="collapse_papers_2010" class="accordion-body collapse">
+					<div id="collapse_papers_2010" class="accordion-body collapse span8">
 						<ol reversed="reversed" start="2">
-						                <li>G. Nain, F. Fouquet, B. Morin, O. Barais and J-M. Jézéquel. -- Integrating IoT and IoS with a Component-Based approach. -- In SEAA’10: 36th Euromicro Conference on Software Engineering and Advanced Applications, Lille, France, September 2010.
+						                <li><u>Integrating IoT and IoS with a Component-Based approach.</u> -- G. Nain, F. Fouquet, B. Morin, O. Barais and J-M. J&eacute;z&eacute;quel. -- In <b>SEAA'10</b>: 36th Euromicro Conference on Software Engineering and Advanced Applications, Lille, France, September 2010.
 						                </li>
-						                <li>F. Fouquet, O. Barais, J-M. Jéeéquel -- Building a Kermeta Compiler using Scala: an Experience Report. -- In Workshop Scala Days 2010. Lauzanne, Switzerland 2010
+						                <li><u>Building a Kermeta Compiler using Scala: an Experience Report.</u> -- F. Fouquet, O. Barais, J-M. J&eacute;z&eacute;quel -- In <b>Workshop Scala Days 2010</b>. Lauzanne, Switzerland 2010
 						                </li>
 						            </ol>
 					</div>
 				</div>
-			</div>
+		</div>
 		</div>
     </div>
 </div>
