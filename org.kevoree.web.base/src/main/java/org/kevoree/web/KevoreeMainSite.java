@@ -96,7 +96,6 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (krenderer.checkForTemplateRequest(basePage, this, request, response)) {
 			replaceGlobalVariables(request, response);
 			if (useCache && !request.getUrl().equals("/download")) {
-                logger.debug("BLA\t\t" + request.getUrl());
 				cacheResponse(request, response);
 			}
 			return response;
@@ -132,9 +131,9 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		if (!pattern.endsWith("/")) {
 			pattern = pattern + "/";
 		}
+        String urlSite = request.getCompleteUrl().replace(request.getUrl(), "");
+        response.setContent(response.getContent().replace("{urlsite}", urlSite));
 		response.setContent(response.getContent().replace("{urlpattern}", pattern));
-		String urlSite = request.getCompleteUrl().replace(request.getUrl(), "");
-		response.setContent(response.getContent().replace("{urlsite}", urlSite));
 		return response;
 	}
 }
