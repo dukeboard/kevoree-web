@@ -56,12 +56,12 @@ public class SlideListPage implements ModelListener {
 	}
 
 	@Override
-	public boolean afterLocalUpdate (ContainerRoot containerRoot, ContainerRoot containerRoot1) {
-		return true;
+	public void modelUpdated () {
+        // do nothing
 	}
 
 	@Override
-	public void modelUpdated () {
+	public boolean afterLocalUpdate (ContainerRoot containerRoot, ContainerRoot containerRoot1) {
 		slidesList.clear();
 		// look for all component that have a super type equals to KevoreeSlidePage
 		KevScriptEngine kengine = mainSite.getKevScriptEngineFactory().createKevScriptEngine();
@@ -139,8 +139,11 @@ public class SlideListPage implements ModelListener {
 				pattern = pattern + "/";
 			}
 			mainSite.invalidateCacheResponse(pattern + "talks");
+            return true;
 		} catch (Exception ignored) {
-            ignored.printStackTrace();
+//            ignored.printStackTrace();
+            logger.debug("Unable to define talks.", ignored);
+            return false;
 		}
 	}
 
