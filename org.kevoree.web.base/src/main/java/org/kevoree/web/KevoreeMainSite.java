@@ -45,10 +45,10 @@ public class KevoreeMainSite extends ParentAbstractPage {
 		String wsUrl = getDictionary().get("webSocketLocation").toString();
 		try {
 			slideList = new SlideListPage(this, wsUrl);
+            getModelService().registerModelListener(slideList);
 		} catch (Exception e) {
 			logger.warn("Unable to initialize Talks page", e);
 		}
-		getModelService().registerModelListener(slideList);
 
 	}
 
