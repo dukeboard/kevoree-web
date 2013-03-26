@@ -173,7 +173,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
       case _ =>
     }
     if (file != null) {
-    files = files.filterKeys(i => i != id) ++ Map[Int, String](id -> file.getAbsolutePath)
+      files = files.filterKeys(i => i != id) ++ Map[Int, String](id -> file.getAbsolutePath)
     }
   }
 
@@ -201,13 +201,13 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           var jar: JarFile = new JarFile(file)
           var entry: JarEntry = jar.getJarEntry("KEV-INF/lib.kev")
           if (entry != null) {
-            updateReleaseVersion(findVersionFromModel(/*convertStreamToString(*/jar.getInputStream(entry)/*)*/))
+            updateReleaseVersion(findVersionFromModel(/*convertStreamToString(*/ jar.getInputStream(entry) /*)*/))
           }
           file = bootService.resolveArtifact("org.kevoree.library.model.javase", "org.kevoree.corelibrary.model", "LATEST", listSnapshot)
           jar = new JarFile(file)
           entry = jar.getJarEntry("KEV-INF/lib.kev")
           if (entry != null) {
-            updateSnapshotVersion(findVersionFromModel(/*convertStreamToString(*/jar.getInputStream(entry)/*)*/))
+            updateSnapshotVersion(findVersionFromModel(/*convertStreamToString(*/ jar.getInputStream(entry) /*)*/))
           }
           logger.debug("kevoree version values updated")
         } catch {
@@ -220,7 +220,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
 
   case class DOWNLOAD(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse)
 
-  case class UPDATE/*_FILE*/(/*filePath: String, */fileId: Int)
+  case class UPDATE /*_FILE*/ (/*filePath: String, */ fileId: Int)
 
   case class UPDATE_RELEASE_VERSION(version: String)
 
@@ -232,8 +232,8 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
     (this !? DOWNLOAD(index, origin, request, response)).asInstanceOf[Boolean]
   }
 
-  def updateFile(/*filePath: String, */id: Int) {
-    this !? UPDATE/*_FILE*/(/*filePath, */id)
+  def updateFile(/*filePath: String, */ id: Int) {
+    this !? UPDATE /*_FILE*/ (/*filePath, */ id)
   }
 
   def updateReleaseVersion(version: String) {
@@ -252,7 +252,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
     loop {
       react {
         case DOWNLOAD(index, origin, request, response) => reply(checkForDownloadInternals(index, origin, request, response))
-//        case UPDATE_FILE(filePath, id) => files = files.filterKeys(i => i != id) ++ Map[Int, String](id -> filePath)
+        //        case UPDATE_FILE(filePath, id) => files = files.filterKeys(i => i != id) ++ Map[Int, String](id -> filePath)
         case UPDATE(id) => update(id); reply(true)
         case UPDATE_RELEASE_VERSION(version) => {
           variables = variables.filterKeys(i => i != "kevoree.version.release") + ("kevoree.version.release" -> version)
@@ -297,7 +297,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
     if (bytes.length > 0) {
       setLastModifiedHeader(response, fileId)
       // must be define if we use tiny webserver
-//      response.getHeaders.put("Content-Length", "" + bytes.length)
+      //      response.getHeaders.put("Content-Length", "" + bytes.length)
       response.setRawContent(bytes)
       true
     } else {
