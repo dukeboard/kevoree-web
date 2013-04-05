@@ -70,6 +70,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
+        logger.debug("receive request: {}", request.getUrl());
 		if (getLastParam(request.getUrl()).startsWith("talks/") || getLastParam(request.getUrl()).startsWith("/talks/")) {
 			logger.debug("forward request to slide pages for url: {} with completeURL = {}", getLastParam(request.getUrl()), request.getCompleteUrl());
 			return forward(request, response);

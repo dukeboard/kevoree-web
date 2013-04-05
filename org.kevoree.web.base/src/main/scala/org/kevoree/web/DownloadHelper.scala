@@ -33,13 +33,13 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
 
 
   /* Stable */
-  private def getEditorStableJNLP = "download/KevoreeEditor.jnlp"
+//  private def getEditorStableJNLP = "download/KevoreeEditor.jnlp"
 
   private def getEditorStableJAR = "download/KevoreeEditor.jar"
 
   //  def getEditorStableJNLP = "http://dist.kevoree.org/KevoreeEditorStable.php"
 
-  private def getPlatformStableJNLP = "download/KevoreeRuntime.jnlp"
+//  private def getPlatformStableJNLP = "download/KevoreeRuntime.jnlp"
 
   private def getPlatformStableGUIJAR = "download/KevoreeRuntimeGUI.jar"
 
@@ -52,13 +52,13 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
   private def getRuntimeLastRelease = "download/KevoreeRuntimeLastRelease.jar"
 
   /* Snapshot */
-  private def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshot.jnlp"
+//  private def getEditorSnapshotJNLP = "download/KevoreeEditorSnapshot.jnlp"
 
   private def getEditorSnapshotJAR = "download/KevoreeEditorSnapshot.jar"
 
   //  def getEditorSnapshotJNLP = "http://dist.kevoree.org/KevoreeEditorSnapshot.php"
 
-  private def getPlatformSnapshotJNLP = "download/KevoreeRuntimeSnapshot.jnlp"
+//  private def getPlatformSnapshotJNLP = "download/KevoreeRuntimeSnapshot.jnlp"
 
   private def getPlatformSnapshotGUIJAR = "download/KevoreeRuntimeSnapshotGUI.jar"
 
@@ -85,10 +85,10 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
 
 
   var variables = Map[String, String](
-    "editorStableJNLP" -> getEditorStableJNLP,
+    /*"editorStableJNLP" -> getEditorStableJNLP,
     "platformStableJNLP" -> getPlatformStableJNLP,
     "editorSnapshotJNLP" -> getEditorSnapshotJNLP,
-    "platformSnapshotJNLP" -> getPlatformSnapshotJNLP,
+    "platformSnapshotJNLP" -> getPlatformSnapshotJNLP,*/
     "editorStableJAR" -> getEditorStableJAR,
     "platformStableJAR" -> getPlatformStableJAR,
     "platformStableGUIJAR" -> getPlatformStableGUIJAR,
@@ -432,7 +432,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
   }
 
   private def findVersionFromModel(stream: InputStream): String = {
-    val model = KevoreeXmiHelper.$instance.loadStream(stream)
+    val model = KevoreeXmiHelper.instance$.loadStream(stream)
 
     import scala.collection.JavaConversions._
     model.getDeployUnits.find(dp => dp.getGroupName == "org.kevoree" && dp.getUnitName == "org.kevoree.framework") match {
