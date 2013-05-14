@@ -3,8 +3,9 @@ package org.kevoree.web
 import io.Source
 import java.io._
 import collection.immutable.HashMap
-import org.kevoree.library.javase.webserver.{URLHandlerScala, AbstractPage, KevoreeHttpRequest, KevoreeHttpResponse}
+import org.kevoree.library.javase.webserver._
 import scala.collection.JavaConversions._
+import scala.Some
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,12 +16,15 @@ import scala.collection.JavaConversions._
 
 class PageRenderer(devmod: Boolean, folder: java.io.File) {
 
-  val handler = new URLHandlerScala()
+  val handler = new URLHandler()
 
   def checkForTemplateRequest(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {
-      case Some(reqP) => {
+      case null => {
+        false
+      }
+      case reqP: String => {
         if (reqP == "" || reqP == null || reqP == "/") {
           response.setContent(krender(index, "/", HashMap[String, String](), urlPattern))
           true
@@ -50,7 +54,6 @@ class PageRenderer(devmod: Boolean, folder: java.io.File) {
           }
         }
       }
-      case None => false
     }
   }
 

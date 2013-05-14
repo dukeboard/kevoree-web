@@ -13,6 +13,10 @@
     <packaging>jar</packaging>
     <name>Kevoree :: Web :: Base</name>
 
+    <properties>
+        <scala.version>2.9.2</scala.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.kevoree.tools</groupId>
@@ -34,6 +38,12 @@
             <groupId>org.kevoree.talks</groupId>
             <artifactId>org.kevoree.talks.framework</artifactId>
             <version>${talks.framework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
         </dependency>
 
     </dependencies>

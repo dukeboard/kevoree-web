@@ -307,28 +307,29 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
   }
 
   private def checkForDownloadInternals(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
-    val handler = new URLHandlerScala()
+    val handler = new URLHandler()
     val urlPattern = origin.getDictionary.get("urlpattern").toString
     handler.getLastParam(request.getUrl, urlPattern) match {
-      case Some(requestDownload) if (requestDownload == getEditorLastSnapshot || requestDownload == "/" + getEditorLastSnapshot) => {
+      case null => false
+      case requestDownload: String if (requestDownload == getEditorLastSnapshot || requestDownload == "/" + getEditorLastSnapshot) => {
         logger.debug("request to download {}", getEditorLastSnapshot)
         update(editorSnapshotFileId)
         buildResponse(response, editorSnapshotFileId)
       }
-      case Some(requestDownload) if (requestDownload == getRuntimeLastSnapshot || requestDownload == "/" + getRuntimeLastSnapshot) => {
+      case requestDownload: String if (requestDownload == getRuntimeLastSnapshot || requestDownload == "/" + getRuntimeLastSnapshot) => {
         logger.debug("request to download {}", getRuntimeLastSnapshot)
         update(runtimeSnapshotGUIFileId)
         buildResponse(response, runtimeSnapshotGUIFileId)
       }
-      case Some(requestDownload) if (requestDownload == getEditorLastRelease || requestDownload == "/" + getEditorLastRelease) => {
+      case requestDownload: String if (requestDownload == getEditorLastRelease || requestDownload == "/" + getEditorLastRelease) => {
         logger.debug("request to download {}", getEditorLastRelease)
         buildResponse(response, editorReleaseFileId)
       }
-      case Some(requestDownload) if (requestDownload == getRuntimeLastRelease || requestDownload == "/" + getRuntimeLastRelease) => {
+      case requestDownload: String if (requestDownload == getRuntimeLastRelease || requestDownload == "/" + getRuntimeLastRelease) => {
         logger.debug("request to download {}", getRuntimeLastRelease)
         buildResponse(response, runtimeReleaseGUIFileId)
       }
-      case Some(requestDownload) if (requestDownload == getEditorSnapshotJAR || requestDownload == "/" + getEditorSnapshotJAR) => {
+      case requestDownload: String if (requestDownload == getEditorSnapshotJAR || requestDownload == "/" + getEditorSnapshotJAR) => {
         logger.debug("request to download {}", getEditorSnapshotJAR)
         update(editorSnapshotFileId)
         if (buildResponse(response, editorSnapshotFileId)) {
@@ -339,7 +340,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           false
         }
       }
-      case Some(requestDownload) if (requestDownload == getPlatformSnapshotGUIJAR || requestDownload == "/" + getPlatformSnapshotGUIJAR) => {
+      case requestDownload: String if (requestDownload == getPlatformSnapshotGUIJAR || requestDownload == "/" + getPlatformSnapshotGUIJAR) => {
         logger.debug("request to download {}", getPlatformSnapshotGUIJAR)
         update(runtimeSnapshotGUIFileId)
         if (buildResponse(response, runtimeSnapshotGUIFileId)) {
@@ -350,7 +351,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           false
         }
       }
-      case Some(requestDownload) if (requestDownload == getPlatformSnapshotJAR || requestDownload == "/" + getPlatformSnapshotJAR) => {
+      case requestDownload: String if (requestDownload == getPlatformSnapshotJAR || requestDownload == "/" + getPlatformSnapshotJAR) => {
         logger.debug("request to download {}", getPlatformSnapshotJAR)
         update(runtimeSnapshotFileId)
         if (buildResponse(response, runtimeSnapshotFileId)) {
@@ -361,7 +362,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           false
         }
       }
-      case Some(requestDownload) if (requestDownload == getEditorStableJAR || requestDownload == "/" + getEditorStableJAR) => {
+      case requestDownload: String if (requestDownload == getEditorStableJAR || requestDownload == "/" + getEditorStableJAR) => {
         logger.debug("request to download {}", getEditorStableJAR)
         if (buildResponse(response, editorReleaseFileId)) {
           response.getHeaders.put("Content-Disposition",
@@ -372,7 +373,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           false
         }
       }
-      case Some(requestDownload) if (requestDownload == getPlatformStableJAR || requestDownload == "/" + getPlatformStableJAR) => {
+      case requestDownload: String if (requestDownload == getPlatformStableJAR || requestDownload == "/" + getPlatformStableJAR) => {
         logger.debug("request to download {}", getPlatformStableJAR)
         if (buildResponse(response, runtimeReleaseFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeRuntime-" +
@@ -382,7 +383,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           false
         }
       }
-      case Some(requestDownload) if (requestDownload == getPlatformStableGUIJAR || requestDownload == "/" + getPlatformStableGUIJAR) => {
+      case requestDownload: String if (requestDownload == getPlatformStableGUIJAR || requestDownload == "/" + getPlatformStableGUIJAR) => {
         logger.debug("request to download {}", getPlatformStableGUIJAR)
         if (buildResponse(response, runtimeReleaseGUIFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-GUI-" + getVariables("kevoree.version.release") + ".jar; filename*=utf-8''KevoreeRuntime-GUI-" +
@@ -392,7 +393,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           false
         }
       }
-      case Some(requestDownload) if (requestDownload == getAndroidStableAPK || requestDownload == "/" + getAndroidStableAPK) => {
+      case requestDownload: String if (requestDownload == getAndroidStableAPK || requestDownload == "/" + getAndroidStableAPK) => {
         logger.debug("request to download {}", getAndroidStableAPK)
         if (buildResponse(response, androidReleaseFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=KevoreeRuntime-" + getVariables("kevoree.version.release") + ".apk; filename*=utf-8''KevoreeRuntime-" +
@@ -402,7 +403,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           false
         }
       }
-      case Some(requestDownload) if (requestDownload == getAndroidSnapshotAPK || requestDownload == "/" + getAndroidSnapshotAPK) => {
+      case requestDownload: String if (requestDownload == getAndroidSnapshotAPK || requestDownload == "/" + getAndroidSnapshotAPK) => {
         logger.debug("request to download {}", getAndroidSnapshotAPK)
         update(androidSnapshotFileId)
         if (buildResponse(response, androidSnapshotFileId)) {
@@ -413,7 +414,7 @@ class DownloadHelper(bootService: Bootstraper, mainSite: KevoreeMainSite) extend
           false
         }
       }
-      case Some(requestDownload) if (requestDownload == getSampleRelease || requestDownload == "/" + getSampleRelease) => {
+      case requestDownload: String if (requestDownload == getSampleRelease || requestDownload == "/" + getSampleRelease) => {
         logger.debug("request to download {}", getSampleRelease)
         if (buildResponse(response, sampleFileId)) {
           response.getHeaders.put("Content-Disposition", "attachment; filename=kevoreeSample-" + getVariables("kevoree.version.snapshot") + ".zip; filename*=utf-8''kevoreeSample-" +
