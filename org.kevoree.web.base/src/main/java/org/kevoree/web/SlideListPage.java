@@ -134,7 +134,7 @@ public class SlideListPage implements ModelListener {
                         logger.debug("{} is not a slideshow", typeDefinition.getName());
                     }
                 }
-                try {
+                /*try {
                     mainSite.getModelService().unregisterModelListener(modelListener);
                     kengine.atomicInterpretDeploy();
                     mainSite.getModelService().registerModelListener(modelListener);
@@ -149,9 +149,33 @@ public class SlideListPage implements ModelListener {
                     mainSite.invalidateCacheResponse(pattern + "talks");
                 } catch (Exception ignored) {
                     logger.debug("Unable to define talks.", ignored);
-                }
+                }*/
+                SlideListPage.this.apply(kengine, 0);
             }
         });
+    }
+
+    private void apply(KevScriptEngine kengine, int tries) {
+        if (tries < 5) {
+            try {
+                mainSite.getModelService().unregisterModelListener(this);
+                kengine.atomicInterpretDeploy();
+                mainSite.getModelService().registerModelListener(this);
+                buildCache();
+                String pattern = mainSite.getDictionary().get("urlpattern").toString();
+                if (pattern.endsWith("**")) {
+                    pattern = pattern.replace("**", "");
+                }
+                if (!pattern.endsWith("/")) {
+                    pattern = pattern + "/";
+                }
+                mainSite.invalidateCacheResponse(pattern + "talks");
+            } catch (Exception ignored) {
+                logger.debug("Unable to define talks.", ignored);
+            }
+        } else {
+            logger.warn("Unable to define talks (see debug logs for more info");
+        }
     }
 
     @Override

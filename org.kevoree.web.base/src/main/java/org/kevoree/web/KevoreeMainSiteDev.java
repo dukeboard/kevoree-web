@@ -50,7 +50,7 @@ public class KevoreeMainSiteDev extends KevoreeMainSite {
             logger.debug("forward request to slide pages for url: {} with completeURL = {}", getLastParam(request.getUrl()), request.getCompleteUrl());
             return forward(request, response);
         }
-        if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response,f.getAbsolutePath())) {
+        if (f!=null && f.exists() && FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response,f.getAbsolutePath())) {
             if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css") || request.getUrl().endsWith(".jnlp")) {
                 // FIXME according to KevoreeSlidesShowerTemplate
                 replaceGlobalVariables(request, response);
