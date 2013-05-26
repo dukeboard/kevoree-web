@@ -4,9 +4,6 @@ import org.kevoree.*;
 import org.kevoree.api.service.core.handler.ModelListener;
 import org.kevoree.api.service.core.script.KevScriptEngine;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,8 +27,6 @@ public class SlideListPage implements ModelListener {
 
     private static Map<String, String> variables = new HashMap<String, String>();
     protected ExecutorService threadPool = Executors.newFixedThreadPool(1);
-
-    private Logger logger = LoggerFactory.getLogger(SlideListPage.class.getName());
 
     public SlideListPage(KevoreeMainSite mainSite, String wsUrl) throws Exception {
         this.mainSite = mainSite;
@@ -93,8 +88,8 @@ public class SlideListPage implements ModelListener {
                         isSlideShow = false;
                         isSlideShowDev = false;
                     }
-                    logger.debug("{} is slideShow: {}", typeDefinition.getName(), isSlideShow);
-                    logger.debug("{} is slideShowDev: {}", typeDefinition.getName(), isSlideShowDev);
+                    org.kevoree.log.Log.debug("{} is slideShow: {}", typeDefinition.getName(), isSlideShow);
+                    org.kevoree.log.Log.debug("{} is slideShowDev: {}", typeDefinition.getName(), isSlideShowDev);
                     if (isSlideShow && !isSlideShowDev) {
                         kengine.addVariable("instanceName", typeDefinition.getName());
                         kengine.addVariable("typeDefinitionName", typeDefinition.getName());
@@ -124,14 +119,14 @@ public class SlideListPage implements ModelListener {
                                 kengine.append("bind {instanceName}.request@{nodeName} => {channelRequestName}");
                                 kengine.append("bind {instanceName}.content@{nodeName} => {channelResponseName}");
                             } else {
-                                logger.warn("Unable to find channels to connect slide component");
+                                org.kevoree.log.Log.warn("Unable to find channels to connect slide component");
                             }
                             slidesList.put(typeDefinition.getName(), new String[]{"{urlsite}{urlpattern}talks/" + typeDefinition.getName() + "/", getPaperURL(typeDefinition)});
                         } else {
-                            logger.warn("Unable to find webserver to connect slide component");
+                            org.kevoree.log.Log.warn("Unable to find webserver to connect slide component");
                         }
                     } else {
-                        logger.debug("{} is not a slideshow", typeDefinition.getName());
+                        org.kevoree.log.Log.debug("{} is not a slideshow", typeDefinition.getName());
                     }
                 }
                 /*try {
@@ -171,10 +166,10 @@ public class SlideListPage implements ModelListener {
                 }
                 mainSite.invalidateCacheResponse(pattern + "talks");
             } catch (Exception ignored) {
-                logger.debug("Unable to define talks.", ignored);
+                org.kevoree.log.Log.debug("Unable to define talks.", ignored);
             }
         } else {
-            logger.warn("Unable to define talks (see debug logs for more info");
+            org.kevoree.log.Log.warn("Unable to define talks (see debug logs for more info");
         }
     }
 
@@ -201,7 +196,7 @@ public class SlideListPage implements ModelListener {
         for (ContainerNode node : model.getNodes()) {
             for (ComponentInstance component : node.getComponents()) {
 //				for (TypeDefinition typeDefinition : component.getTypeDefinition().getSuperTypesForJ()) {
-                logger.debug(component.getTypeDefinition().getName());
+                org.kevoree.log.Log.debug(component.getTypeDefinition().getName());
                 if ("SprayWebServer".equals(component.getTypeDefinition().getName())) {// must be change if the webserver implementation is changed
                     return new String[]{component.getName(), node.getName()};
                 }
@@ -216,7 +211,7 @@ public class SlideListPage implements ModelListener {
             if (mbinding.getPort().getPortTypeRef().getName().equals(portName)
                     && ((ComponentInstance) mbinding.getPort().eContainer()).getName().equals(componentName)
                     && ((ContainerNode) mbinding.getPort().eContainer().eContainer()).getName().equals(nodeName)) {
-                logger.debug(mbinding.getHub().getName());
+                org.kevoree.log.Log.debug(mbinding.getHub().getName());
                 return mbinding.getHub().getName();
             }
         }
@@ -244,8 +239,8 @@ public class SlideListPage implements ModelListener {
                 }
             }
         }
-        logger.debug("menu = {}", menuBuilder.toString());
-        logger.debug("slides = {}", slideListBuilder.toString());
+        org.kevoree.log.Log.debug("menu = {}", menuBuilder.toString());
+        org.kevoree.log.Log.debug("slides = {}", slideListBuilder.toString());
         variables.put("menu", menuBuilder.toString());
         variables.put("initSlides", slideListBuilder.toString());
     }
