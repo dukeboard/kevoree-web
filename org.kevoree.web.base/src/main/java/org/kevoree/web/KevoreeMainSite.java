@@ -47,7 +47,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 			slideList = new SlideListPage(this, wsUrl);
             getModelService().registerModelListener(slideList);
 		} catch (Exception e) {
-			logger.warn("Unable to initialize Talks page", e);
+            org.kevoree.log.Log.warn("Unable to initialize Talks page", e);
 		}
 
 	}
@@ -70,9 +70,9 @@ public class KevoreeMainSite extends ParentAbstractPage {
 
 	@Override
 	public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
-        logger.debug("receive request: {}", request.getUrl());
+        org.kevoree.log.Log.debug("receive request: {}", request.getUrl());
 		if (getLastParam(request.getUrl()).startsWith("talks/") || getLastParam(request.getUrl()).startsWith("/talks/")) {
-			logger.debug("forward request to slide pages for url: {} with completeURL = {}", getLastParam(request.getUrl()), request.getCompleteUrl());
+            org.kevoree.log.Log.debug("forward request to slide pages for url: {} with completeURL = {}", getLastParam(request.getUrl()), request.getCompleteUrl());
 			return forward(request, response);
 		}
 
@@ -109,7 +109,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 	}
 
 	public void cacheResponse (KevoreeHttpRequest request, KevoreeHttpResponse response) {
-		logger.debug("put cache: {}", request.getUrl());
+        org.kevoree.log.Log.debug("put cache: {}", request.getUrl());
 		if (response.getRawContent() != null) {
 			contentRawCache.put(request.getUrl(), response.getRawContent());
 		} else {
@@ -120,7 +120,7 @@ public class KevoreeMainSite extends ParentAbstractPage {
 
 	public void invalidateCacheResponse (String url) {
 		if (contentRawCache.remove(url) == null && contentTypeCache.remove(url) == null) {
-			logger.debug("nothing to invalidate for {}", url);
+            org.kevoree.log.Log.debug("nothing to invalidate for {}", url);
 		}
 	}
 

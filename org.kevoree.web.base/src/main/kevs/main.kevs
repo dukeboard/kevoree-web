@@ -1,11 +1,8 @@
-//merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.sky/org.kevoree.library.sky.api/{kevoree.version}"
-merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
 merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.spray/{kevoree.version}"
 merge "mvn:org.kevoree.web/org.kevoree.web.base/{site.version}"
 
-//merge "mvn:org.kevoree.talks/org.kevoree.talks.adam/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.ubimob2012Demo/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.dais2012/{talks.version}"
@@ -13,7 +10,6 @@ merge "mvn:org.kevoree.talks/org.kevoree.talks.cbse2012/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.snt2012/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.models2012/{talks.version}"
 merge "mvn:org.kevoree.talks/org.kevoree.talks.duke.phd/{talks.version}"
-
 merge "mvn:org.kevoree.talks/org.kevoree.talks.ws/{talks.version}"
 
 addNode node0 : PJavaSENode {logLevel="DEBUG"}
@@ -26,6 +22,3 @@ bind webSrv.handler@node0 => req
 bind webSitePage.request@node0 => req
 bind webSitePage.content@node0 => res
 bind webSrv.response@node0 => res
-
-addGroup sync : NanoRestGroup
-addToGroup sync node0

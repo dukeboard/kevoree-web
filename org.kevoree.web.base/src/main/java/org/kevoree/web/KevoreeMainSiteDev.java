@@ -47,7 +47,7 @@ public class KevoreeMainSiteDev extends KevoreeMainSite {
     @Override
     public KevoreeHttpResponse process (KevoreeHttpRequest request, KevoreeHttpResponse response) {
         if (getLastParam(request.getUrl()).startsWith("talks/") || getLastParam(request.getUrl()).startsWith("/talks/")) {
-            logger.debug("forward request to slide pages for url: {} with completeURL = {}", getLastParam(request.getUrl()), request.getCompleteUrl());
+            org.kevoree.log.Log.debug("forward request to slide pages for url: {} with completeURL = {}", getLastParam(request.getUrl()), request.getCompleteUrl());
             return forward(request, response);
         }
         if (f!=null && f.exists() && FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response,f.getAbsolutePath())) {
